@@ -20,14 +20,14 @@ export default React.createClass({
 
   generateData() {
     return d3Array.shuffle(alphabet)
-              .slice(0, 3 + Math.floor(Math.random() * 23))
-              .sort()
-              .map(letter => {
-                return {
-                  letter,
-                  number: Math.floor(Math.random() * 100)
-                };
-              });
+      .slice(0, 3 + Math.floor(Math.random() * 23))
+      .sort()
+      .map(letter => {
+        return {
+          letter,
+          number: Math.floor(Math.random() * 100)
+        };
+      });
   },
 
   render() {
