@@ -1,4 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import App from './components/App';
 
-ReactDOM.render(<div>Hello, world!</div>, document.body);
+ReactDOM.render(<App duration={650} />, document.body);
