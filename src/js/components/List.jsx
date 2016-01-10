@@ -8,7 +8,7 @@ export default React.createClass({
       offset: 180,
       springConfigMotion: [200, 30],
       springConfigOpacity: [170, 26],
-      springConfigNumber: [170, 26]
+      springConfigNumber: [200, 30]
     };
   },
 
@@ -17,8 +17,8 @@ export default React.createClass({
       obj[d.letter] = {
         index: i,
         opacity: spring(1, this.props.springConfigOpacity),
-        y: spring(i * 40, this.props.springConfigMotion),
         x: spring(0, this.props.springConfigMotion),
+        y: spring(i * 40, this.props.springConfigMotion),
         n: spring(d.number, this.props.springConfigNumber),
         ...d
       };
@@ -30,8 +30,8 @@ export default React.createClass({
     return {
       ...d,
       opacity: spring(0, this.props.springConfigOpacity),
-      y: spring(d.index * 40, this.props.springConfigMotion),
-      x: spring(-this.props.offset, this.props.springConfigMotion)
+      x: spring(-this.props.offset, this.props.springConfigMotion),
+      y: spring(d.index * 40, this.props.springConfigMotion)
     };
   },
 
@@ -40,16 +40,16 @@ export default React.createClass({
       return {
         ...d,
         opacity: 0,
-        y: d.index * 40,
-        x: this.props.offset
+        x: this.props.offset,
+        y: d.index * 40
       };
     }
 
     return {
       ...d,
       opacity: spring(0, this.props.springConfigOpacity),
-      y: spring(d.index * 40, this.props.springConfigMotion),
-      x: spring(this.props.offset, this.props.springConfigMotion)
+      x: spring(this.props.offset, this.props.springConfigMotion),
+      y: spring(d.index * 40, this.props.springConfigMotion)
     };
   },
 
