@@ -1,6 +1,7 @@
 /* eslint-disable no-var */
 
 var gulp          = require('gulp');
+var plumber       = require('gulp-plumber');
 var browserSync   = require('browser-sync');
 var webpack       = require('webpack');
 var webpackStream = require('webpack-stream');
@@ -35,6 +36,7 @@ var webpackConfig = {
 
 gulp.task('webpack', function() {
   return gulp.src('src/js/main.js')
+    .pipe(plumber())
     .pipe(webpackStream(webpackConfig, webpack))
     .pipe(gulp.dest('public'))
     .pipe(browserSync.reload({ stream: true }));

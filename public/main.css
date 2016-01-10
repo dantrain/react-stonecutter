@@ -53,8 +53,6 @@ button {
   position: absolute;
 
   text-align: center;
-  padding: 50px;
-  width: 300px;
-  height: 150px;
+  padding: 20px;
   background-color: #ccc;
 }

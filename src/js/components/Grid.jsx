@@ -5,32 +5,31 @@ export default React.createClass({
 
   getDefaultProps() {
     return {
-      width: 300,
-      height: 150,
-      columns: 3,
+      width: 200,
+      height: 100,
+      columns: 4,
       margin: 20,
-      springConfigMotion: [200, 30],
-      springConfigOpacity: [170, 26],
-      springConfigScale: [170, 26],
-      springConfigNumber: [200, 30]
+      springConfig: [60, 14]
     };
   },
 
   getStyles() {
-    return this.props.data.reduce((obj, d, i) => {
-      const column = i % this.props.columns;
-      const row = Math.floor(i / this.props.columns);
+    const { data, width, height, columns, margin, springConfig } = this.props;
 
-      const x = column * this.props.width + column * this.props.margin;
-      const y = row * this.props.height + row * this.props.margin;
+    return data.reduce((obj, d, i) => {
+      const column = i % columns;
+      const row = Math.floor(i / columns);
+
+      const x = column * width + column * margin;
+      const y = row * height + row * margin;
 
       obj[d.letter] = {
         index: i,
-        opacity: spring(1, this.props.springConfigOpacity),
-        size: spring(1, this.props.springConfigScale),
-        x: spring(x, this.props.springConfigMotion),
-        y: spring(y, this.props.springConfigMotion),
-        n: spring(d.number, this.props.springConfigNumber),
+        opacity: spring(1, springConfig),
+        size: spring(1, springConfig),
+        x: spring(x, springConfig),
+        y: spring(y, springConfig),
+        n: spring(d.number, springConfig),
         ...d
       };
       return obj;
@@ -40,13 +39,13 @@ export default React.createClass({
   willEnter(key, d) {
     return {
       ...d,
-      opacity: spring(0, this.props.springConfigOpacity),
-      size: spring(0, this.props.springConfigScale)
+      opacity: spring(0, this.props.springConfig),
+      size: spring(0, this.props.springConfig)
     };
   },
 
   willLeave(key, d, styles, currentInterpolatedStyle, currentSpeed) {
-    if (currentSpeed[key].x < 10 && currentSpeed[key].x > 0) {
+    if (currentSpeed[key].opacity > -0.1 && currentSpeed[key].opacity !== 0) {
       return {
         ...d,
         opacity: 0,
@@ -56,12 +55,14 @@ export default React.createClass({
 
     return {
       ...d,
-      opacity: spring(0, this.props.springConfigOpacity),
-      size: spring(0, this.props.springConfigScale)
+      opacity: spring(0, this.props.springConfig),
+      size: spring(0, this.props.springConfig)
     };
   },
 
   render() {
+    const { data, width, height, columns, margin } = this.props;
+
     return (
       <TransitionMotion
         styles={this.getStyles()}
@@ -72,10 +73,10 @@ export default React.createClass({
           <ul
             className="grid"
             style={{
-              width: this.props.columns * this.props.width +
-                ((this.props.columns - 1) * this.props.margin),
-              height: Math.ceil(this.props.data.length / this.props.columns) *
-                (this.props.height + this.props.margin) - this.props.margin
+              width: columns * width +
+                ((columns - 1) * margin),
+              height: Math.ceil(data.length / columns) *
+                (height + margin) - margin
             }}
           >
             {Object.keys(interpolatedStyles).map(key => {
@@ -87,6 +88,8 @@ export default React.createClass({
                   className="grid-item"
                   key={letter}
                   style={{
+                    width,
+                    height,
                     opacity,
                     transform,
                     WebkitTransform: transform
