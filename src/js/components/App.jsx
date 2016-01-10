@@ -1,6 +1,6 @@
 import React from 'react';
 import d3Array from 'd3-array';
-import List from './List';
+import Grid from './Grid';
 
 const alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('');
 
@@ -36,7 +36,7 @@ export default React.createClass({
         <button
           onClick={this.handleShuffle}
         >Shuffle</button>
-        <List
+        <Grid
           data={this.state.data}
         />
       </div>

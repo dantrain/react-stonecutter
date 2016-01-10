@@ -1,8 +1,17 @@
+html {
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
 body {
   background-color: #eee;
   color: #333;
   font-family: sans-serif;
   padding: 1em;
+  overflow-y: scroll;
 }
 
 button {
@@ -13,14 +22,14 @@ button {
   display: block;
 }
 
-ul {
+.list {
   list-style: none;
   padding: 0;
   margin: 0 0 0 130px;
   position: relative;
 }
 
-li {
+.list-item {
   background-color: #ddd;
   margin: 0;
   padding: 8px;
@@ -31,4 +40,21 @@ li {
   position: absolute;
   top: 0;
   border-radius: 3px;
+}
+
+.grid {
+  list-style: none;
+  padding: 0;
+  margin: 0 auto;
+  position: relative;
+}
+
+.grid-item {
+  position: absolute;
+
+  text-align: center;
+  padding: 50px;
+  width: 300px;
+  height: 150px;
+  background-color: #ccc;
 }

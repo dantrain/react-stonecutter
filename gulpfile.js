@@ -1,15 +1,13 @@
 /* eslint-disable no-var */
 
 var gulp          = require('gulp');
-var gutil         = require('gulp-util');
 var browserSync   = require('browser-sync');
 var webpack       = require('webpack');
-var _             = require('lodash');
+var webpackStream = require('webpack-stream');
 
 var webpackConfig = {
   entry: './src/js/main.js',
   output: {
-    path: './public',
     filename: 'bundle.js'
   },
   module: {
@@ -31,22 +29,15 @@ var webpackConfig = {
   resolve: {
     extensions: ['', '.js', '.jsx']
   },
-  watch: false
+  watch: false,
+  devtool: 'inline-source-map'
 };
 
-var devCompiler = webpack(_.assign({}, webpackConfig, {
-  devtool: 'inline-source-map'
-}));
-
-gulp.task('webpack', function(done) {
-  devCompiler.run(function(err, stats) {
-    if (err) throw new gutil.PluginError('webpack', err);
-    gutil.log('[webpack]', stats.toString({
-      colors: true
-    }));
-    browserSync.reload();
-    done();
-  });
+gulp.task('webpack', function() {
+  return gulp.src('src/js/main.js')
+    .pipe(webpackStream(webpackConfig, webpack))
+    .pipe(gulp.dest('public'))
+    .pipe(browserSync.reload({ stream: true }));
 });
 
 gulp.task('browser-sync', ['webpack'], function() {

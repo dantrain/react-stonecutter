@@ -5,20 +5,31 @@ export default React.createClass({
 
   getDefaultProps() {
     return {
-      offset: 180,
+      width: 300,
+      height: 150,
+      columns: 3,
+      margin: 20,
       springConfigMotion: [200, 30],
       springConfigOpacity: [170, 26],
+      springConfigScale: [170, 26],
       springConfigNumber: [200, 30]
     };
   },
 
   getStyles() {
     return this.props.data.reduce((obj, d, i) => {
+      const column = i % this.props.columns;
+      const row = Math.floor(i / this.props.columns);
+
+      const x = column * this.props.width + column * this.props.margin;
+      const y = row * this.props.height + row * this.props.margin;
+
       obj[d.letter] = {
         index: i,
         opacity: spring(1, this.props.springConfigOpacity),
-        x: spring(0, this.props.springConfigMotion),
-        y: spring(i * 40, this.props.springConfigMotion),
+        size: spring(1, this.props.springConfigScale),
+        x: spring(x, this.props.springConfigMotion),
+        y: spring(y, this.props.springConfigMotion),
         n: spring(d.number, this.props.springConfigNumber),
         ...d
       };
@@ -30,8 +41,7 @@ export default React.createClass({
     return {
       ...d,
       opacity: spring(0, this.props.springConfigOpacity),
-      x: spring(-this.props.offset, this.props.springConfigMotion),
-      y: spring(d.index * 40, this.props.springConfigMotion)
+      size: spring(0, this.props.springConfigScale)
     };
   },
 
@@ -40,16 +50,14 @@ export default React.createClass({
       return {
         ...d,
         opacity: 0,
-        x: this.props.offset,
-        y: d.index * 40
+        size: 0
       };
     }
 
     return {
       ...d,
       opacity: spring(0, this.props.springConfigOpacity),
-      x: spring(this.props.offset, this.props.springConfigMotion),
-      y: spring(d.index * 40, this.props.springConfigMotion)
+      size: spring(0, this.props.springConfigScale)
     };
   },
 
@@ -57,18 +65,26 @@ export default React.createClass({
     return (
       <TransitionMotion
         styles={this.getStyles()}
-        willLeave={this.willLeave}
         willEnter={this.willEnter}
+        willLeave={this.willLeave}
       >
         {interpolatedStyles =>
-          <ul className="list">
+          <ul
+            className="grid"
+            style={{
+              width: this.props.columns * this.props.width +
+                ((this.props.columns - 1) * this.props.margin),
+              height: Math.ceil(this.props.data.length / this.props.columns) *
+                (this.props.height + this.props.margin) - this.props.margin
+            }}
+          >
             {Object.keys(interpolatedStyles).map(key => {
-              const { letter, n, y, x, opacity } = interpolatedStyles[key];
-              const transform = `translate(${x}px, ${y}px)`;
+              const { letter, n, y, x, opacity, size } = interpolatedStyles[key];
+              const transform = `translate(${x}px, ${y}px) scale(${size})`;
 
               return (
                 <li
-                  className="list-item"
+                  className="grid-item"
                   key={letter}
                   style={{
                     opacity,
