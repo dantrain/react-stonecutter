@@ -4,10 +4,12 @@ import { TransitionMotion, spring } from 'react-motion';
 export default React.createClass({
 
   propTypes: {
-    width: React.PropTypes.number.isRequired,
-    height: React.PropTypes.number.isRequired,
-    margin: React.PropTypes.number.isRequired,
-    columns: React.PropTypes.number.isRequired
+    columns: React.PropTypes.number.isRequired,
+    itemWidth: React.PropTypes.number.isRequired,
+    itemHeight: React.PropTypes.number.isRequired,
+    gutterWidth: React.PropTypes.number.isRequired,
+    gutterHeight: React.PropTypes.number.isRequired,
+    fromCenter: React.PropTypes.bool
   },
 
   getDefaultProps() {
@@ -17,48 +19,49 @@ export default React.createClass({
     };
   },
 
+  containsNonDigit: /\D/,
+
   getStyles() {
-    const { width, height, columns, margin, springConfig } = this.props;
-    const containsNonDigit = /\D/;
+    const { itemWidth, itemHeight, columns,
+      gutterWidth, gutterHeight, springConfig } = this.props;
 
-    const children = React.Children.toArray(this.props.children);
+    return React.Children.toArray(this.props.children)
+      .reduce((obj, element, i) => {
+        const key = element.key.substring(2);
 
-    return children.reduce((obj, element, i) => {
-      const key = element.key.substring(2);
+        if (!this.containsNonDigit.test(key)) {
+          throw new Error(
+            'Each child of TransitionMotionGrid must have a unique non-number "key" prop.');
+        }
 
-      if (!containsNonDigit.test(key)) {
-        throw new Error(
-          'Each child of TransitionMotionGrid must have a unique non-number "key" prop.');
-      }
+        const column = i % columns;
+        const row = Math.floor(i / columns);
 
-      const column = i % columns;
-      const row = Math.floor(i / columns);
+        const x = column * itemWidth + column * gutterWidth;
+        const y = row * itemHeight + row * gutterHeight;
 
-      const x = column * width + column * margin;
-      const y = row * height + row * margin;
+        obj[key] = {
+          element,
+          index: i,
+          opacity: spring(1, springConfig),
+          size: spring(1, springConfig),
+          x: spring(x, springConfig),
+          y: spring(y, springConfig)
+        };
 
-      obj[key] = {
-        element,
-        index: i,
-        opacity: spring(1, springConfig),
-        size: spring(1, springConfig),
-        x: spring(x, springConfig),
-        y: spring(y, springConfig)
-      };
-
-      return obj;
-    }, {});
+        return obj;
+      }, {});
   },
 
   getCenterHorizontal() {
-    const { columns, width, margin } = this.props;
-    return (columns * width + (columns - 1) * margin - width) / 2;
+    const { columns, itemWidth, gutterWidth } = this.props;
+    return (columns * itemWidth + (columns - 1) * gutterWidth - itemWidth) / 2;
   },
 
   getCenterVertical() {
-    const { columns, height, margin, children } = this.props;
+    const { columns, itemHeight, gutterHeight, children } = this.props;
     return (Math.ceil(React.Children.count(children) / columns) *
-      (height + margin) - margin + height) / 2;
+      (itemHeight + gutterHeight) - gutterHeight + itemHeight) / 2;
   },
 
   willEnter(key, d) {
@@ -66,8 +69,10 @@ export default React.createClass({
       ...d,
       opacity: spring(0, this.props.springConfig),
       size: spring(0, this.props.springConfig),
-      x: spring(this.getCenterHorizontal(), this.props.springConfig),
-      y: spring(this.getCenterVertical(), this.props.springConfig)
+      ...(this.props.fromCenter ? {
+        x: spring(this.getCenterHorizontal(), this.props.springConfig),
+        y: spring(this.getCenterVertical(), this.props.springConfig)
+      } : {})
     };
   },
 
@@ -86,14 +91,16 @@ export default React.createClass({
       ...d,
       opacity: spring(0, this.props.springConfig),
       size: spring(0, this.props.springConfig),
-      x: spring(this.getCenterHorizontal(), this.props.springConfig),
-      y: spring(this.getCenterVertical(), this.props.springConfig)
+      ...(this.props.fromCenter ? {
+        x: spring(this.getCenterHorizontal(), this.props.springConfig),
+        y: spring(this.getCenterVertical(), this.props.springConfig)
+      } : {})
     };
   },
 
   render() {
-    const { springConfig, children, // eslint-disable-line no-unused-vars
-      width, height, columns, margin, component, style, ...rest } = this.props;
+    const { springConfig, children, columns, component, // eslint-disable-line no-unused-vars
+      itemWidth, itemHeight, gutterWidth, gutterHeight, style, ...rest } = this.props;
 
     return (
       <TransitionMotion
@@ -104,11 +111,12 @@ export default React.createClass({
         {interpolatedStyles =>
           React.createElement(component, {
             style: {
+              position: 'relative',
               ...style,
-              width: columns * width +
-                ((columns - 1) * margin),
+              width: columns * itemWidth +
+                ((columns - 1) * gutterWidth),
               height: Math.ceil(React.Children.count(children) /
-                columns) * (height + margin) - margin
+                columns) * (itemHeight + gutterHeight) - gutterHeight
             },
             ...rest
           }, Object.keys(interpolatedStyles).map(key => {
@@ -117,11 +125,15 @@ export default React.createClass({
 
             return React.cloneElement(element, {
               style: {
-                width,
-                height,
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: itemWidth,
+                height: itemHeight,
                 opacity,
                 transform,
-                WebkitTransform: transform
+                WebkitTransform: transform,
+                MsTransform: transform
               }
             });
           }))}

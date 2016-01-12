@@ -46,12 +46,9 @@ button {
   list-style: none;
   padding: 0;
   margin: 0 auto;
-  position: relative;
 }
 
 .grid-item {
-  position: absolute;
-
   text-align: center;
   padding: 20px;
   background-color: #ccc;
