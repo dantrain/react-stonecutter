@@ -32,31 +32,44 @@ export default React.createClass({
         n: spring(d.number, springConfig),
         ...d
       };
+
       return obj;
     }, {});
   },
 
   willEnter(key, d) {
+    const { data, columns, width, height, margin, springConfig } = this.props;
+
     return {
       ...d,
-      opacity: spring(0, this.props.springConfig),
-      size: spring(0, this.props.springConfig)
+      opacity: spring(0, springConfig),
+      size: spring(0, springConfig),
+      x: spring((columns * width + (columns - 1) * margin - width) / 2, springConfig),
+      y: spring((Math.ceil(data.length / columns) * (height + margin) -
+                  margin + height) / 2, springConfig)
     };
   },
 
   willLeave(key, d, styles, currentInterpolatedStyle, currentSpeed) {
+    const { data, columns, width, height, margin, springConfig } = this.props;
+
     if (currentSpeed[key].opacity > -0.1 && currentSpeed[key].opacity !== 0) {
       return {
         ...d,
         opacity: 0,
-        size: 0
+        size: 0,
+        x: (columns * width + (columns - 1) * margin - width) / 2,
+        y: (Math.ceil(data.length / columns) * (height + margin) - margin + height) / 2
       };
     }
 
     return {
       ...d,
-      opacity: spring(0, this.props.springConfig),
-      size: spring(0, this.props.springConfig)
+      opacity: spring(0, springConfig),
+      size: spring(0, springConfig),
+      x: spring((columns * width + (columns - 1) * margin - width) / 2, springConfig),
+      y: spring((Math.ceil(data.length / columns) * (height + margin) -
+                  margin + height) / 2, springConfig)
     };
   },
 

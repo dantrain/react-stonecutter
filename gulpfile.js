@@ -1,14 +1,15 @@
 /* eslint-disable no-var */
 
 var gulp          = require('gulp');
-var plumber       = require('gulp-plumber');
+var gutil         = require('gulp-util');
 var browserSync   = require('browser-sync');
 var webpack       = require('webpack');
-var webpackStream = require('webpack-stream');
+var assign        = require('lodash.assign');
 
 var webpackConfig = {
   entry: './src/js/main.js',
   output: {
+    path: './public',
     filename: 'bundle.js'
   },
   module: {
@@ -30,16 +31,25 @@ var webpackConfig = {
   resolve: {
     extensions: ['', '.js', '.jsx']
   },
-  watch: false,
-  devtool: 'inline-source-map'
+  watch: false
 };
 
+var devCompiler = webpack(assign({}, webpackConfig, {
+  devtool: 'inline-source-map'
+}));
+
 gulp.task('webpack', function() {
-  return gulp.src('src/js/main.js')
-    .pipe(plumber())
-    .pipe(webpackStream(webpackConfig, webpack))
-    .pipe(gulp.dest('public'))
-    .pipe(browserSync.reload({ stream: true }));
+  devCompiler.watch({
+    aggregateTimeout: 100
+  }, function(err, stats) {
+    if (err) throw new gutil.PluginError('webpack', err);
+    gutil.log(gutil.colors.cyan('[webpack]'), stats.toString({
+      chunks: false,
+      version: false,
+      colors: true
+    }));
+    browserSync.reload();
+  });
 });
 
 gulp.task('browser-sync', ['webpack'], function() {
@@ -52,7 +62,11 @@ gulp.task('browser-sync', ['webpack'], function() {
 });
 
 gulp.task('watch', function() {
-  gulp.watch('src/js/**/*', ['webpack']);
+  gulp.watch('src/js/**/*', function(e) {
+    gutil.log(gutil.colors.magenta(
+      e.path.substring(e.path.lastIndexOf('/') + 1)) + ' ' +
+      gutil.colors.cyan(e.type + '...'));
+  });
 });
 
 gulp.task('default', ['browser-sync', 'watch']);

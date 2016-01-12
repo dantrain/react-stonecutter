@@ -6,6 +6,12 @@ const alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('');
 
 export default React.createClass({
 
+  getDefaultProps() {
+    return {
+      minItems: 10
+    };
+  },
+
   getInitialState() {
     return {
       data: this.generateData()
@@ -20,7 +26,8 @@ export default React.createClass({
 
   generateData() {
     return d3Array.shuffle(alphabet)
-      .slice(0, 3 + Math.floor(Math.random() * 23))
+      .slice(0, this.props.minItems +
+        Math.floor(Math.random() * (26 - this.props.minItems)))
       .sort()
       .map(letter => {
         return {

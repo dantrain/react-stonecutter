@@ -15,10 +15,10 @@
     "babel-preset-stage-2": "^6.3.13",
     "browser-sync": "^2.11.0",
     "gulp": "^3.9.0",
-    "gulp-plumber": "^1.0.1",
+    "gulp-util": "^3.0.7",
+    "lodash.assign": "^3.2.0",
     "node-libs-browser": "^0.5.3",
-    "webpack": "^1.12.10",
-    "webpack-stream": "^3.1.0"
+    "webpack": "^1.12.10"
   },
   "dependencies": {
     "d3-array": "^0.7.0",
