@@ -1,6 +1,6 @@
 import React from 'react';
 import d3Array from 'd3-array';
-import Grid from './Grid';
+import TransitionMotionGrid from './TransitionMotionGrid';
 
 const alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('');
 
@@ -38,14 +38,29 @@ export default React.createClass({
   },
 
   render() {
+    const items = this.state.data.map(d =>
+      <li
+        className="grid-item"
+        key={d.letter}
+      >
+        {d.letter.toUpperCase()} - {parseInt(d.number, 10)}
+      </li>);
+
     return (
       <div>
         <button
           onClick={this.handleShuffle}
         >Shuffle</button>
-        <Grid
-          data={this.state.data}
-        />
+        <TransitionMotionGrid
+          className="grid"
+          component="ul"
+          columns={4}
+          width={200}
+          height={100}
+          margin={20}
+        >
+          {items}
+        </TransitionMotionGrid>
       </div>
     );
   }
