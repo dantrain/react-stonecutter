@@ -6,7 +6,7 @@ export default React.createClass({
   propTypes: {
     columns: React.PropTypes.number.isRequired,
     columnWidth: React.PropTypes.number.isRequired,
-    itemHeight: React.PropTypes.number.isRequired,
+    itemHeight: React.PropTypes.number,
     gutterWidth: React.PropTypes.number.isRequired,
     gutterHeight: React.PropTypes.number.isRequired,
     fromCenter: React.PropTypes.bool,
@@ -21,38 +21,100 @@ export default React.createClass({
     };
   },
 
+  componentWillMount() {
+    this.setState({ styles: this.getStyles(this.props) });
+  },
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({ styles: this.getStyles(nextProps) });
+  },
+
   containsNonDigit: /\D/,
 
-  getStyles() {
-    const { columnWidth, itemHeight, columns,
-      gutterWidth, gutterHeight, springConfig } = this.props;
-
-    return React.Children.toArray(this.props.children)
-      .reduce((obj, element, index) => {
-        const key = element.key.substring(2);
+  getStyles(props) {
+    return this.doLayout(
+        React.Children.toArray(props.children)
+          .map((element, index) => ({
+            element,
+            index,
+            opacity: spring(1, props.springConfig),
+            scale: spring(1, props.springConfig)
+          })), props)
+      .reduce((obj, d) => {
+        const key = d.element.key.substring(2);
 
         if (!this.containsNonDigit.test(key)) {
           throw new Error(
             'Each child of TransitionMotionGrid must have a unique non-number "key" prop.');
         }
 
-        const column = index % columns;
-        const row = Math.floor(index / columns);
-
-        const x = column * columnWidth + column * gutterWidth;
-        const y = row * itemHeight + row * gutterHeight;
-
-        obj[key] = {
-          element,
-          index,
-          opacity: spring(1, springConfig),
-          scale: spring(1, springConfig),
-          x: spring(x, springConfig),
-          y: spring(y, springConfig)
-        };
+        obj[key] = d;
 
         return obj;
       }, {});
+  },
+
+  doLayout(arr, props) {
+    return props.itemHeight ?
+      this.doLayoutSimple(arr, props) : this.doLayoutPinterest(arr, props);
+  },
+
+  doLayoutSimple(arr, props) {
+    const { columnWidth, itemHeight, columns,
+      gutterWidth, gutterHeight, springConfig } = props;
+
+    const result = arr.map(d => {
+      const column = d.index % columns;
+      const row = Math.floor(d.index / columns);
+
+      const x = column * columnWidth + column * gutterWidth;
+      const y = row * itemHeight + row * gutterHeight;
+
+      return {
+        ...d,
+        x: spring(x, springConfig),
+        y: spring(y, springConfig)
+      };
+    });
+
+    this.setState({ height: Math.ceil(arr.length / columns) *
+      (itemHeight + gutterHeight) - gutterHeight });
+
+    return result;
+  },
+
+  doLayoutPinterest(arr, props) {
+    const { columns, columnWidth, gutterWidth, gutterHeight, springConfig } = props;
+
+    const columnHeights = [];
+
+    for (let i = 0; i < columns; i++) { columnHeights.push(0); }
+
+    const result = arr.map(d => {
+      const column = columnHeights.indexOf(Math.min.apply(null, columnHeights));
+
+      const height = d.element.props.height;
+
+      if (!(height && typeof height === 'number')) {
+        throw new Error(
+          'Each child of TransitionMotionGrid must have a "height" prop of type number.');
+      }
+
+      const x = column * columnWidth + column * gutterWidth;
+      const y = columnHeights[column];
+
+      columnHeights[column] += height + gutterHeight;
+
+      return {
+        ...d,
+        x: spring(x, springConfig),
+        y: spring(y, springConfig)
+      };
+    });
+
+    this.setState({ height: Math.max.apply(null, columnHeights) - gutterHeight });
+
+    return result;
   },
 
   getCenterHorizontal() {
@@ -61,9 +123,7 @@ export default React.createClass({
   },
 
   getCenterVertical() {
-    const { columns, itemHeight, gutterHeight, children } = this.props;
-    return (Math.ceil(React.Children.count(children) / columns) *
-      (itemHeight + gutterHeight) - gutterHeight + itemHeight) / 2;
+    return this.state.height / 2;
   },
 
   willEnter(key, d) {
@@ -84,8 +144,10 @@ export default React.createClass({
         ...d,
         opacity: 0,
         scale: 0,
-        x: this.getCenterHorizontal(),
-        y: this.getCenterVertical()
+        ...(this.props.fromCenter ? {
+          x: this.getCenterHorizontal(),
+          y: this.getCenterVertical()
+        } : {})
       };
     }
 
@@ -94,11 +156,11 @@ export default React.createClass({
 
   render() {
     const { springConfig, children, columns, component, // eslint-disable-line no-unused-vars
-      columnWidth, itemHeight, gutterWidth, gutterHeight, style, ...rest } = this.props;
+      columnWidth, itemHeight, gutterWidth, style, ...rest } = this.props;
 
     return (
       <TransitionMotion
-        styles={this.getStyles()}
+        styles={this.state.styles}
         willEnter={this.willEnter}
         willLeave={this.willLeave}
       >
@@ -109,21 +171,24 @@ export default React.createClass({
               ...style,
               width: columns * columnWidth +
                 ((columns - 1) * gutterWidth),
-              height: Math.ceil(React.Children.count(children) /
-                columns) * (itemHeight + gutterHeight) - gutterHeight
+              height: this.state.height
             },
             ...rest
           }, Object.keys(interpolatedStyles).map(key => {
             const { element, x, y, opacity, scale } = interpolatedStyles[key];
+
+            if (isNaN(x)) console.log('yo');
+
             const transform = `translate(${x}px, ${y}px) scale(${scale})`;
 
             return React.cloneElement(element, {
               style: {
+                ...element.props.style,
                 position: 'absolute',
                 top: 0,
                 left: 0,
                 width: columnWidth,
-                height: itemHeight,
+                ...(itemHeight ? { height: itemHeight } : {}),
                 opacity,
                 transform,
                 WebkitTransform: transform,

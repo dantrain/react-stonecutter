@@ -38,13 +38,21 @@ export default React.createClass({
   },
 
   render() {
-    const items = this.state.data.map(d =>
-      <li
-        className="grid-item"
-        key={d.letter}
-      >
-        {d.letter.toUpperCase()} - {parseInt(d.number, 10)}
-      </li>);
+    const items = this.state.data.map(d => {
+      const height = (Math.random() * 3 | 0) * 50 + 100;
+
+      return (
+        <li
+          className="grid-item"
+          style={{ height }}
+          key={d.letter}
+          height={height}
+        >
+          {d.letter.toUpperCase()} - {parseInt(d.number, 10)}
+        </li>
+      );
+    });
+
 
     return (
       <div>
@@ -56,7 +64,6 @@ export default React.createClass({
           component="ul"
           columns={4}
           columnWidth={200}
-          itemHeight={125}
           gutterWidth={15}
           gutterHeight={15}
           fromCenter
