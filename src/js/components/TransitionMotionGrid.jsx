@@ -5,11 +5,13 @@ export default React.createClass({
 
   propTypes: {
     columns: React.PropTypes.number.isRequired,
-    itemWidth: React.PropTypes.number.isRequired,
+    columnWidth: React.PropTypes.number.isRequired,
     itemHeight: React.PropTypes.number.isRequired,
     gutterWidth: React.PropTypes.number.isRequired,
     gutterHeight: React.PropTypes.number.isRequired,
-    fromCenter: React.PropTypes.bool
+    fromCenter: React.PropTypes.bool,
+    springConfig: React.PropTypes.array,
+    component: React.PropTypes.string
   },
 
   getDefaultProps() {
@@ -22,11 +24,11 @@ export default React.createClass({
   containsNonDigit: /\D/,
 
   getStyles() {
-    const { itemWidth, itemHeight, columns,
+    const { columnWidth, itemHeight, columns,
       gutterWidth, gutterHeight, springConfig } = this.props;
 
     return React.Children.toArray(this.props.children)
-      .reduce((obj, element, i) => {
+      .reduce((obj, element, index) => {
         const key = element.key.substring(2);
 
         if (!this.containsNonDigit.test(key)) {
@@ -34,17 +36,17 @@ export default React.createClass({
             'Each child of TransitionMotionGrid must have a unique non-number "key" prop.');
         }
 
-        const column = i % columns;
-        const row = Math.floor(i / columns);
+        const column = index % columns;
+        const row = Math.floor(index / columns);
 
-        const x = column * itemWidth + column * gutterWidth;
+        const x = column * columnWidth + column * gutterWidth;
         const y = row * itemHeight + row * gutterHeight;
 
         obj[key] = {
           element,
-          index: i,
+          index,
           opacity: spring(1, springConfig),
-          size: spring(1, springConfig),
+          scale: spring(1, springConfig),
           x: spring(x, springConfig),
           y: spring(y, springConfig)
         };
@@ -54,8 +56,8 @@ export default React.createClass({
   },
 
   getCenterHorizontal() {
-    const { columns, itemWidth, gutterWidth } = this.props;
-    return (columns * itemWidth + (columns - 1) * gutterWidth - itemWidth) / 2;
+    const { columns, columnWidth, gutterWidth } = this.props;
+    return (columns * columnWidth + (columns - 1) * gutterWidth - columnWidth) / 2;
   },
 
   getCenterVertical() {
@@ -68,7 +70,7 @@ export default React.createClass({
     return {
       ...d,
       opacity: spring(0, this.props.springConfig),
-      size: spring(0, this.props.springConfig),
+      scale: spring(0, this.props.springConfig),
       ...(this.props.fromCenter ? {
         x: spring(this.getCenterHorizontal(), this.props.springConfig),
         y: spring(this.getCenterVertical(), this.props.springConfig)
@@ -81,26 +83,18 @@ export default React.createClass({
       return {
         ...d,
         opacity: 0,
-        size: 0,
+        scale: 0,
         x: this.getCenterHorizontal(),
         y: this.getCenterVertical()
       };
     }
 
-    return {
-      ...d,
-      opacity: spring(0, this.props.springConfig),
-      size: spring(0, this.props.springConfig),
-      ...(this.props.fromCenter ? {
-        x: spring(this.getCenterHorizontal(), this.props.springConfig),
-        y: spring(this.getCenterVertical(), this.props.springConfig)
-      } : {})
-    };
+    return this.willEnter(key, d);
   },
 
   render() {
     const { springConfig, children, columns, component, // eslint-disable-line no-unused-vars
-      itemWidth, itemHeight, gutterWidth, gutterHeight, style, ...rest } = this.props;
+      columnWidth, itemHeight, gutterWidth, gutterHeight, style, ...rest } = this.props;
 
     return (
       <TransitionMotion
@@ -113,22 +107,22 @@ export default React.createClass({
             style: {
               position: 'relative',
               ...style,
-              width: columns * itemWidth +
+              width: columns * columnWidth +
                 ((columns - 1) * gutterWidth),
               height: Math.ceil(React.Children.count(children) /
                 columns) * (itemHeight + gutterHeight) - gutterHeight
             },
             ...rest
           }, Object.keys(interpolatedStyles).map(key => {
-            const { element, x, y, opacity, size } = interpolatedStyles[key];
-            const transform = `translate(${x}px, ${y}px) scale(${size})`;
+            const { element, x, y, opacity, scale } = interpolatedStyles[key];
+            const transform = `translate(${x}px, ${y}px) scale(${scale})`;
 
             return React.cloneElement(element, {
               style: {
                 position: 'absolute',
                 top: 0,
                 left: 0,
-                width: itemWidth,
+                width: columnWidth,
                 height: itemHeight,
                 opacity,
                 transform,

@@ -55,11 +55,11 @@ export default React.createClass({
           className="grid"
           component="ul"
           columns={4}
-          fromCenter={true}
-          itemWidth={200}
+          columnWidth={200}
           itemHeight={125}
           gutterWidth={15}
           gutterHeight={15}
+          fromCenter
         >
           {items}
         </TransitionMotionGrid>
