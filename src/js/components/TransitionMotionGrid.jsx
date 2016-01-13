@@ -87,7 +87,6 @@ export default React.createClass({
     const { columns, columnWidth, gutterWidth, gutterHeight, springConfig } = props;
 
     const columnHeights = [];
-
     for (let i = 0; i < columns; i++) { columnHeights.push(0); }
 
     const result = arr.map(d => {
@@ -176,9 +175,6 @@ export default React.createClass({
             ...rest
           }, Object.keys(interpolatedStyles).map(key => {
             const { element, x, y, opacity, scale } = interpolatedStyles[key];
-
-            if (isNaN(x)) console.log('yo');
-
             const transform = `translate(${x}px, ${y}px) scale(${scale})`;
 
             return React.cloneElement(element, {
