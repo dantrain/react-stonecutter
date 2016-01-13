@@ -39,7 +39,7 @@ export default React.createClass({
 
   render() {
     const items = this.state.data.map(d => {
-      const height = (Math.random() * 3 | 0) * 50 + 100;
+      const height = (d.letter.charCodeAt(0) % 3) * 50 + 100;
 
       return (
         <li
