@@ -1,5 +1,6 @@
 import React from 'react';
 import d3Array from 'd3-array';
+import enquire from 'enquire.js';
 import TransitionMotionGrid from './TransitionMotionGrid';
 
 const alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('');
@@ -14,8 +15,20 @@ export default React.createClass({
 
   getInitialState() {
     return {
-      data: this.generateData()
+      data: this.generateData(),
+      columns: 4
     };
+  },
+
+  componentWillMount() {
+    enquire.register('screen and (max-width: 875px)', {
+      match: () => this.setState({ columns: 3 }),
+      unmatch: () => this.setState({ columns: 4 })
+    });
+  },
+
+  componentWillUnmount() {
+    enquire.unregister('screen and (max-width: 875px)');
   },
 
   handleShuffle() {
@@ -53,20 +66,18 @@ export default React.createClass({
       );
     });
 
-
     return (
       <div>
         <button
           onClick={this.handleShuffle}
-        >Shuffle</button>
+        >Randomize</button>
         <TransitionMotionGrid
           className="grid"
           component="ul"
-          columns={4}
+          columns={this.state.columns}
           columnWidth={200}
           gutterWidth={15}
           gutterHeight={15}
-          fromCenter
         >
           {items}
         </TransitionMotionGrid>
