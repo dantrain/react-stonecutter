@@ -22,10 +22,6 @@ var webpackConfig = {
           query: {
             presets: ['es2015', 'react', 'stage-2']
           }
-        },
-        {
-          test: /\.json$/,
-          loader: 'json'
         }
     ]
   },
@@ -39,7 +35,9 @@ var devCompiler = webpack(assign({}, webpackConfig, {
   devtool: 'inline-source-map'
 }));
 
-gulp.task('webpack', function() {
+gulp.task('webpack', function(done) {
+  var firstTime = true;
+
   devCompiler.watch({
     aggregateTimeout: 100
   }, function(err, stats) {
@@ -62,6 +60,11 @@ gulp.task('webpack', function() {
       colors: true
     }));
     browserSync.reload();
+
+    if (firstTime) {
+      firstTime = false;
+      done();
+    }
   });
 });
 
