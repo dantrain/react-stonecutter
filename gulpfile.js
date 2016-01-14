@@ -2,6 +2,7 @@
 
 var gulp          = require('gulp');
 var gutil         = require('gulp-util');
+var notifier      = require('node-notifier');
 var browserSync   = require('browser-sync');
 var webpack       = require('webpack');
 var assign        = require('lodash.assign');
@@ -42,7 +43,19 @@ gulp.task('webpack', function() {
   devCompiler.watch({
     aggregateTimeout: 100
   }, function(err, stats) {
-    if (err) throw new gutil.PluginError('webpack', err);
+    if (err) {
+      notifier.notify({ title: 'Webpack Error', message: err });
+      throw new gutil.PluginError('webpack', err);
+    }
+
+    var jsonStats = stats.toJson();
+
+    if (jsonStats.errors.length > 0) {
+      notifier.notify({ title: 'Webpack Error', message: jsonStats.errors[0] });
+    } else if (jsonStats.warnings.length > 0) {
+      notifier.notify({ title: 'Webpack Warning', message: jsonStats.warnings[0] });
+    }
+
     gutil.log(gutil.colors.cyan('[webpack]'), stats.toString({
       chunks: false,
       version: false,

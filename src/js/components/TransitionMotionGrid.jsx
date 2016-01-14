@@ -96,7 +96,9 @@ export default React.createClass({
 
       if (!(height && typeof height === 'number')) {
         throw new Error(
-          'Each child of TransitionMotionGrid must have a "height" prop of type number.');
+          'Each child of TransitionMotionGrid must have a "height" prop of type number. ' +
+          'Alternatively provide an "itemHeight" prop to TransitionMotionGrid if all ' +
+          'items are of equal height.');
       }
 
       const x = column * columnWidth + column * gutterWidth;
