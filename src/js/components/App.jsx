@@ -1,7 +1,6 @@
 import React from 'react';
 import d3Array from 'd3-array';
-import enquire from 'enquire.js';
-import TransitionMotionGrid from './TransitionMotionGrid';
+import ResponsiveTransitionMotionGrid from './ResponsiveTransitionMotionGrid';
 
 const alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('');
 
@@ -9,44 +8,14 @@ export default React.createClass({
 
   getDefaultProps() {
     return {
-      minItems: 10,
-      columnWidth: 200,
-      gutters: 15,
-      minPadding: 100,
-      maxWidth: 1160
+      minItems: 10
     };
   },
 
   getInitialState() {
     return {
-      data: this.generateData(),
-      columns: 4
+      data: this.generateData()
     };
-  },
-
-  componentWillMount() {
-    const { columnWidth, gutters, maxWidth, minPadding } = this.props;
-
-    const breakpoints = [];
-    const getWidth = i => i * (columnWidth + gutters) - gutters + minPadding;
-
-    for (let i = 1; getWidth(i) <= maxWidth + getWidth(1); i++) {
-      breakpoints.push(getWidth(i));
-    }
-
-    this.breakpoints = breakpoints.map((width, i, arr) => [
-      'screen',
-      (i > 0 && '(min-width: ' + arr[i - 1] + 'px)'),
-      (i < arr.length - 1 && '(max-width: ' + width + 'px)')
-    ].filter(Boolean).join(' and '));
-
-    this.breakpoints.forEach((breakpoint, i) => enquire.register(breakpoint, {
-      match: () => this.setState({ columns: i })
-    }));
-  },
-
-  componentWillUnmount() {
-    this.breakpoints.forEach(breakpoint => enquire.unregister(breakpoint));
   },
 
   handleShuffle() {
@@ -89,17 +58,17 @@ export default React.createClass({
         <button
           onClick={this.handleShuffle}
         >Randomize</button>
-        <TransitionMotionGrid
+        <ResponsiveTransitionMotionGrid
           className="grid"
           component="ul"
-          columns={this.state.columns}
-          columnWidth={this.props.columnWidth}
-          gutterWidth={this.props.gutters}
-          gutterHeight={this.props.gutters}
-          fromCenter
+          columnWidth={200}
+          gutterWidth={15}
+          gutterHeight={15}
+          maxWidth={1160}
+          minPadding={100}
         >
           {items}
-        </TransitionMotionGrid>
+        </ResponsiveTransitionMotionGrid>
       </div>
     );
   }
