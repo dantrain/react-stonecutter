@@ -9,7 +9,11 @@ export default React.createClass({
 
   getDefaultProps() {
     return {
-      minItems: 10
+      minItems: 10,
+      columnWidth: 200,
+      gutters: 15,
+      minPadding: 100,
+      maxWidth: 1160
     };
   },
 
@@ -21,14 +25,28 @@ export default React.createClass({
   },
 
   componentWillMount() {
-    enquire.register('screen and (max-width: 875px)', {
-      match: () => this.setState({ columns: 3 }),
-      unmatch: () => this.setState({ columns: 4 })
-    });
+    const { columnWidth, gutters, maxWidth, minPadding } = this.props;
+
+    const breakpoints = [];
+    const getWidth = i => i * (columnWidth + gutters) - gutters + minPadding;
+
+    for (let i = 1; getWidth(i) <= maxWidth + getWidth(1); i++) {
+      breakpoints.push(getWidth(i));
+    }
+
+    this.breakpoints = breakpoints.map((width, i, arr) => [
+      'screen',
+      (i > 0 && '(min-width: ' + arr[i - 1] + 'px)'),
+      (i < arr.length - 1 && '(max-width: ' + width + 'px)')
+    ].filter(Boolean).join(' and '));
+
+    this.breakpoints.forEach((breakpoint, i) => enquire.register(breakpoint, {
+      match: () => this.setState({ columns: i })
+    }));
   },
 
   componentWillUnmount() {
-    enquire.unregister('screen and (max-width: 875px)');
+    this.breakpoints.forEach(breakpoint => enquire.unregister(breakpoint));
   },
 
   handleShuffle() {
@@ -75,9 +93,10 @@ export default React.createClass({
           className="grid"
           component="ul"
           columns={this.state.columns}
-          columnWidth={200}
-          gutterWidth={15}
-          gutterHeight={15}
+          columnWidth={this.props.columnWidth}
+          gutterWidth={this.props.gutters}
+          gutterHeight={this.props.gutters}
+          fromCenter
         >
           {items}
         </TransitionMotionGrid>
