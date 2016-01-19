@@ -1,8 +1,17 @@
 import React from 'react';
 import d3Array from 'd3-array';
-import ResponsiveTransitionMotionGrid from './ResponsiveTransitionMotionGrid';
+import MeasuredTransitionMotionGrid from './MeasuredTransitionMotionGrid';
 
 const alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('');
+
+const ipsum = `Hashtag hoodie food truck XOXO gastropub asymmetrical.
+Viral actually sartorial thundercats fixie next level. Ethical skateboard
+put a bird on it bespoke, brunch small batch photo booth fashion axe
+actually cronut poutine fanny pack microdosing church-key. Post-ironic
+90's pug, master cleanse keytar normcore aesthetic viral crucifix selvage
+gastropub. Echo park yr organic typewriter blog. Health goth literally
+cornhole microdosing fanny pack, bespoke kinfolk heirloom ennui viral
+dreamcatcher. Offal VHS helvetica meh.`;
 
 export default React.createClass({
 
@@ -39,16 +48,18 @@ export default React.createClass({
 
   render() {
     const items = this.state.data.map(d => {
-      const height = (d.letter.charCodeAt(0) % 3) * 50 + 100;
+      // const height = (d.letter.charCodeAt(0) % 3) * 50 + 100;
+      const content = ipsum.slice(0, (d.letter.charCodeAt(0) % 3 + 1) * 50);
 
       return (
         <li
           className="grid-item"
-          style={{ height }}
+          // style={{ height }}
           key={d.letter}
-          height={height}
+          // height={height}
         >
-          {d.letter.toUpperCase()} - {parseInt(d.number, 10)}
+          <h3>{d.letter.toUpperCase()} - {parseInt(d.number, 10)}</h3>
+          <p>{content}</p>
         </li>
       );
     });
@@ -58,7 +69,7 @@ export default React.createClass({
         <button
           onClick={this.handleShuffle}
         >Randomize</button>
-        <ResponsiveTransitionMotionGrid
+        <MeasuredTransitionMotionGrid
           className="grid"
           component="ul"
           defaultColumns={4}
@@ -70,7 +81,7 @@ export default React.createClass({
           fromCenter
         >
           {items}
-        </ResponsiveTransitionMotionGrid>
+        </MeasuredTransitionMotionGrid>
       </div>
     );
   }
