@@ -61,11 +61,13 @@ export default React.createClass({
         <ResponsiveTransitionMotionGrid
           className="grid"
           component="ul"
+          defaultColumns={4}
           columnWidth={200}
           gutterWidth={15}
           gutterHeight={15}
-          maxWidth={1160}
+          maxWidth={1920}
           minPadding={100}
+          fromCenter
         >
           {items}
         </ResponsiveTransitionMotionGrid>

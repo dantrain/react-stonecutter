@@ -8,6 +8,7 @@ export default React.createClass({
 
   propTypes: {
     ...childPropTypes,
+    defaultColumns: React.PropTypes.number.isRequired,
     columnWidth: React.PropTypes.number.isRequired,
     gutterWidth: React.PropTypes.number.isRequired,
     maxWidth: React.PropTypes.number.isRequired,
@@ -15,11 +16,15 @@ export default React.createClass({
   },
 
   getDefaultProps() {
-    return { minPadding: 0 };
+    return {
+      minPadding: 0
+    };
   },
 
   getInitialState() {
-    return { columns: 4 };
+    return {
+      columns: this.props.defaultColumns
+    };
   },
 
   componentWillMount() {
@@ -28,7 +33,7 @@ export default React.createClass({
     const breakpoints = [];
     const getWidth = i => i * (columnWidth + gutterWidth) - gutterWidth + minPadding;
 
-    for (let i = 1; getWidth(i) <= maxWidth + getWidth(1); i++) {
+    for (let i = 1; getWidth(i) <= maxWidth + columnWidth + gutterWidth; i++) {
       breakpoints.push(getWidth(i));
     }
 
