@@ -73,7 +73,7 @@ export default React.createClass({
         >Randomize</button>
         <ResponsiveTransitionMotionGrid
           columnWidth={200}
-          gutterWidth={15}
+          gutterWidth={10}
           defaultColumns={4}
           maxWidth={1920}
           minPadding={100}
@@ -81,7 +81,8 @@ export default React.createClass({
           <MeasuredTransitionMotionGrid
             className="grid"
             component="ul"
-            gutterHeight={15}
+            gutterHeight={10}
+            springConfig={[60, 14]}
           >
             {items}
           </MeasuredTransitionMotionGrid>

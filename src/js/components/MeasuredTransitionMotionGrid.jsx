@@ -26,18 +26,18 @@ export default React.createClass({
 
     const elementsToMeasure = newElements.map((element, index, arr) =>
       React.cloneElement(element, {
-        'style': {
+        style: {
+          ...element.props.style,
           width: this.props.columnWidth
         },
-        'data-key': element.key.substring(2),
-        'ref': el => {
+        ref: el => {
           if (el) {
-            newHeights[el.dataset.key] = el.clientHeight;
+            newHeights[element.key.substring(2)] = el.clientHeight;
 
             if (index === arr.length - 1) {
               this.setState({
                 heights: {
-                  ...this.state.heights,
+                  ...this.state.heights,  // Memory leak here?
                   ...newHeights
                 }
               });
@@ -59,6 +59,7 @@ export default React.createClass({
           style: {
             width: 0,
             height: 0,
+            overflow: 'hidden',
             visibility: 'hidden'
           }
         }, elementsToMeasure)}
