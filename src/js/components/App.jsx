@@ -58,7 +58,7 @@ export default React.createClass({
           className="grid-item"
           // style={{ height }}
           key={d.letter}
-          // height={height}
+          // itemHeight={height}
         >
           <h3>{d.letter.toUpperCase()} - {parseInt(d.number, 10)}</h3>
           <p>{content}</p>

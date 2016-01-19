@@ -6,7 +6,7 @@ export default React.createClass({
 
   getDefaultProps() {
     return {
-      component: 'div'
+      component: 'span'
     };
   },
 
@@ -49,16 +49,18 @@ export default React.createClass({
 
     const measuredElements = existingElements.map(element =>
       React.cloneElement(element, {
-        height: this.state.heights[element.key.substring(2)]
+        itemHeight: this.state.heights[element.key.substring(2)]
       })
     );
 
     return (
-      <div>
+      <span>
         {React.createElement(component, {
           style: {
             width: 0,
             height: 0,
+            padding: 0,
+            margin: 0,
             overflow: 'hidden',
             visibility: 'hidden'
           }
@@ -70,7 +72,7 @@ export default React.createClass({
             {measuredElements}
           </TransitionMotionGrid>
         }
-      </div>
+      </span>
     );
   }
 
