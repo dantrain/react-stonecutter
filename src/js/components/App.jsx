@@ -1,6 +1,8 @@
 import React from 'react';
 import d3Array from 'd3-array';
+import ResponsiveTransitionMotionGrid from './ResponsiveTransitionMotionGrid';
 import MeasuredTransitionMotionGrid from './MeasuredTransitionMotionGrid';
+import TransitionMotionGrid from './TransitionMotionGrid';
 
 const alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('');
 
@@ -69,19 +71,21 @@ export default React.createClass({
         <button
           onClick={this.handleShuffle}
         >Randomize</button>
-        <MeasuredTransitionMotionGrid
-          className="grid"
-          component="ul"
-          defaultColumns={4}
+        <ResponsiveTransitionMotionGrid
           columnWidth={200}
           gutterWidth={15}
-          gutterHeight={15}
+          defaultColumns={4}
           maxWidth={1920}
           minPadding={100}
-          fromCenter
         >
-          {items}
-        </MeasuredTransitionMotionGrid>
+          <MeasuredTransitionMotionGrid
+            className="grid"
+            component="ul"
+            gutterHeight={15}
+          >
+            {items}
+          </MeasuredTransitionMotionGrid>
+        </ResponsiveTransitionMotionGrid>
       </div>
     );
   }

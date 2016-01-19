@@ -65,7 +65,6 @@ export default React.createClass({
         {measuredElements.length &&
           <TransitionMotionGrid
             {...this.props}
-            columns={4}
           >
             {measuredElements}
           </TransitionMotionGrid>

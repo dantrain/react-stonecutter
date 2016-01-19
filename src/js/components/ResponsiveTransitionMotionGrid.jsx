@@ -1,18 +1,15 @@
 import React from 'react';
 import enquire from 'enquire.js';
-import TransitionMotionGrid from './TransitionMotionGrid';
-
-const { columns, ...childPropTypes } = TransitionMotionGrid.propTypes; // eslint-disable-line no-unused-vars
 
 export default React.createClass({
 
   propTypes: {
-    ...childPropTypes,
     defaultColumns: React.PropTypes.number.isRequired,
     columnWidth: React.PropTypes.number.isRequired,
     gutterWidth: React.PropTypes.number.isRequired,
     maxWidth: React.PropTypes.number.isRequired,
-    minPadding: React.PropTypes.number
+    minPadding: React.PropTypes.number,
+    children: React.PropTypes.element.isRequired
   },
 
   getDefaultProps() {
@@ -53,16 +50,13 @@ export default React.createClass({
   },
 
   render() {
-    const { maxWidth, minPadding, ...rest } = this.props; // eslint-disable-line no-unused-vars
+    const { columnWidth, gutterWidth } = this.props; // eslint-disable-line no-unused-vars
 
-    return (
-      <TransitionMotionGrid
-        {...rest}
-        columns={this.state.columns}
-      >
-        {this.props.children}
-      </TransitionMotionGrid>
-    );
+    return React.cloneElement(React.Children.only(this.props.children), {
+      columns: this.state.columns,
+      columnWidth,
+      gutterWidth
+    });
   }
 
 });
