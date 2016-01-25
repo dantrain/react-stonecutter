@@ -55,23 +55,23 @@ export default React.createClass({
 
     return (
       <span>
-        {React.createElement(component, {
-          style: {
-            width: 0,
-            height: 0,
-            padding: 0,
-            margin: 0,
-            overflow: 'hidden',
-            visibility: 'hidden'
-          }
-        }, elementsToMeasure)}
         {measuredElements.length &&
           <TransitionMotionGrid
             {...this.props}
           >
             {measuredElements}
-          </TransitionMotionGrid>
-        }
+          </TransitionMotionGrid>}
+        {elementsToMeasure.length > 0 &&
+          React.createElement(component, {
+            style: {
+              width: 0,
+              height: 0,
+              padding: 0,
+              margin: 0,
+              overflow: 'hidden',
+              visibility: 'hidden'
+            }
+          }, elementsToMeasure)}
       </span>
     );
   }

@@ -82,7 +82,7 @@ export default React.createClass({
             className="grid"
             component="ul"
             gutterHeight={10}
-            springConfig={[60, 14]}
+            springConfig={[60, 9]}
           >
             {items}
           </MeasuredTransitionMotionGrid>
