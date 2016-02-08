@@ -2,7 +2,6 @@ import React from 'react';
 import d3Array from 'd3-array';
 import ResponsiveTransitionMotionGrid from './ResponsiveTransitionMotionGrid';
 import MeasuredTransitionMotionGrid from './MeasuredTransitionMotionGrid';
-import TransitionMotionGrid from './TransitionMotionGrid';
 
 const alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('');
 
