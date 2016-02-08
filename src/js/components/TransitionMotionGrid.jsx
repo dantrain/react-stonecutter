@@ -35,7 +35,7 @@ export default React.createClass({
     return this.doLayout(
       React.Children.toArray(props.children)
         .map((element, index) => ({
-          key: element.key.substring(2),
+          key: element.key,
           data: {
             element,
             index

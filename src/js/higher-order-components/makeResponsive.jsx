@@ -1,8 +1,8 @@
 import React from 'react';
 import enquire from 'enquire.js';
 
-export default (Grid, { maxWidth, minPadding = 0, defaultColumns = 4 } = {}) => {
-  return React.createClass({
+export default (Grid, { maxWidth, minPadding = 0, defaultColumns = 4 } = {}) =>
+  React.createClass({
 
     getDefaultProps() {
       return {
@@ -46,4 +46,3 @@ export default (Grid, { maxWidth, minPadding = 0, defaultColumns = 4 } = {}) => 
     }
 
   });
-};

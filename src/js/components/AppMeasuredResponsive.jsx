@@ -1,7 +1,8 @@
 import React from 'react';
 import d3Array from 'd3-array';
 import makeResponsive from '../higher-order-components/makeResponsive';
-import MeasuredTransitionMotionGrid from './MeasuredTransitionMotionGrid';
+import measureItemHeights from '../higher-order-components/measureItemHeights';
+import TransitionMotionGrid from './TransitionMotionGrid';
 
 const alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('');
 
@@ -14,10 +15,7 @@ gastropub. Echo park yr organic typewriter blog. Health goth literally
 cornhole microdosing fanny pack, bespoke kinfolk heirloom ennui viral
 dreamcatcher. Offal VHS helvetica meh.`;
 
-const ResponsiveGrid = makeResponsive(MeasuredTransitionMotionGrid, {
-  maxWidth: 1920,
-  minPadding: 100
-});
+const ResponsiveGrid = measureItemHeights(TransitionMotionGrid);
 
 export default React.createClass({
 
@@ -73,6 +71,8 @@ export default React.createClass({
           onClick={this.handleShuffle}
         >Randomize</button>
         <ResponsiveGrid
+          columns={3}
+
           className="grid"
           component="ul"
           columnWidth={200}

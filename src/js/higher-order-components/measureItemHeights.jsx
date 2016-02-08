@@ -1,8 +1,7 @@
 import React from 'react';
-import TransitionMotionGrid from './TransitionMotionGrid';
 import partition from 'lodash.partition';
 
-export default React.createClass({
+export default Grid => React.createClass({
 
   getDefaultProps() {
     return {
@@ -22,7 +21,7 @@ export default React.createClass({
 
     const [newElements, existingElements] = partition(
       React.Children.toArray(this.props.children),
-      element => !this.state.heights[element.key.substring(2)]);
+      element => !this.state.heights[element.key]);
 
     const elementsToMeasure = newElements.map((element, index, arr) =>
       React.cloneElement(element, {
@@ -32,7 +31,7 @@ export default React.createClass({
         },
         ref: el => {
           if (el) {
-            newHeights[element.key.substring(2)] = el.clientHeight;
+            newHeights[element.key] = el.clientHeight;
 
             if (index === arr.length - 1) {
               this.setState({
@@ -49,18 +48,18 @@ export default React.createClass({
 
     const measuredElements = existingElements.map(element =>
       React.cloneElement(element, {
-        itemHeight: this.state.heights[element.key.substring(2)]
+        itemHeight: this.state.heights[element.key]
       })
     );
 
     return (
       <span>
         {measuredElements.length &&
-          <TransitionMotionGrid
+          <Grid
             {...this.props}
           >
             {measuredElements}
-          </TransitionMotionGrid>}
+          </Grid>}
         {elementsToMeasure.length > 0 &&
           React.createElement(component, {
             style: {
