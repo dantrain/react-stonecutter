@@ -123,32 +123,27 @@ export default React.createClass({
     return this.state.height / 2;
   },
 
-  willEnter(key, d) {
+  willEnter(transitionStyle) {
+    const { x, y } = transitionStyle.style;
+
     return {
-      ...d,
-      opacity: spring(0, this.props.springConfig),
-      scale: spring(0, this.props.springConfig),
-      ...(this.props.fromCenter ? {
-        x: spring(this.getCenterHorizontal(), this.props.springConfig),
-        y: spring(this.getCenterVertical(), this.props.springConfig)
-      } : {})
+      x: this.props.fromCenter ? this.getCenterHorizontal() : x.val,
+      y: this.props.fromCenter ? this.getCenterVertical() : y.val,
+      opacity: 0,
+      scale: 0
     };
   },
 
-  willLeave(key, d, styles, currentInterpolatedStyle, currentSpeed) {
-    if (currentSpeed[key].opacity > -0.1 && currentSpeed[key].opacity !== 0) {
-      return {
-        ...d,
-        opacity: 0,
-        scale: 0,
-        ...(this.props.fromCenter ? {
-          x: this.getCenterHorizontal(),
-          y: this.getCenterVertical()
-        } : {})
-      };
-    }
-
-    return this.willEnter(key, d);
+  willLeave(transitionStyle) {
+    return {
+      ...transitionStyle.style,
+      ...(this.props.fromCenter ? {
+        x: this.getCenterHorizontal(),
+        y: this.getCenterVertical()
+      } : {}),
+      opacity: spring(0, this.props.springConfig),
+      scale: spring(0, this.props.springConfig)
+    };
   },
 
   render() {
@@ -158,8 +153,8 @@ export default React.createClass({
     return (
       <TransitionMotion
         styles={this.state.styles}
-        // willEnter={this.willEnter}
-        // willLeave={this.willLeave}
+        willEnter={this.willEnter}
+        willLeave={this.willLeave}
       >
         {interpolatedStyles =>
           React.createElement(component, {
