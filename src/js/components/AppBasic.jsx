@@ -65,7 +65,6 @@ export default React.createClass({
           columnWidth={200}
           gutterWidth={10}
           gutterHeight={10}
-          springConfig={[60, 14]}
         >
             {items}
         </TransitionMotionGrid>

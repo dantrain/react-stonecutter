@@ -10,13 +10,13 @@ export default React.createClass({
     gutterWidth: React.PropTypes.number,
     gutterHeight: React.PropTypes.number.isRequired,
     fromCenter: React.PropTypes.bool,
-    springConfig: React.PropTypes.array,
+    springConfig: React.PropTypes.object,
     component: React.PropTypes.string
   },
 
   getDefaultProps() {
     return {
-      springConfig: [60, 14],
+      springConfig: { stiffness: 60, damping: 14 },
       component: 'div'
     };
   },
@@ -33,25 +33,18 @@ export default React.createClass({
 
   getStyles(props) {
     return this.doLayout(
-        React.Children.toArray(props.children)
-          .map((element, index) => ({
+      React.Children.toArray(props.children)
+        .map((element, index) => ({
+          key: element.key.substring(2),
+          data: {
             element,
-            index,
+            index
+          },
+          style: {
             opacity: spring(1, props.springConfig),
             scale: spring(1, props.springConfig)
-          })), props)
-      .reduce((obj, d) => {
-        const key = d.element.key.substring(2);
-
-        if (!this.containsNonDigit.test(key)) {
-          throw new Error(
-            'Each child of TransitionMotionGrid must have a unique non-number "key" prop.');
-        }
-
-        obj[key] = d;
-
-        return obj;
-      }, {});
+          }
+        })), props);
   },
 
   doLayout(arr, props) {
@@ -64,8 +57,8 @@ export default React.createClass({
       gutterWidth, gutterHeight, springConfig } = props;
 
     const result = arr.map(d => {
-      const column = d.index % columns;
-      const row = Math.floor(d.index / columns);
+      const column = d.data.index % columns;
+      const row = Math.floor(d.data.index / columns);
 
       const x = column * columnWidth + column * gutterWidth;
       const y = row * itemHeight + row * gutterHeight;
@@ -92,7 +85,7 @@ export default React.createClass({
     const result = arr.map(d => {
       const column = columnHeights.indexOf(Math.min.apply(null, columnHeights));
 
-      const height = d.element.props.itemHeight;
+      const height = d.data.element.props.itemHeight;
 
       if (!(height && typeof height === 'number')) {
         throw new Error(
@@ -108,8 +101,11 @@ export default React.createClass({
 
       return {
         ...d,
-        x: spring(x, springConfig),
-        y: spring(y, springConfig)
+        style: {
+          ...d.style,
+          x: spring(x, springConfig),
+          y: spring(y, springConfig)
+        }
       };
     });
 
@@ -162,8 +158,8 @@ export default React.createClass({
     return (
       <TransitionMotion
         styles={this.state.styles}
-        willEnter={this.willEnter}
-        willLeave={this.willLeave}
+        // willEnter={this.willEnter}
+        // willLeave={this.willLeave}
       >
         {interpolatedStyles =>
           React.createElement(component, {
@@ -175,13 +171,13 @@ export default React.createClass({
               height: this.state.height
             },
             ...rest
-          }, Object.keys(interpolatedStyles).map(key => {
-            const { element, x, y, opacity, scale } = interpolatedStyles[key];
+          }, interpolatedStyles.map(config => {
+            const { style: { opacity, scale, x, y }, data } = config;
             const transform = `translate(${x}px, ${y}px) scale(${scale})`;
 
-            return React.cloneElement(element, {
+            return React.cloneElement(data.element, {
               style: {
-                ...element.props.style,
+                ...data.element.props.style,
                 position: 'absolute',
                 top: 0,
                 left: 0,
