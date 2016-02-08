@@ -65,8 +65,11 @@ export default React.createClass({
 
       return {
         ...d,
-        x: spring(x, springConfig),
-        y: spring(y, springConfig)
+        style: {
+          ...d.style,
+          x: spring(x, springConfig),
+          y: spring(y, springConfig)
+        }
       };
     });
 

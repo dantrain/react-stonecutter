@@ -81,7 +81,8 @@ export default React.createClass({
             className="grid"
             component="ul"
             gutterHeight={10}
-            springConfig={[60, 9]}
+            // springConfig={{ stiffness: 60, damping: 9 }}
+            fromCenter
           >
             {items}
           </MeasuredTransitionMotionGrid>
