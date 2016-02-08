@@ -141,8 +141,8 @@ export default React.createClass({
     return {
       ...transitionStyle.style,
       ...(this.props.fromCenter ? {
-        x: this.getCenterHorizontal(),
-        y: this.getCenterVertical()
+        x: spring(this.getCenterHorizontal(), this.props.springConfig),
+        y: spring(this.getCenterVertical(), this.props.springConfig)
       } : {}),
       opacity: spring(0, this.props.springConfig),
       scale: spring(0, this.props.springConfig)
