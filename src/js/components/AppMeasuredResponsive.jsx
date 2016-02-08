@@ -1,6 +1,6 @@
 import React from 'react';
 import d3Array from 'd3-array';
-import ResponsiveTransitionMotionGrid from './ResponsiveTransitionMotionGrid';
+import makeResponsive from '../higher-order-components/makeResponsive';
 import MeasuredTransitionMotionGrid from './MeasuredTransitionMotionGrid';
 
 const alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('');
@@ -13,6 +13,11 @@ actually cronut poutine fanny pack microdosing church-key. Post-ironic
 gastropub. Echo park yr organic typewriter blog. Health goth literally
 cornhole microdosing fanny pack, bespoke kinfolk heirloom ennui viral
 dreamcatcher. Offal VHS helvetica meh.`;
+
+const ResponsiveGrid = makeResponsive(MeasuredTransitionMotionGrid, {
+  maxWidth: 1920,
+  minPadding: 100
+});
 
 export default React.createClass({
 
@@ -49,15 +54,12 @@ export default React.createClass({
 
   render() {
     const items = this.state.data.map(d => {
-      // const height = (d.letter.charCodeAt(0) % 3) * 50 + 100;
       const content = ipsum.slice(0, (d.letter.charCodeAt(0) % 3 + 1) * 50);
 
       return (
         <li
           className="grid-item"
-          // style={{ height }}
           key={d.letter}
-          // itemHeight={height}
         >
           <h3>{d.letter.toUpperCase()} - {parseInt(d.number, 10)}</h3>
           <p>{content}</p>
@@ -70,23 +72,17 @@ export default React.createClass({
         <button
           onClick={this.handleShuffle}
         >Randomize</button>
-        <ResponsiveTransitionMotionGrid
+        <ResponsiveGrid
+          className="grid"
+          component="ul"
           columnWidth={200}
           gutterWidth={10}
-          defaultColumns={4}
-          maxWidth={1920}
-          minPadding={100}
+          gutterHeight={10}
+          // springConfig={{ stiffness: 60, damping: 9 }}
+          fromCenter
         >
-          <MeasuredTransitionMotionGrid
-            className="grid"
-            component="ul"
-            gutterHeight={10}
-            // springConfig={{ stiffness: 60, damping: 9 }}
-            fromCenter
-          >
-            {items}
-          </MeasuredTransitionMotionGrid>
-        </ResponsiveTransitionMotionGrid>
+          {items}
+        </ResponsiveGrid>
       </div>
     );
   }

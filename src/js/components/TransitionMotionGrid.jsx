@@ -4,10 +4,10 @@ import { TransitionMotion, spring } from 'react-motion';
 export default React.createClass({
 
   propTypes: {
-    columns: React.PropTypes.number,
-    columnWidth: React.PropTypes.number,
+    columns: React.PropTypes.number.isRequired,
+    columnWidth: React.PropTypes.number.isRequired,
     itemHeight: React.PropTypes.number,
-    gutterWidth: React.PropTypes.number,
+    gutterWidth: React.PropTypes.number.isRequired,
     gutterHeight: React.PropTypes.number.isRequired,
     fromCenter: React.PropTypes.bool,
     springConfig: React.PropTypes.object,
