@@ -73,17 +73,15 @@ export default React.createClass({
 
     return {
       ...stripStyle(transitionStyle.style),
-      ...this.props.enter(transitionStyle.data.element.props, this.props, {
-        gridWidth, gridHeight
-      })
+      ...this.props.enter(transitionStyle.data.element.props,
+        this.props, { gridWidth, gridHeight })
     };
   },
 
   willLeave(transitionStyle) {
     const { gridWidth, gridHeight } = this.state;
-    const exitStyle = this.props.exit(transitionStyle.data.element.props, this.props, {
-      gridWidth, gridHeight
-    });
+    const exitStyle = this.props.exit(transitionStyle.data.element.props,
+      this.props, { gridWidth, gridHeight });
 
     return {
       ...transitionStyle.style,

@@ -87,7 +87,7 @@ export default React.createClass({
           layout={pinterestLayout}
           enter={fromCenter.enter}
           exit={fromCenter.exit}
-          // springConfig={{ stiffness: 60, damping: 9 }}
+          springConfig={{ stiffness: 60, damping: 9 }}
         >
           {items}
         </ResponsiveGrid>

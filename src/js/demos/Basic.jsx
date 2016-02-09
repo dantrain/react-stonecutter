@@ -70,7 +70,7 @@ export default React.createClass({
           gutterHeight={10}
           layout={pinterestLayout}
         >
-            {items}
+          {items}
         </SpringGrid>
       </div>
     );
