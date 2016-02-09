@@ -15,10 +15,12 @@ gastropub. Echo park yr organic typewriter blog. Health goth literally
 cornhole microdosing fanny pack, bespoke kinfolk heirloom ennui viral
 dreamcatcher. Offal VHS helvetica meh.`;
 
-const ResponsiveGrid = makeResponsive(measureItemHeights(TransitionMotionGrid), {
-  maxWidth: 1920,
-  minPadding: 100
-});
+const ResponsiveGrid = makeResponsive(
+  measureItemHeights(TransitionMotionGrid), {
+    maxWidth: 1920,
+    minPadding: 200
+  }
+);
 
 export default React.createClass({
 
@@ -74,8 +76,6 @@ export default React.createClass({
           onClick={this.handleShuffle}
         >Randomize</button>
         <ResponsiveGrid
-          columns={3}
-
           className="grid"
           component="ul"
           columnWidth={200}

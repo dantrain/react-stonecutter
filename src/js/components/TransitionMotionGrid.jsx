@@ -29,8 +29,6 @@ export default React.createClass({
     this.setState({ styles: this.getStyles(nextProps) });
   },
 
-  containsNonDigit: /\D/,
-
   getStyles(props) {
     return this.doLayout(
       React.Children.toArray(props.children)
