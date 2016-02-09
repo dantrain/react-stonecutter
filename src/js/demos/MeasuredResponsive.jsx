@@ -1,8 +1,9 @@
 import React from 'react';
 import d3Array from 'd3-array';
 import makeResponsive from '../higher-order-components/makeResponsive';
-import measureItemHeights from '../higher-order-components/measureItemHeights';
-import TransitionMotionGrid from './TransitionMotionGrid';
+import measureItems from '../higher-order-components/measureItems';
+import SpringGrid from '../components/SpringGrid';
+import pinterestLayout from '../layouts/pinterest';
 
 const alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('');
 
@@ -16,9 +17,9 @@ cornhole microdosing fanny pack, bespoke kinfolk heirloom ennui viral
 dreamcatcher. Offal VHS helvetica meh.`;
 
 const ResponsiveGrid = makeResponsive(
-  measureItemHeights(TransitionMotionGrid), {
+  measureItems(SpringGrid), {
     maxWidth: 1920,
-    minPadding: 200
+    minPadding: 100
   }
 );
 
@@ -63,6 +64,7 @@ export default React.createClass({
         <li
           className="grid-item"
           key={d.letter}
+          style={{ width: 200 }}
         >
           <h3>{d.letter.toUpperCase()} - {parseInt(d.number, 10)}</h3>
           <p>{content}</p>
@@ -81,6 +83,7 @@ export default React.createClass({
           columnWidth={200}
           gutterWidth={10}
           gutterHeight={10}
+          layout={pinterestLayout}
           // springConfig={{ stiffness: 60, damping: 9 }}
           fromCenter
         >

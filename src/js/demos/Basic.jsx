@@ -1,6 +1,7 @@
 import React from 'react';
 import d3Array from 'd3-array';
-import TransitionMotionGrid from './TransitionMotionGrid';
+import SpringGrid from '../components/SpringGrid';
+import pinterestLayout from '../layouts/pinterest';
 
 const alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('');
 
@@ -44,9 +45,9 @@ export default React.createClass({
       return (
         <li
           className="grid-item"
-          style={{ height }}
+          style={{ height, width: 200 }}
           key={d.letter}
-          itemHeight={height}
+          itemRect={{ height }}
         >
           <h3>{d.letter.toUpperCase()} - {parseInt(d.number, 10)}</h3>
         </li>
@@ -58,16 +59,17 @@ export default React.createClass({
         <button
           onClick={this.handleShuffle}
         >Randomize</button>
-        <TransitionMotionGrid
+        <SpringGrid
           className="grid"
           component="ul"
           columns={3}
           columnWidth={200}
           gutterWidth={10}
           gutterHeight={10}
+          layout={pinterestLayout}
         >
             {items}
-        </TransitionMotionGrid>
+        </SpringGrid>
       </div>
     );
   }

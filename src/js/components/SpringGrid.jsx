@@ -1,5 +1,6 @@
 import React from 'react';
 import { TransitionMotion, spring } from 'react-motion';
+import simpleLayout from '../layouts/simple';
 
 export default React.createClass({
 
@@ -11,13 +12,15 @@ export default React.createClass({
     gutterHeight: React.PropTypes.number.isRequired,
     fromCenter: React.PropTypes.bool,
     springConfig: React.PropTypes.object,
-    component: React.PropTypes.string
+    component: React.PropTypes.string,
+    layout: React.PropTypes.func
   },
 
   getDefaultProps() {
     return {
       springConfig: { stiffness: 60, damping: 14 },
-      component: 'div'
+      component: 'div',
+      layout: simpleLayout
     };
   },
 
@@ -32,11 +35,10 @@ export default React.createClass({
   getStyles(props) {
     return this.doLayout(
       React.Children.toArray(props.children)
-        .map((element, index) => ({
+        .map(element => ({
           key: element.key,
           data: {
-            element,
-            index
+            element
           },
           style: {
             opacity: spring(1, props.springConfig),
@@ -45,74 +47,20 @@ export default React.createClass({
         })), props);
   },
 
-  doLayout(arr, props) {
-    return props.itemHeight ?
-      this.doLayoutSimple(arr, props) : this.doLayoutPinterest(arr, props);
-  },
+  doLayout(items, props) {
+    const { positions, gridWidth, gridHeight } =
+      this.props.layout(items.map(item => item.data.element.props), props);
 
-  doLayoutSimple(arr, props) {
-    const { columnWidth, itemHeight, columns,
-      gutterWidth, gutterHeight, springConfig } = props;
+    this.setState({ gridWidth, gridHeight });
 
-    const result = arr.map(d => {
-      const column = d.data.index % columns;
-      const row = Math.floor(d.data.index / columns);
-
-      const x = column * columnWidth + column * gutterWidth;
-      const y = row * itemHeight + row * gutterHeight;
-
-      return {
-        ...d,
-        style: {
-          ...d.style,
-          x: spring(x, springConfig),
-          y: spring(y, springConfig)
-        }
-      };
-    });
-
-    this.setState({ height: Math.ceil(arr.length / columns) *
-      (itemHeight + gutterHeight) - gutterHeight });
-
-    return result;
-  },
-
-  doLayoutPinterest(arr, props) {
-    const { columns, columnWidth, gutterWidth, gutterHeight, springConfig } = props;
-
-    const columnHeights = [];
-    for (let i = 0; i < columns; i++) { columnHeights.push(0); }
-
-    const result = arr.map(d => {
-      const column = columnHeights.indexOf(Math.min.apply(null, columnHeights));
-
-      const height = d.data.element.props.itemHeight;
-
-      if (!(height && typeof height === 'number')) {
-        throw new Error(
-          'Each child of TransitionMotionGrid must have an "itemHeight" prop of type number. ' +
-          'Alternatively provide an "itemHeight" prop to TransitionMotionGrid if all ' +
-          'items are of equal height.');
+    return positions.map((position, i) => ({
+      ...items[i],
+      style: {
+        ...items[i].style,
+        x: spring(position.x, this.props.springConfig),
+        y: spring(position.y, this.props.springConfig)
       }
-
-      const x = column * columnWidth + column * gutterWidth;
-      const y = columnHeights[column];
-
-      columnHeights[column] += height + gutterHeight;
-
-      return {
-        ...d,
-        style: {
-          ...d.style,
-          x: spring(x, springConfig),
-          y: spring(y, springConfig)
-        }
-      };
-    });
-
-    this.setState({ height: Math.max.apply(null, columnHeights) - gutterHeight });
-
-    return result;
+    }));
   },
 
   getCenterHorizontal() {
@@ -121,7 +69,7 @@ export default React.createClass({
   },
 
   getCenterVertical() {
-    return this.state.height / 2;
+    return this.state.gridHeight / 2;
   },
 
   willEnter(transitionStyle) {
@@ -148,8 +96,7 @@ export default React.createClass({
   },
 
   render() {
-    const { springConfig, children, columns, component, // eslint-disable-line no-unused-vars
-      columnWidth, itemHeight, gutterWidth, style, ...rest } = this.props;
+    const { columns, component, columnWidth, gutterWidth, style, ...rest } = this.props;
 
     return (
       <TransitionMotion
@@ -162,9 +109,8 @@ export default React.createClass({
             style: {
               position: 'relative',
               ...style,
-              width: columns * columnWidth +
-                ((columns - 1) * gutterWidth),
-              height: this.state.height
+              width: this.state.gridWidth,
+              height: this.state.gridHeight
             },
             ...rest
           }, interpolatedStyles.map(config => {
@@ -177,8 +123,6 @@ export default React.createClass({
                 position: 'absolute',
                 top: 0,
                 left: 0,
-                width: columnWidth,
-                ...(itemHeight ? { height: itemHeight } : {}),
                 opacity,
                 transform,
                 WebkitTransform: transform,

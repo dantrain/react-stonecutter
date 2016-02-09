@@ -11,17 +11,17 @@ export default Grid => React.createClass({
 
   getInitialState() {
     return {
-      heights: {}
+      rects: {}
     };
   },
 
   render() {
     const { component } = this.props;
-    const newHeights = {};
+    const newRects = {};
 
     const [newElements, existingElements] = partition(
       React.Children.toArray(this.props.children),
-      element => !this.state.heights[element.key]);
+      element => !this.state.rects[element.key]);
 
     const elementsToMeasure = newElements.map((element, index, arr) =>
       React.cloneElement(element, {
@@ -31,13 +31,13 @@ export default Grid => React.createClass({
         },
         ref: el => {
           if (el) {
-            newHeights[element.key] = el.clientHeight;
+            newRects[element.key] = el.getBoundingClientRect();
 
             if (index === arr.length - 1) {
               this.setState({
-                heights: {
-                  ...this.state.heights,  // Memory leak here?
-                  ...newHeights
+                rects: {
+                  ...this.state.rects,  // Memory leak here?
+                  ...newRects
                 }
               });
             }
@@ -48,7 +48,7 @@ export default Grid => React.createClass({
 
     const measuredElements = existingElements.map(element =>
       React.cloneElement(element, {
-        itemHeight: this.state.heights[element.key]
+        itemRect: this.state.rects[element.key]
       })
     );
 
