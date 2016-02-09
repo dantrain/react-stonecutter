@@ -4,6 +4,7 @@ import makeResponsive from '../higher-order-components/makeResponsive';
 import measureItems from '../higher-order-components/measureItems';
 import SpringGrid from '../components/SpringGrid';
 import pinterestLayout from '../layouts/pinterest';
+import * as fromCenter from '../enter-exit-styles/fromCenter';
 
 const alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('');
 
@@ -84,8 +85,9 @@ export default React.createClass({
           gutterWidth={10}
           gutterHeight={10}
           layout={pinterestLayout}
+          enter={fromCenter.enter}
+          exit={fromCenter.exit}
           // springConfig={{ stiffness: 60, damping: 9 }}
-          fromCenter
         >
           {items}
         </ResponsiveGrid>

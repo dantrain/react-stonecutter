@@ -39,13 +39,15 @@ export default React.createClass({
   },
 
   render() {
+    const itemWidth = 200;
+
     const items = this.state.data.map(d => {
       const height = (d.letter.charCodeAt(0) % 3) * 50 + 100;
 
       return (
         <li
           className="grid-item"
-          style={{ height, width: 200 }}
+          style={{ height, width: itemWidth }}
           key={d.letter}
           itemRect={{ height }}
         >
@@ -63,7 +65,7 @@ export default React.createClass({
           className="grid"
           component="ul"
           columns={3}
-          columnWidth={200}
+          columnWidth={itemWidth}
           gutterWidth={10}
           gutterHeight={10}
           layout={pinterestLayout}

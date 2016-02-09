@@ -1,6 +1,8 @@
 import React from 'react';
 import { TransitionMotion, spring } from 'react-motion';
+import stripStyle from 'react-motion/lib/stripStyle';
 import simpleLayout from '../layouts/simple';
+import * as simpleEnterExit from '../enter-exit-styles/simple';
 
 export default React.createClass({
 
@@ -10,17 +12,20 @@ export default React.createClass({
     itemHeight: React.PropTypes.number,
     gutterWidth: React.PropTypes.number.isRequired,
     gutterHeight: React.PropTypes.number.isRequired,
-    fromCenter: React.PropTypes.bool,
     springConfig: React.PropTypes.object,
     component: React.PropTypes.string,
-    layout: React.PropTypes.func
+    layout: React.PropTypes.func,
+    enter: React.PropTypes.func,
+    exit: React.PropTypes.func
   },
 
   getDefaultProps() {
     return {
       springConfig: { stiffness: 60, damping: 14 },
       component: 'div',
-      layout: simpleLayout
+      layout: simpleLayout,
+      enter: simpleEnterExit.enter,
+      exit: simpleEnterExit.exit
     };
   },
 
@@ -63,40 +68,34 @@ export default React.createClass({
     }));
   },
 
-  getCenterHorizontal() {
-    const { columns, columnWidth, gutterWidth } = this.props;
-    return (columns * columnWidth + (columns - 1) * gutterWidth - columnWidth) / 2;
-  },
-
-  getCenterVertical() {
-    return this.state.gridHeight / 2;
-  },
-
   willEnter(transitionStyle) {
-    const { x, y } = transitionStyle.style;
+    const { gridWidth, gridHeight } = this.state;
 
     return {
-      x: this.props.fromCenter ? this.getCenterHorizontal() : x.val,
-      y: this.props.fromCenter ? this.getCenterVertical() : y.val,
-      opacity: 0,
-      scale: 0
+      ...stripStyle(transitionStyle.style),
+      ...this.props.enter(transitionStyle.data.element.props, this.props, {
+        gridWidth, gridHeight
+      })
     };
   },
 
   willLeave(transitionStyle) {
+    const { gridWidth, gridHeight } = this.state;
+    const exitStyle = this.props.exit(transitionStyle.data.element.props, this.props, {
+      gridWidth, gridHeight
+    });
+
     return {
       ...transitionStyle.style,
-      ...(this.props.fromCenter ? {
-        x: spring(this.getCenterHorizontal(), this.props.springConfig),
-        y: spring(this.getCenterVertical(), this.props.springConfig)
-      } : {}),
-      opacity: spring(0, this.props.springConfig),
-      scale: spring(0, this.props.springConfig)
+      ...Object.keys(exitStyle).reduce((obj, key) => {
+        obj[key] = spring(exitStyle[key], this.props.springConfig);
+        return obj;
+      }, {})
     };
   },
 
   render() {
-    const { columns, component, columnWidth, gutterWidth, style, ...rest } = this.props;
+    const { component, style, ...rest } = this.props;
 
     return (
       <TransitionMotion
