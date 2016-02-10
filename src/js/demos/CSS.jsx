@@ -68,6 +68,7 @@ export default React.createClass({
           columnWidth={itemWidth}
           gutterWidth={5}
           gutterHeight={5}
+          duration={600}
           layout={pinterestLayout}
         >
           {items}

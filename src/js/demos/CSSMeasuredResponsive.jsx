@@ -84,6 +84,7 @@ export default React.createClass({
           columnWidth={150}
           gutterWidth={5}
           gutterHeight={5}
+          duration={600}
           layout={pinterestLayout}
           enter={fromCenter.enter}
           exit={fromCenter.exit}
