@@ -59,6 +59,7 @@ export default React.createClass({
       ...items[i],
       style: {
         ...items[i].style,
+        zIndex: 2,
         x: spring(position.x, props.springConfig),
         y: spring(position.y, props.springConfig)
       }
@@ -72,6 +73,7 @@ export default React.createClass({
 
     return {
       ...stripStyle(transitionStyle.style),
+      zIndex: 1,
       ...this.props.enter(transitionStyle.data.element.props,
         this.props, { gridWidth, gridHeight })
     };
@@ -84,6 +86,7 @@ export default React.createClass({
 
     return {
       ...transitionStyle.style,
+      zIndex: 0,
       ...Object.keys(exitStyle).reduce((obj, key) => {
         obj[key] = spring(exitStyle[key], this.props.springConfig);
         return obj;
@@ -110,7 +113,7 @@ export default React.createClass({
             },
             ...rest
           }, interpolatedStyles.map(config => {
-            const { style: { opacity, scale, x, y }, data } = config;
+            const { style: { opacity, scale, x, y, zIndex }, data } = config;
             const transform = `translate(${x}px, ${y}px) scale(${scale})`;
 
             return React.cloneElement(data.element, {
@@ -119,6 +122,7 @@ export default React.createClass({
                 position: 'absolute',
                 top: 0,
                 left: 0,
+                zIndex,
                 opacity,
                 transform,
                 WebkitTransform: transform,

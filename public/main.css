@@ -31,8 +31,16 @@ button {
 .grid-item {
   font-size: 0.75rem;
   text-align: center;
-  padding: 15px;
+  padding: 20px 15px;
   background-color: #ccc;
   border-radius: 3px;
   border: 2px solid #aaa;
+}
+
+.grid-item *:first-child {
+  margin-top: 0;
+}
+
+.grid-item *:last-child {
+  margin-bottom: 0;
 }

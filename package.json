@@ -19,7 +19,7 @@
     "gulp-util": "^3.0.7",
     "lodash.assign": "^4.0.2",
     "node-libs-browser": "^1.0.0",
-    "node-notifier": "^4.4.0",
+    "node-notifier": "^4.5.0",
     "webpack": "^1.12.13"
   },
   "dependencies": {
