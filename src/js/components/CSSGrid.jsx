@@ -2,6 +2,7 @@ import React from 'react';
 import ReactTransitionGroup from 'react-addons-transition-group';
 import simpleLayout from '../layouts/simple';
 import * as simpleEnterExit from '../enter-exit-styles/simple';
+import { cubicOut } from '../utils/easings';
 import CSSGridItem from './CSSGridItem';
 
 export default React.createClass({
@@ -25,7 +26,7 @@ export default React.createClass({
       layout: simpleLayout,
       enter: simpleEnterExit.enter,
       exit: simpleEnterExit.exit,
-      easing: 'cubic-bezier(0.215, 0.610, 0.355, 1.000)'
+      easing: cubicOut
     };
   },
 
