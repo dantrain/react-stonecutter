@@ -39,10 +39,10 @@ export default React.createClass({
   },
 
   render() {
-    const itemWidth = 200;
+    const itemWidth = 150;
 
     const items = this.state.data.map(d => {
-      const height = (d.letter.charCodeAt(0) % 3) * 50 + 100;
+      const height = (d.letter.charCodeAt(0) % 3) * 75 + 75;
 
       return (
         <li
@@ -66,8 +66,8 @@ export default React.createClass({
           component="ul"
           columns={4}
           columnWidth={itemWidth}
-          gutterWidth={10}
-          gutterHeight={10}
+          gutterWidth={5}
+          gutterHeight={5}
           layout={pinterestLayout}
         >
           {items}

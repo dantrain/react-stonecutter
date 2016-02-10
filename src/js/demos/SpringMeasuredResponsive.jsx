@@ -65,7 +65,7 @@ export default React.createClass({
         <li
           className="grid-item"
           key={d.letter}
-          style={{ width: 200 }}
+          style={{ width: 150 }}
         >
           <h3>{d.letter.toUpperCase()} - {parseInt(d.number, 10)}</h3>
           <p>{content}</p>
@@ -81,13 +81,13 @@ export default React.createClass({
         <ResponsiveGrid
           className="grid"
           component="ul"
-          columnWidth={200}
-          gutterWidth={10}
-          gutterHeight={10}
+          columnWidth={150}
+          gutterWidth={5}
+          gutterHeight={5}
           layout={pinterestLayout}
           enter={fromCenter.enter}
           exit={fromCenter.exit}
-          springConfig={{ stiffness: 60, damping: 9 }}
+          // springConfig={{ stiffness: 60, damping: 9 }}
         >
           {items}
         </ResponsiveGrid>
