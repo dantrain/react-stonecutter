@@ -4,7 +4,8 @@ import makeResponsive from '../higher-order-components/makeResponsive';
 import measureItems from '../higher-order-components/measureItems';
 import CSSGrid from '../components/CSSGrid';
 import pinterestLayout from '../layouts/pinterest';
-import * as fromCenter from '../enter-exit-styles/fromCenter';
+import { enter, exit } from '../enter-exit-styles/fromCenter';
+import { quintOut } from '../utils/easings';
 
 const alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('');
 
@@ -19,7 +20,7 @@ dreamcatcher. Offal VHS helvetica meh.`;
 
 const ResponsiveGrid = makeResponsive(
   measureItems(CSSGrid), {
-    maxWidth: 1920,
+    maxWidth: 1200,
     minPadding: 100
   }
 );
@@ -84,10 +85,11 @@ export default React.createClass({
           columnWidth={150}
           gutterWidth={5}
           gutterHeight={5}
-          duration={600}
+          duration={800}
           layout={pinterestLayout}
-          enter={fromCenter.enter}
-          exit={fromCenter.exit}
+          enter={enter}
+          exit={exit}
+          easing={quintOut}
         >
           {items}
         </ResponsiveGrid>

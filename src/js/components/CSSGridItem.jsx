@@ -44,10 +44,12 @@ export default React.createClass({
     this.enterTimeout = setTimeout(() => {
       this.setEndStyle(this.props, 0);
       done();
-    }, 0);
+    }, 17);
   },
 
   componentWillLeave(done) {
+    this.remove = done;
+
     this.leaveTimeout = setTimeout(() => {
       this.setState({
         style: {
@@ -63,6 +65,13 @@ export default React.createClass({
   },
 
   setEndStyle(props, zIndex) {
+    clearTimeout(this.leaveTimeout);
+
+    if (this.remove) {
+      this.remove();
+      this.remove = null;
+    }
+
     this.setState({
       style: {
         ...props.position,
