@@ -25,6 +25,7 @@
   "dependencies": {
     "d3-array": "^0.7.1",
     "enquire.js": "^2.1.1",
+    "lodash.isequal": "^4.0.0",
     "lodash.partition": "^4.1.0",
     "react": "^0.14.7",
     "react-addons-transition-group": "^0.14.7",

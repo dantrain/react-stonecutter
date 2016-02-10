@@ -1,6 +1,7 @@
 import React from 'react';
 import { TransitionMotion, spring } from 'react-motion';
 import stripStyle from 'react-motion/lib/stripStyle';
+import isEqual from 'lodash.isequal';
 import simpleLayout from '../layouts/simple';
 import * as simpleEnterExit from '../enter-exit-styles/simple';
 
@@ -29,42 +30,41 @@ export default React.createClass({
   },
 
   componentWillMount() {
-    this.setState({ styles: this.getStyles(this.props) });
+    this.setState(this.doLayout(this.props));
   },
 
   componentWillReceiveProps(nextProps) {
-    this.setState({ styles: this.getStyles(nextProps) });
+    if (!isEqual(nextProps, this.props)) {
+      this.setState(this.doLayout(nextProps));
+    }
   },
 
-  getStyles(props) {
-    return this.doLayout(
-      React.Children.toArray(props.children)
-        .map(element => ({
-          key: element.key,
-          data: {
-            element
-          },
-          style: {
-            opacity: spring(1, props.springConfig),
-            scale: spring(1, props.springConfig)
-          }
-        })), props);
-  },
+  doLayout(props) {
+    const items = React.Children.toArray(props.children)
+      .map(element => ({
+        key: element.key,
+        data: {
+          element
+        },
+        style: {
+          opacity: spring(1, props.springConfig),
+          scale: spring(1, props.springConfig)
+        }
+      }));
 
-  doLayout(items, props) {
     const { positions, gridWidth, gridHeight } =
-      this.props.layout(items.map(item => item.data.element.props), props);
+      props.layout(items.map(item => item.data.element.props), props);
 
-    this.setState({ gridWidth, gridHeight });
-
-    return positions.map((position, i) => ({
+    const styles = positions.map((position, i) => ({
       ...items[i],
       style: {
         ...items[i].style,
-        x: spring(position.x, this.props.springConfig),
-        y: spring(position.y, this.props.springConfig)
+        x: spring(position.x, props.springConfig),
+        y: spring(position.y, props.springConfig)
       }
     }));
+
+    return { styles, gridWidth, gridHeight };
   },
 
   willEnter(transitionStyle) {

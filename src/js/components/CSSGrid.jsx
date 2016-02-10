@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactTransitionGroup from 'react-addons-transition-group';
+import isEqual from 'lodash.isequal';
 import simpleLayout from '../layouts/simple';
 import * as simpleEnterExit from '../enter-exit-styles/simple';
 
@@ -9,20 +10,17 @@ const GridItem = React.createClass({
 
   getInitialState() {
     return {
-      isLeaving: false,
       style: {
-        scale: 1,
-        opacity: 1
+        scale: 0,
+        opacity: 0
       }
     };
   },
 
-  componentWillMount() {
-    this.setEndStyle(this.props);
-  },
-
   componentWillReceiveProps(nextProps) {
-    this.setEndStyle(nextProps);
+    if (!isEqual(nextProps, this.props)) {
+      this.setEndStyle(nextProps);
+    }
   },
 
   componentWillUnmount() {
@@ -39,7 +37,6 @@ const GridItem = React.createClass({
     clearTimeout(this.leaveTimeout);
 
     this.setState({
-      isLeaving: false,
       style: {
         ...this.props.position,
         ...this.props.gridProps.enter(
@@ -57,7 +54,6 @@ const GridItem = React.createClass({
   componentWillLeave(done) {
     this.leaveTimeout = setTimeout(() => {
       this.setState({
-        isLeaving: true,
         style: {
           ...this.state.style,
           ...this.props.gridProps.exit(
@@ -70,15 +66,13 @@ const GridItem = React.createClass({
   },
 
   setEndStyle(props) {
-    if (!this.state.isLeaving) {
-      this.setState({
-        style: {
-          ...props.position,
-          scale: 1,
-          opacity: 1
-        }
-      });
-    }
+    this.setState({
+      style: {
+        ...props.position,
+        scale: 1,
+        opacity: 1
+      }
+    });
   },
 
   render() {
@@ -90,7 +84,6 @@ const GridItem = React.createClass({
     const transform = `translate(${x}px, ${y}px) scale(${scale})`;
 
     return React.cloneElement(item, {
-      ref: el => this.el = el,
       style: {
         ...itemStyle,
         position: 'absolute',
@@ -100,7 +93,7 @@ const GridItem = React.createClass({
         transform,
         // WebkitTransform: transform,
         // MsTransform: transform,
-        transition: `opacity ${timeout}ms ease-out, transform ${timeout}ms ease-out`
+        transition: `opacity ${timeout}ms cubic-bezier(0.215, 0.610, 0.355, 1.000), transform ${timeout}ms cubic-bezier(0.215, 0.610, 0.355, 1.000)`
       }
     });
   }
@@ -154,6 +147,8 @@ export default React.createClass({
       <GridItem
         key={item.key}
         position={positions[i]}
+        enter={enter}
+        exit={exit}
         gridProps={this.props}
         gridState={this.state}
       >

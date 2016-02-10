@@ -64,7 +64,7 @@ export default React.createClass({
         <SpringGrid
           className="grid"
           component="ul"
-          columns={3}
+          columns={4}
           columnWidth={itemWidth}
           gutterWidth={10}
           gutterHeight={10}
