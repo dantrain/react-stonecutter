@@ -6,8 +6,8 @@ export default React.createClass({
   getInitialState() {
     return {
       style: {
-        scale: 0,
-        opacity: 0
+        scale: 1,
+        opacity: 1
       }
     };
   },
@@ -33,6 +33,7 @@ export default React.createClass({
 
     this.setState({
       style: {
+        ...this.state.style,
         ...this.props.position,
         ...this.props.gridProps.enter(
           this.props, this.props.gridProps, this.props.gridState)
@@ -74,6 +75,11 @@ export default React.createClass({
     const { style: { x, y, scale, opacity } } = this.state;
     const { style: itemStyle } = item.props;
     const { duration, easing } = this.props;
+
+    if ([x, y, scale, opacity].reduce((prev, curr) =>
+          prev || typeof curr === 'undefined', false)) {
+      return null;
+    }
 
     const transform = `translate(${x}px, ${y}px) scale(${scale})`;
 

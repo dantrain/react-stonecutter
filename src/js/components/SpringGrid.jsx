@@ -21,7 +21,7 @@ export default React.createClass({
 
   getDefaultProps() {
     return {
-      springConfig: { stiffness: 60, damping: 14 },
+      springConfig: { stiffness: 60, damping: 14, precision: 0.1 },
       component: 'div',
       layout: simpleLayout,
       enter: simpleEnterExit.enter,

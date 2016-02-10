@@ -2,6 +2,7 @@ import React from 'react';
 import d3Array from 'd3-array';
 import CSSGrid from '../components/CSSGrid';
 import pinterestLayout from '../layouts/pinterest';
+import { enter, exit } from '../enter-exit-styles/fromLeftToRight';
 
 const alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('');
 
@@ -70,6 +71,8 @@ export default React.createClass({
           gutterHeight={5}
           duration={600}
           layout={pinterestLayout}
+          enter={enter}
+          exit={exit}
         >
           {items}
         </CSSGrid>

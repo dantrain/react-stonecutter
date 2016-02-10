@@ -2,6 +2,7 @@ import React from 'react';
 import d3Array from 'd3-array';
 import SpringGrid from '../components/SpringGrid';
 import pinterestLayout from '../layouts/pinterest';
+import { enter, exit } from '../enter-exit-styles/fromLeftToRight';
 
 const alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('');
 
@@ -69,6 +70,8 @@ export default React.createClass({
           gutterWidth={5}
           gutterHeight={5}
           layout={pinterestLayout}
+          enter={enter}
+          exit={exit}
         >
           {items}
         </SpringGrid>
