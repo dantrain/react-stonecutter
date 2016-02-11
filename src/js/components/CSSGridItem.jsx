@@ -42,7 +42,7 @@ export default React.createClass({
     });
 
     this.enterTimeout = setTimeout(() => {
-      this.setEndStyle(this.props, 0);
+      this.setEndStyle(this.props, 1);
       done();
     }, 17);
   },
