@@ -10,7 +10,7 @@ export default React.createClass({
 
   getDefaultProps() {
     return {
-      minItems: 2
+      minItems: 5
     };
   },
 
@@ -69,7 +69,7 @@ export default React.createClass({
           columnWidth={itemWidth}
           gutterWidth={5}
           gutterHeight={5}
-          duration={2000}
+          duration={800}
           layout={pinterestLayout}
           enter={enter}
           exit={exit}
