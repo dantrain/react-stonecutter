@@ -7,7 +7,8 @@ export default React.createClass({
     return {
       style: {
         scale: 1,
-        opacity: 1
+        opacity: 1,
+        zIndex: 2
       }
     };
   },
@@ -84,19 +85,16 @@ export default React.createClass({
 
   render() {
     const item = React.Children.only(this.props.children);
-    const { style: { x, y, scale, opacity, zIndex } } = this.state;
     const { style: itemStyle } = item.props;
-    const { duration, easing } = this.props;
+    const { transition } = this.props;
 
-    if ([x, y, scale, opacity, zIndex].reduce((prev, curr) =>
-          prev || typeof curr === 'undefined', false)) {
+    const { style: { x, y, scale, opacity, zIndex } } = this.state;
+
+    if (typeof x === 'undefined' || typeof y === 'undefined') {
       return null;
     }
 
     const transform = `translate(${x}px, ${y}px) scale(${scale})`;
-
-    const transition = ['opacity', 'transform'].map(prop =>
-      `${prop} ${duration}ms ${easing}`).join(', ');
 
     return React.cloneElement(item, {
       style: {

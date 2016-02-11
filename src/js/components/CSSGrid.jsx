@@ -51,6 +51,9 @@ export default React.createClass({
     const items = React.Children.toArray(children);
     const { positions, gridWidth, gridHeight } = this.state;
 
+    const transition = ['opacity', 'transform'].map(prop =>
+      `${prop} ${duration}ms ${easing}`).join(', ');
+
     const wrappedItems = items.map((item, i) =>
       <CSSGridItem
         key={item.key}
@@ -58,7 +61,7 @@ export default React.createClass({
         enter={enter}
         exit={exit}
         duration={duration}
-        easing={easing}
+        transition={transition}
         gridProps={this.props}
         gridState={this.state}
       >

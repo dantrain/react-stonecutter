@@ -124,9 +124,7 @@ export default React.createClass({
                 left: 0,
                 zIndex,
                 opacity,
-                transform,
-                WebkitTransform: transform,
-                MsTransform: transform
+                transform
               }
             });
           }))}
