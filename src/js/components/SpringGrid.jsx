@@ -60,8 +60,8 @@ export default React.createClass({
       style: {
         ...items[i].style,
         zIndex: 2,
-        x: spring(position.x, props.springConfig),
-        y: spring(position.y, props.springConfig)
+        translateX: spring(position.translateX, props.springConfig),
+        translateY: spring(position.translateY, props.springConfig)
       }
     }));
 
@@ -113,8 +113,8 @@ export default React.createClass({
             },
             ...rest
           }, interpolatedStyles.map(config => {
-            const { style: { opacity, scale, x, y, zIndex }, data } = config;
-            const transform = `translate(${x}px, ${y}px) scale(${scale})`;
+            const { style: { opacity, scale, translateX, translateY, zIndex }, data } = config;
+            const transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
 
             return React.cloneElement(data.element, {
               style: {

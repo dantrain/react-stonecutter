@@ -1,5 +1,5 @@
 
-const enterExit = () => ({ y: 0, opacity: 0 });
+const enterExit = () => ({ translateY: 0, opacity: 0 });
 
 export const enter = enterExit;
 export const exit = enterExit;

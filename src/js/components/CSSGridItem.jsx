@@ -88,13 +88,13 @@ export default React.createClass({
     const { style: itemStyle } = item.props;
     const { transition } = this.props;
 
-    const { style: { x, y, scale, opacity, zIndex } } = this.state;
+    const { style: { translateX, translateY, scale, opacity, zIndex } } = this.state;
 
-    if (typeof x === 'undefined' || typeof y === 'undefined') {
+    if (typeof translateX === 'undefined' || typeof translateY === 'undefined') {
       return null;
     }
 
-    const transform = `translate(${x}px, ${y}px) scale(${scale})`;
+    const transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
 
     return React.cloneElement(item, {
       style: {

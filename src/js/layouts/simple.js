@@ -7,10 +7,10 @@ export default function(items, props) {
     const column = i % columns;
     const row = Math.floor(i / columns);
 
-    const x = column * columnWidth + column * gutterWidth;
-    const y = row * itemHeight + row * gutterHeight;
+    const translateX = column * columnWidth + column * gutterWidth;
+    const translateY = row * itemHeight + row * gutterHeight;
 
-    return { x, y };
+    return { translateX, translateY };
   });
 
   const gridWidth = columns * columnWidth + ((columns - 1) * gutterWidth);
