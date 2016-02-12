@@ -4,7 +4,7 @@ import makeResponsive from '../higher-order-components/makeResponsive';
 import measureItems from '../higher-order-components/measureItems';
 import CSSGrid from '../components/CSSGrid';
 import pinterestLayout from '../layouts/pinterest';
-import { enter, exit } from '../enter-exit-styles/fromTop';
+import { enter, exit } from '../enter-exit-styles/skew';
 import { quintOut } from '../utils/easings';
 
 const alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('');

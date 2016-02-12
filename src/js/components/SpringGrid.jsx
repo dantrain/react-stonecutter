@@ -1,6 +1,7 @@
 import React from 'react';
 import { TransitionMotion, spring } from 'react-motion';
 import stripStyle from 'react-motion/lib/stripStyle';
+import { transformDefaults, buildTransform } from '../utils/transformHelpers';
 import isEqual from 'lodash.isequal';
 import simpleLayout from '../layouts/simple';
 import * as simpleEnterExit from '../enter-exit-styles/simple';
@@ -48,7 +49,7 @@ export default React.createClass({
         },
         style: {
           opacity: spring(1, props.springConfig),
-          scale: spring(1, props.springConfig)
+          ...springify(transformDefaults, props.springConfig)
         }
       }));
 
@@ -60,8 +61,7 @@ export default React.createClass({
       style: {
         ...items[i].style,
         zIndex: 2,
-        translateX: spring(position.translateX, props.springConfig),
-        translateY: spring(position.translateY, props.springConfig)
+        ...springify(position, props.springConfig)
       }
     }));
 
@@ -87,10 +87,7 @@ export default React.createClass({
     return {
       ...transitionStyle.style,
       zIndex: 0,
-      ...Object.keys(exitStyle).reduce((obj, key) => {
-        obj[key] = spring(exitStyle[key], this.props.springConfig);
-        return obj;
-      }, {})
+      ...springify(exitStyle, this.props.springConfig)
     };
   },
 
@@ -113,8 +110,9 @@ export default React.createClass({
             },
             ...rest
           }, interpolatedStyles.map(config => {
-            const { style: { opacity, scale, translateX, translateY, zIndex }, data } = config;
-            const transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+            const { style: { opacity, zIndex }, data } = config;
+
+            const transform = buildTransform(config.style);
 
             return React.cloneElement(data.element, {
               style: {
@@ -133,3 +131,10 @@ export default React.createClass({
   }
 
 });
+
+function springify(style, springConfig) {
+  return Object.keys(style).reduce((obj, key) => {
+    obj[key] = spring(style[key], springConfig);
+    return obj;
+  }, {});
+}

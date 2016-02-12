@@ -2,7 +2,7 @@ import React from 'react';
 import d3Array from 'd3-array';
 import SpringGrid from '../components/SpringGrid';
 import pinterestLayout from '../layouts/pinterest';
-import { enter, exit } from '../enter-exit-styles/fromTop';
+import { enter, exit } from '../enter-exit-styles/newspaper';
 
 const alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('');
 
@@ -72,6 +72,7 @@ export default React.createClass({
           layout={pinterestLayout}
           enter={enter}
           exit={exit}
+          // springConfig={{ stiffness: 60, damping: 9, precision: 0.1 }}
         >
           {items}
         </SpringGrid>

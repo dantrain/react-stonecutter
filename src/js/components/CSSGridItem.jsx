@@ -1,12 +1,13 @@
 import React from 'react';
 import isEqual from 'lodash.isequal';
+import { transformDefaults, buildTransform } from '../utils/transformHelpers';
 
 export default React.createClass({
 
   getInitialState() {
     return {
       style: {
-        scale: 1,
+        // ...transformDefaults,
         opacity: 1,
         zIndex: 2
       }
@@ -75,9 +76,10 @@ export default React.createClass({
 
     this.setState({
       style: {
+        ...this.state.style,
         ...props.position,
         zIndex,
-        scale: 1,
+        ...transformDefaults,
         opacity: 1
       }
     });
@@ -88,13 +90,13 @@ export default React.createClass({
     const { style: itemStyle } = item.props;
     const { transition } = this.props;
 
-    const { style: { translateX, translateY, scale, opacity, zIndex } } = this.state;
+    const { style: { translateX, translateY, opacity, zIndex } } = this.state;
 
     if (typeof translateX === 'undefined' || typeof translateY === 'undefined') {
       return null;
     }
 
-    const transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+    const transform = buildTransform(this.state.style);
 
     return React.cloneElement(item, {
       style: {

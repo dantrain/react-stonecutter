@@ -2,7 +2,7 @@ import React from 'react';
 import d3Array from 'd3-array';
 import CSSGrid from '../components/CSSGrid';
 import pinterestLayout from '../layouts/pinterest';
-import { enter, exit } from '../enter-exit-styles/fromTop';
+import { enter, exit } from '../enter-exit-styles/skew';
 
 const alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('');
 
