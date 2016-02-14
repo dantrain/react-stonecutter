@@ -17,7 +17,9 @@ export default React.createClass({
     component: React.PropTypes.string,
     layout: React.PropTypes.func,
     enter: React.PropTypes.func,
-    exit: React.PropTypes.func
+    entered: React.PropTypes.func,
+    exit: React.PropTypes.func,
+    perspective: React.PropTypes.number
   },
 
   getDefaultProps() {
@@ -25,6 +27,7 @@ export default React.createClass({
       component: 'div',
       layout: simpleLayout,
       enter: simpleEnterExit.enter,
+      entered: simpleEnterExit.entered,
       exit: simpleEnterExit.exit,
       easing: quartOut
     };
@@ -47,7 +50,7 @@ export default React.createClass({
   },
 
   render() {
-    const { component, style, children, enter, exit, duration, easing, ...rest } = this.props;
+    const { component, style, children, duration, easing, ...rest } = this.props;
     const items = React.Children.toArray(children);
     const { positions, gridWidth, gridHeight } = this.state;
 
@@ -58,9 +61,7 @@ export default React.createClass({
       <CSSGridItem
         key={item.key}
         position={positions[i]}
-        enter={enter}
-        exit={exit}
-        duration={duration}
+        {...this.props}
         transition={transition}
         gridProps={this.props}
         gridState={this.state}

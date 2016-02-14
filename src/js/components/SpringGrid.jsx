@@ -17,7 +17,9 @@ export default React.createClass({
     component: React.PropTypes.string,
     layout: React.PropTypes.func,
     enter: React.PropTypes.func,
-    exit: React.PropTypes.func
+    entered: React.PropTypes.func,
+    exit: React.PropTypes.func,
+    perspective: React.PropTypes.number
   },
 
   getDefaultProps() {
@@ -26,6 +28,7 @@ export default React.createClass({
       component: 'div',
       layout: simpleLayout,
       enter: simpleEnterExit.enter,
+      entered: simpleEnterExit.entered,
       exit: simpleEnterExit.exit
     };
   },
@@ -46,10 +49,6 @@ export default React.createClass({
         key: element.key,
         data: {
           element
-        },
-        style: {
-          opacity: spring(1, props.springConfig),
-          ...springify(transformDefaults, props.springConfig)
         }
       }));
 
@@ -61,6 +60,8 @@ export default React.createClass({
       style: {
         ...items[i].style,
         zIndex: 2,
+        ...springify(this.props.entered(items[i].data.element.props,
+          this.props, { gridWidth, gridHeight }), props.springConfig),
         ...springify(position, props.springConfig)
       }
     }));
@@ -92,7 +93,7 @@ export default React.createClass({
   },
 
   render() {
-    const { component, style, ...rest } = this.props;
+    const { component, style, perspective, ...rest } = this.props;
 
     return (
       <TransitionMotion
@@ -112,7 +113,7 @@ export default React.createClass({
           }, interpolatedStyles.map(config => {
             const { style: { opacity, zIndex }, data } = config;
 
-            const transform = buildTransform(config.style);
+            const transform = buildTransform(config.style, perspective);
 
             return React.cloneElement(data.element, {
               style: {

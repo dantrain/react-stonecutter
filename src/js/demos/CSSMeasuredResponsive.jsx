@@ -4,7 +4,7 @@ import makeResponsive from '../higher-order-components/makeResponsive';
 import measureItems from '../higher-order-components/measureItems';
 import CSSGrid from '../components/CSSGrid';
 import pinterestLayout from '../layouts/pinterest';
-import { enter, exit } from '../enter-exit-styles/skew';
+import { enter, entered, exit } from '../enter-exit-styles/skew';
 import { quintOut } from '../utils/easings';
 
 const alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('');
@@ -88,6 +88,7 @@ export default React.createClass({
           duration={1000}
           layout={pinterestLayout}
           enter={enter}
+          entered={entered}
           exit={exit}
           easing={quintOut}
         >

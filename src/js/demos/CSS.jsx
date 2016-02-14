@@ -2,7 +2,7 @@ import React from 'react';
 import d3Array from 'd3-array';
 import CSSGrid from '../components/CSSGrid';
 import pinterestLayout from '../layouts/pinterest';
-import { enter, exit } from '../enter-exit-styles/skew';
+import { enter, entered, exit } from '../enter-exit-styles/foldDown';
 
 const alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('');
 
@@ -72,7 +72,9 @@ export default React.createClass({
           duration={800}
           layout={pinterestLayout}
           enter={enter}
+          entered={entered}
           exit={exit}
+          perspective={600}
         >
           {items}
         </CSSGrid>

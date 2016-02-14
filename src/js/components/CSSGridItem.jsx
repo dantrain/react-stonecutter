@@ -1,14 +1,13 @@
 import React from 'react';
 import isEqual from 'lodash.isequal';
-import { transformDefaults, buildTransform } from '../utils/transformHelpers';
+import { buildTransform } from '../utils/transformHelpers';
 
 export default React.createClass({
 
   getInitialState() {
     return {
       style: {
-        // ...transformDefaults,
-        opacity: 1,
+        // opacity: 1,
         zIndex: 2
       }
     };
@@ -77,10 +76,11 @@ export default React.createClass({
     this.setState({
       style: {
         ...this.state.style,
-        ...props.position,
         zIndex,
-        ...transformDefaults,
-        opacity: 1
+        // opacity: 1,
+        ...this.props.gridProps.entered(
+          this.props, this.props.gridProps, this.props.gridState),
+        ...props.position
       }
     });
   },
@@ -88,7 +88,7 @@ export default React.createClass({
   render() {
     const item = React.Children.only(this.props.children);
     const { style: itemStyle } = item.props;
-    const { transition } = this.props;
+    const { transition, perspective } = this.props;
 
     const { style: { translateX, translateY, opacity, zIndex } } = this.state;
 
@@ -96,7 +96,7 @@ export default React.createClass({
       return null;
     }
 
-    const transform = buildTransform(this.state.style);
+    const transform = buildTransform(this.state.style, perspective);
 
     return React.cloneElement(item, {
       style: {
