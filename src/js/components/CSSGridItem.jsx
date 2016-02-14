@@ -1,6 +1,6 @@
 import React from 'react';
 import isEqual from 'lodash.isequal';
-import { buildTransform, positionToProperties } from '../utils/transformHelpers';
+import { buildTransform, defaultUnits, positionToProperties } from '../utils/transformHelpers';
 
 export default React.createClass({
 
@@ -87,7 +87,7 @@ export default React.createClass({
   render() {
     const item = React.Children.only(this.props.children);
     const { style: itemStyle } = item.props;
-    const { transition, perspective } = this.props;
+    const { transition, perspective, units } = this.props;
 
     const { style: { translateX, translateY, opacity, zIndex } } = this.state;
 
@@ -95,7 +95,10 @@ export default React.createClass({
       return null;
     }
 
-    const transform = buildTransform(this.state.style, perspective);
+    const transform = buildTransform(this.state.style, perspective, {
+      ...defaultUnits,
+      ...units
+    });
 
     return React.cloneElement(item, {
       style: {

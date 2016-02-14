@@ -1,7 +1,7 @@
 import React from 'react';
 import { TransitionMotion, spring } from 'react-motion';
 import stripStyle from 'react-motion/lib/stripStyle';
-import { buildTransform, positionToProperties } from '../utils/transformHelpers';
+import { buildTransform, defaultUnits, positionToProperties } from '../utils/transformHelpers';
 import isEqual from 'lodash.isequal';
 import simpleLayout from '../layouts/simple';
 import * as simpleEnterExit from '../enter-exit-styles/simple';
@@ -93,7 +93,8 @@ export default React.createClass({
   },
 
   render() {
-    const { component, style, perspective, ...rest } = this.props;
+    const { component, style, perspective, units, ...rest } = this.props;
+    const lengthUnit = units && units.length || 'px';
 
     return (
       <TransitionMotion
@@ -106,14 +107,17 @@ export default React.createClass({
             style: {
               position: 'relative',
               ...style,
-              width: this.state.gridWidth,
-              height: this.state.gridHeight
+              width: `${this.state.gridWidth}${lengthUnit}`,
+              height: `${this.state.gridHeight}${lengthUnit}`
             },
             ...rest
           }, interpolatedStyles.map(config => {
             const { style: { opacity, zIndex }, data } = config;
 
-            const transform = buildTransform(config.style, perspective);
+            const transform = buildTransform(config.style, perspective, {
+              ...defaultUnits,
+              ...units
+            });
 
             return React.cloneElement(data.element, {
               style: {

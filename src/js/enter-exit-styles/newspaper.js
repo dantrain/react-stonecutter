@@ -2,7 +2,7 @@
 export const enter = () => ({
   scale: 0,
   opacity: 0,
-  rotate: -720
+  rotate: -2
 });
 
 export const exit = () => ({ scale: 0, opacity: 0 });

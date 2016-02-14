@@ -4,7 +4,7 @@ import makeResponsive from '../higher-order-components/makeResponsive';
 import measureItems from '../higher-order-components/measureItems';
 import SpringGrid from '../components/SpringGrid';
 import pinterestLayout from '../layouts/pinterest';
-import { enter, entered, exit } from '../enter-exit-styles/foldDown';
+import { enter, entered, exit } from '../enter-exit-styles/newspaper';
 
 const alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('');
 
@@ -89,6 +89,7 @@ export default React.createClass({
           entered={entered}
           exit={exit}
           perspective={600}
+          units={{ angle: 'turn' }}
           // springConfig={{ stiffness: 60, damping: 9, precision: 0.1 }}
         >
           {items}

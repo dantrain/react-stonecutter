@@ -40,15 +40,15 @@ export default React.createClass({
   },
 
   render() {
-    const itemWidth = 150;
+    const itemWidth = 10;
 
     const items = this.state.data.map(d => {
-      const height = (d.letter.charCodeAt(0) % 3) * 75 + 75;
+      const height = (d.letter.charCodeAt(0) % 3 + 1) * 5;
 
       return (
         <li
           className="grid-item"
-          style={{ height, width: itemWidth }}
+          style={{ height: height + 'rem', width: itemWidth + 'rem' }}
           key={d.letter}
           itemRect={{ height }}
         >
@@ -67,13 +67,14 @@ export default React.createClass({
           component="ul"
           columns={4}
           columnWidth={itemWidth}
-          gutterWidth={5}
-          gutterHeight={5}
+          gutterWidth={0.5}
+          gutterHeight={0.5}
           layout={pinterestLayout}
           enter={enter}
           entered={entered}
           exit={exit}
-          perspective={600}
+          perspective={60}
+          units={{ length: 'rem' }}
           // springConfig={{ stiffness: 60, damping: 9, precision: 0.1 }}
         >
           {items}

@@ -3,6 +3,7 @@ import ReactTransitionGroup from 'react-addons-transition-group';
 import simpleLayout from '../layouts/simple';
 import * as simpleEnterExit from '../enter-exit-styles/simple';
 import { quartOut } from '../utils/easings';
+import { defaultUnits } from '../utils/transformHelpers';
 import CSSGridItem from './CSSGridItem';
 
 export default React.createClass({
@@ -50,9 +51,11 @@ export default React.createClass({
   },
 
   render() {
-    const { component, style, children, duration, easing, ...rest } = this.props;
+    const { component, style, children, duration, easing, units, ...rest } = this.props;
     const items = React.Children.toArray(children);
     const { positions, gridWidth, gridHeight } = this.state;
+
+    const lengthUnit = units && units.length || 'px';
 
     const transition = ['opacity', 'transform'].map(prop =>
       `${prop} ${duration}ms ${easing}`).join(', ');
@@ -75,8 +78,8 @@ export default React.createClass({
         style={{
           position: 'relative',
           ...style,
-          width: gridWidth,
-          height: gridHeight
+          width: `${gridWidth}${lengthUnit}`,
+          height: `${gridHeight}${lengthUnit}`
         }}
         {...rest}
       >
