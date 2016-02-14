@@ -15,6 +15,11 @@ const properties = [
   { name: 'rotateY', unit: 'deg' }
 ];
 
+export const positionToProperties = position => ({
+  translateX: position[0],
+  translateY: position[1]
+});
+
 export const buildTransform = (style, perspective) => {
   const arr = [];
 

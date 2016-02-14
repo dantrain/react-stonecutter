@@ -1,7 +1,7 @@
 import React from 'react';
 import { TransitionMotion, spring } from 'react-motion';
 import stripStyle from 'react-motion/lib/stripStyle';
-import { transformDefaults, buildTransform } from '../utils/transformHelpers';
+import { buildTransform, positionToProperties } from '../utils/transformHelpers';
 import isEqual from 'lodash.isequal';
 import simpleLayout from '../layouts/simple';
 import * as simpleEnterExit from '../enter-exit-styles/simple';
@@ -62,7 +62,7 @@ export default React.createClass({
         zIndex: 2,
         ...springify(this.props.entered(items[i].data.element.props,
           this.props, { gridWidth, gridHeight }), props.springConfig),
-        ...springify(position, props.springConfig)
+        ...springify(positionToProperties(position), props.springConfig)
       }
     }));
 

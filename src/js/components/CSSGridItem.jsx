@@ -1,13 +1,12 @@
 import React from 'react';
 import isEqual from 'lodash.isequal';
-import { buildTransform } from '../utils/transformHelpers';
+import { buildTransform, positionToProperties } from '../utils/transformHelpers';
 
 export default React.createClass({
 
   getInitialState() {
     return {
       style: {
-        // opacity: 1,
         zIndex: 2
       }
     };
@@ -31,14 +30,14 @@ export default React.createClass({
 
   componentWillEnter(done) {
     clearTimeout(this.leaveTimeout);
+    const { position, gridProps, gridState } = this.props;
 
     this.setState({
       style: {
         ...this.state.style,
-        ...this.props.position,
+        ...positionToProperties(position),
         zIndex: 1,
-        ...this.props.gridProps.enter(
-          this.props, this.props.gridProps, this.props.gridState)
+        ...gridProps.enter(this.props, gridProps, gridState)
       }
     });
 
@@ -50,14 +49,14 @@ export default React.createClass({
 
   componentWillLeave(done) {
     this.remove = done;
+    const { gridProps, gridState } = this.props;
 
     this.leaveTimeout = setTimeout(() => {
       this.setState({
         style: {
           ...this.state.style,
           zIndex: 0,
-          ...this.props.gridProps.exit(
-            this.props, this.props.gridProps, this.props.gridState)
+          ...gridProps.exit(this.props, gridProps, gridState)
         }
       });
 
@@ -73,14 +72,14 @@ export default React.createClass({
       this.remove = null;
     }
 
+    const { position, gridProps, gridState } = props;
+
     this.setState({
       style: {
         ...this.state.style,
         zIndex,
-        // opacity: 1,
-        ...this.props.gridProps.entered(
-          this.props, this.props.gridProps, this.props.gridState),
-        ...props.position
+        ...gridProps.entered(props, gridProps, gridState),
+        ...positionToProperties(position)
       }
     });
   },

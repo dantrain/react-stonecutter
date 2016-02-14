@@ -14,12 +14,12 @@ export default function(items, props) {
       throw new Error('Each child must have an "itemRect.height" prop.');
     }
 
-    const translateX = column * columnWidth + column * gutterWidth;
-    const translateY = columnHeights[column];
+    const x = column * columnWidth + column * gutterWidth;
+    const y = columnHeights[column];
 
     columnHeights[column] += height + gutterHeight;
 
-    return { translateX, translateY };
+    return [x, y];
   });
 
   const gridWidth = columns * columnWidth + ((columns - 1) * gutterWidth);
