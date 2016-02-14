@@ -3,6 +3,7 @@ const properties = [
   { name: 'translateX', unit: 'px' },
   { name: 'translateY', unit: 'px' },
   { name: 'perspective', unit: 'px' },
+  { name: 'translateZ', unit: 'px' },
   { name: 'skew', unit: 'deg' },
   { name: 'skewX', unit: 'deg' },
   { name: 'skewY', unit: 'deg' },
