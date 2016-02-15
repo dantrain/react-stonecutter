@@ -28,8 +28,8 @@ export default (Grid, { maxWidth, minPadding = 0, defaultColumns = 4 } = {}) =>
 
       this.breakpoints = breakpoints.map((width, i, arr) => [
         'screen',
-        (i > 0 && '(min-width: ' + arr[i - 1] + 'px)'),
-        (i < arr.length - 1 && '(max-width: ' + width + 'px)')
+        (i > 0 && `(min-width: ${arr[i - 1]}px)`),
+        (i < arr.length - 1 && `(max-width: ${width}px)`)
       ].filter(Boolean).join(' and '));
 
       this.breakpoints.forEach((breakpoint, i) => enquire.register(breakpoint, {

@@ -31,12 +31,10 @@ export default React.createClass({
       .slice(0, this.props.minItems +
         Math.floor(Math.random() * (26 - this.props.minItems)))
       .sort()
-      .map(letter => {
-        return {
-          letter,
-          number: Math.floor(Math.random() * 100)
-        };
-      });
+      .map(letter => ({
+        letter,
+        number: Math.floor(Math.random() * 100)
+      }));
   },
 
   render() {

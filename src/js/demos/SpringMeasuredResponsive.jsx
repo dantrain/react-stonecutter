@@ -49,12 +49,10 @@ export default React.createClass({
       .slice(0, this.props.minItems +
         Math.floor(Math.random() * (26 - this.props.minItems)))
       .sort()
-      .map(letter => {
-        return {
-          letter,
-          number: Math.floor(Math.random() * 100)
-        };
-      });
+      .map(letter => ({
+        letter,
+        number: Math.floor(Math.random() * 100)
+      }));
   },
 
   render() {
@@ -89,7 +87,6 @@ export default React.createClass({
           entered={entered}
           exit={exit}
           perspective={600}
-          units={{ angle: 'turn' }}
           // springConfig={{ stiffness: 60, damping: 9, precision: 0.1 }}
         >
           {items}

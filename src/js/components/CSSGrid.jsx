@@ -11,9 +11,9 @@ export default React.createClass({
   propTypes: {
     columns: React.PropTypes.number.isRequired,
     columnWidth: React.PropTypes.number.isRequired,
-    gutterWidth: React.PropTypes.number.isRequired,
-    gutterHeight: React.PropTypes.number.isRequired,
     duration: React.PropTypes.number.isRequired,
+    gutterWidth: React.PropTypes.number,
+    gutterHeight: React.PropTypes.number,
     easing: React.PropTypes.string,
     component: React.PropTypes.string,
     layout: React.PropTypes.func,
@@ -26,6 +26,8 @@ export default React.createClass({
   getDefaultProps() {
     return {
       component: 'div',
+      gutterWidth: 0,
+      gutterHeight: 0,
       layout: simpleLayout,
       enter: simpleEnterExit.enter,
       entered: simpleEnterExit.entered,
@@ -45,7 +47,10 @@ export default React.createClass({
   doLayout(props) {
     const { positions, gridWidth, gridHeight } =
       props.layout(React.Children.toArray(props.children)
-        .map(item => item.props), props);
+        .map(item => ({
+          ...item.props,
+          key: item.key
+        })), props);
 
     this.setState({ gridWidth, gridHeight, positions });
   },

@@ -1,8 +1,8 @@
 import React from 'react';
 import d3Array from 'd3-array';
 import SpringGrid from '../components/SpringGrid';
-import pinterestLayout from '../layouts/pinterest';
-import { enter, entered, exit } from '../enter-exit-styles/foldDown';
+import root2Layout from '../layouts/root2';
+import { enter, entered, exit } from '../enter-exit-styles/simple';
 
 const alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('');
 
@@ -38,19 +38,29 @@ export default React.createClass({
   },
 
   render() {
-    const itemWidth = 10;
+    const itemWidth = 150;
 
     const items = this.state.data.map(d => {
-      const height = (d.letter.charCodeAt(0) % 3 + 1) * 5;
+      let height = itemWidth * (d.letter.charCodeAt(0) % 2 ? Math.sqrt(2) : 1 / Math.sqrt(2));
+      let width = itemWidth;
+      let doubleSize = false;
+
+      if (d.letter.charCodeAt(0) % 6 === 0) {
+        doubleSize = true;
+        width *= 2;
+        height = 150 * Math.sqrt(2);
+      }
 
       return (
         <li
           className="grid-item"
-          style={{ height: `${height}rem`, width: `${itemWidth}rem` }}
+          style={{ height, width }}
           key={d.letter}
-          itemRect={{ height }}
+          itemRect={{ height, width }}
+          doubleSize={doubleSize}
         >
           <h3>{d.letter.toUpperCase()} - {parseInt(d.number, 10)}</h3>
+          {doubleSize && <p>Big!</p>}
         </li>
       );
     });
@@ -63,17 +73,12 @@ export default React.createClass({
         <SpringGrid
           className="grid"
           component="ul"
-          columns={4}
+          columns={5}
           columnWidth={itemWidth}
-          gutterWidth={0.5}
-          gutterHeight={0.5}
-          layout={pinterestLayout}
+          layout={root2Layout}
           enter={enter}
           entered={entered}
           exit={exit}
-          perspective={60}
-          units={{ length: 'rem' }}
-          // springConfig={{ stiffness: 60, damping: 9, precision: 0.1 }}
         >
           {items}
         </SpringGrid>

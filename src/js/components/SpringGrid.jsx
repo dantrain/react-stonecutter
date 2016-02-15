@@ -11,8 +11,8 @@ export default React.createClass({
   propTypes: {
     columns: React.PropTypes.number.isRequired,
     columnWidth: React.PropTypes.number.isRequired,
-    gutterWidth: React.PropTypes.number.isRequired,
-    gutterHeight: React.PropTypes.number.isRequired,
+    gutterWidth: React.PropTypes.number,
+    gutterHeight: React.PropTypes.number,
     springConfig: React.PropTypes.object,
     component: React.PropTypes.string,
     layout: React.PropTypes.func,
@@ -26,6 +26,8 @@ export default React.createClass({
     return {
       springConfig: { stiffness: 60, damping: 14, precision: 0.1 },
       component: 'div',
+      gutterWidth: 0,
+      gutterHeight: 0,
       layout: simpleLayout,
       enter: simpleEnterExit.enter,
       entered: simpleEnterExit.entered,
@@ -53,7 +55,10 @@ export default React.createClass({
       }));
 
     const { positions, gridWidth, gridHeight } =
-      props.layout(items.map(item => item.data.element.props), props);
+      props.layout(items.map(item => ({
+        ...item.data.element.props,
+        key: item.data.element.key
+      })), props);
 
     const styles = positions.map((position, i) => ({
       ...items[i],
