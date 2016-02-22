@@ -32,9 +32,6 @@ button {
 .grid-item {
   font-size: 0.75rem;
   padding: 20px 15px;
-  /*box-shadow: 0 2px 3px rgba(0, 0, 0, 0.075), 0 0 0 1px rgba(0,0,0,0.1);*/
-  /*border-radius: 4px;*/
-  /*background-color: white;*/
   background-color: #ccc;
   border-radius: 3px;
   border: 2px solid #aaa;

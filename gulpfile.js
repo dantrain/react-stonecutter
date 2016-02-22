@@ -9,12 +9,7 @@ var browserSync   = require('browser-sync');
 var webpack       = require('webpack');
 var assign        = require('lodash.assign');
 
-var webpackConfig = {
-  entry: './src/main.js',
-  output: {
-    path: './public',
-    filename: 'bundle.js'
-  },
+var sharedWebpackConfig = {
   module: {
     loaders: [
       {
@@ -33,9 +28,39 @@ var webpackConfig = {
   watch: false
 };
 
-var devCompiler = webpack(assign({}, webpackConfig, {
-  devtool: 'inline-source-map'
-}));
+var libWebpackConfig = assign({}, sharedWebpackConfig, {
+  entry: './src/index.js',
+  output: {
+    path: './lib',
+    filename: 'react-brickwork.js',
+    library: 'reactBrickwork',
+    libraryTarget: 'umd'
+  },
+  externals: {
+    'react': 'react',
+    'react-dom': 'react-dom',
+    'react-addons-transition-group': 'react-addons-transition-group',
+    'react-motion': 'react-motion',
+    'enquire.js': 'enquire.js',
+    'lodash.isequal': 'lodash.isequal',
+    'lodash.partition': 'lodash.partition'
+  }
+});
+
+var demoWebpackConfig = assign({}, sharedWebpackConfig, {
+  entry: './demo/src/main.js',
+  output: {
+    path: './demo/public',
+    filename: 'demo.js'
+  }
+});
+
+// var devCompiler = webpack([
+//   assign({}, libWebpackConfig, { devtool: 'inline-source-map' }),
+//   assign({}, demoWebpackConfig, { devtool: 'inline-source-map' })
+// ]);
+
+var devCompiler = webpack([libWebpackConfig, demoWebpackConfig]);
 
 gulp.task('webpack', function(done) {
   var firstTime = true;
@@ -61,11 +86,14 @@ gulp.task('webpack', function(done) {
       version: false,
       colors: true
     }));
-    browserSync.reload();
 
-    if (firstTime) {
-      firstTime = false;
-      done();
+    if (jsonStats.assets[0].name === 'demo.js') {
+      browserSync.reload();
+
+      if (firstTime) {
+        firstTime = false;
+        done();
+      }
     }
   });
 });
@@ -74,7 +102,7 @@ gulp.task('browser-sync', ['webpack'], function() {
   browserSync({
     notify: false,
     server: {
-      baseDir: 'public'
+      baseDir: 'demo/public'
     }
   });
 });

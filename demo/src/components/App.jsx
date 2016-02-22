@@ -1,10 +1,7 @@
 import React from 'react';
 import d3Array from 'd3-array';
-import makeResponsive from '../higher-order-components/makeResponsive';
-import measureItems from '../higher-order-components/measureItems';
-import SpringGrid from '../components/SpringGrid';
-import pinterestLayout from '../layouts/pinterest';
-import { enter, entered, exit } from '../enter-exit-styles/simple';
+import { makeResponsive, measureItems,
+  SpringGrid, layout, enterExitStyle } from '../../../lib/react-brickwork';
 
 const alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('');
 
@@ -78,10 +75,10 @@ export default React.createClass({
           columnWidth={150}
           gutterWidth={5}
           gutterHeight={5}
-          layout={pinterestLayout}
-          enter={enter}
-          entered={entered}
-          exit={exit}
+          layout={layout.pinterest}
+          enter={enterExitStyle.simple.enter}
+          entered={enterExitStyle.simple.entered}
+          exit={enterExitStyle.simple.exit}
           perspective={600}
           // springConfig={{ stiffness: 60, damping: 9, precision: 0.1 }}
         >
