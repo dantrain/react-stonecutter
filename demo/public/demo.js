@@ -19683,13 +19683,18 @@
 
 	var _reactBrickwork = __webpack_require__(161);
 
+	var _reactBrickwork2 = _interopRequireDefault(_reactBrickwork);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var Grid = _reactBrickwork2.default.SpringGrid;
+	var enterExitStyle = _reactBrickwork2.default.enterExitStyle.simple;
 
 	var alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('');
 
 	var ipsum = 'Hashtag hoodie food truck XOXO gastropub asymmetrical.\nViral actually sartorial thundercats fixie next level. Ethical skateboard\nput a bird on it bespoke, brunch small batch photo booth fashion axe\nactually cronut poutine fanny pack microdosing church-key. Post-ironic\n90\'s pug, master cleanse keytar normcore aesthetic viral crucifix selvage\ngastropub. Echo park yr organic typewriter blog. Health goth literally\ncornhole microdosing fanny pack, bespoke kinfolk heirloom ennui viral\ndreamcatcher. Offal VHS helvetica meh.';
 
-	var ResponsiveGrid = (0, _reactBrickwork.makeResponsive)((0, _reactBrickwork.measureItems)(_reactBrickwork.SpringGrid), {
+	var ResponsiveGrid = (0, _reactBrickwork.makeResponsive)((0, _reactBrickwork.measureItems)(Grid), {
 	  maxWidth: 1200,
 	  minPadding: 100
 	});
@@ -19757,10 +19762,11 @@
 	          gutterWidth: 5,
 	          gutterHeight: 5,
 	          layout: _reactBrickwork.layout.pinterest,
-	          enter: _reactBrickwork.enterExitStyle.simple.enter,
-	          entered: _reactBrickwork.enterExitStyle.simple.entered,
-	          exit: _reactBrickwork.enterExitStyle.simple.exit,
+	          enter: enterExitStyle.enter,
+	          entered: enterExitStyle.entered,
+	          exit: enterExitStyle.exit,
 	          perspective: 600
+	          // duration={800}
 	          // springConfig={{ stiffness: 60, damping: 9, precision: 0.1 }}
 	        },
 	        items
@@ -20307,43 +20313,31 @@
 				Object.defineProperty(exports, "__esModule", {
 					value: true
 				});
-				exports.enterExitStyle = exports.layout = exports.easings = exports.measureItems = exports.makeResponsive = exports.SpringGrid = exports.CSSGrid = undefined;
+				exports.easings = exports.makeResponsive = exports.measureItems = exports.SpringGrid = exports.CSSGrid = exports.enterExitStyle = exports.layout = undefined;
 
 				var _CSSGrid = __webpack_require__(1);
 
-				Object.defineProperty(exports, 'CSSGrid', {
-					enumerable: true,
-					get: function get() {
-						return _interopRequireDefault(_CSSGrid).default;
-					}
-				});
+				var _CSSGrid2 = _interopRequireDefault(_CSSGrid);
 
 				var _SpringGrid = __webpack_require__(10);
 
-				Object.defineProperty(exports, 'SpringGrid', {
-					enumerable: true,
-					get: function get() {
-						return _interopRequireDefault(_SpringGrid).default;
-					}
-				});
+				var _SpringGrid2 = _interopRequireDefault(_SpringGrid);
 
 				var _makeResponsive = __webpack_require__(13);
 
-				Object.defineProperty(exports, 'makeResponsive', {
-					enumerable: true,
-					get: function get() {
-						return _interopRequireDefault(_makeResponsive).default;
-					}
-				});
+				var _makeResponsive2 = _interopRequireDefault(_makeResponsive);
 
 				var _measureItems = __webpack_require__(15);
 
-				Object.defineProperty(exports, 'measureItems', {
-					enumerable: true,
-					get: function get() {
-						return _interopRequireDefault(_measureItems).default;
-					}
-				});
+				var _measureItems2 = _interopRequireDefault(_measureItems);
+
+				var _pinterest = __webpack_require__(24);
+
+				var _pinterest2 = _interopRequireDefault(_pinterest);
+
+				var _simple = __webpack_require__(4);
+
+				var _simple2 = _interopRequireDefault(_simple);
 
 				var _foldDown = __webpack_require__(17);
 
@@ -20369,21 +20363,13 @@
 
 				var newspaper = _interopRequireWildcard(_newspaper);
 
-				var _simple = __webpack_require__(5);
+				var _simple3 = __webpack_require__(5);
 
-				var simpleEnterExit = _interopRequireWildcard(_simple);
+				var simpleEnterExit = _interopRequireWildcard(_simple3);
 
 				var _skew = __webpack_require__(23);
 
 				var skew = _interopRequireWildcard(_skew);
-
-				var _pinterest = __webpack_require__(24);
-
-				var _pinterest2 = _interopRequireDefault(_pinterest);
-
-				var _simple2 = __webpack_require__(4);
-
-				var _simple3 = _interopRequireDefault(_simple2);
 
 				var _easings = __webpack_require__(6);
 
@@ -20405,10 +20391,9 @@
 					return obj && obj.__esModule ? obj : { default: obj };
 				}
 
-				exports.easings = easings;
 				var layout = exports.layout = {
 					pinterest: _pinterest2.default,
-					simple: _simple3.default
+					simple: _simple2.default
 				};
 
 				var enterExitStyle = exports.enterExitStyle = {
@@ -20420,6 +20405,21 @@
 					newspaper: newspaper,
 					simple: simpleEnterExit,
 					skew: skew
+				};
+
+				exports.CSSGrid = _CSSGrid2.default;
+				exports.SpringGrid = _SpringGrid2.default;
+				exports.measureItems = _measureItems2.default;
+				exports.makeResponsive = _makeResponsive2.default;
+				exports.easings = easings;
+				exports.default = {
+					CSSGrid: _CSSGrid2.default,
+					SpringGrid: _SpringGrid2.default,
+					measureItems: _measureItems2.default,
+					makeResponsive: _makeResponsive2.default,
+					easings: easings,
+					layout: layout,
+					enterExitStyle: enterExitStyle
 				};
 
 				/***/

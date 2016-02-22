@@ -1,7 +1,9 @@
 import React from 'react';
 import d3Array from 'd3-array';
-import { makeResponsive, measureItems,
-  SpringGrid, layout, enterExitStyle } from '../../../lib/react-brickwork';
+import reactBrickwork, { makeResponsive, measureItems, layout } from '../../../lib/react-brickwork';
+
+const Grid = reactBrickwork.SpringGrid;
+const enterExitStyle = reactBrickwork.enterExitStyle.simple;
 
 const alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('');
 
@@ -15,7 +17,7 @@ cornhole microdosing fanny pack, bespoke kinfolk heirloom ennui viral
 dreamcatcher. Offal VHS helvetica meh.`;
 
 const ResponsiveGrid = makeResponsive(
-  measureItems(SpringGrid), {
+  measureItems(Grid), {
     maxWidth: 1200,
     minPadding: 100
   }
@@ -76,10 +78,11 @@ export default React.createClass({
           gutterWidth={5}
           gutterHeight={5}
           layout={layout.pinterest}
-          enter={enterExitStyle.simple.enter}
-          entered={enterExitStyle.simple.entered}
-          exit={enterExitStyle.simple.exit}
+          enter={enterExitStyle.enter}
+          entered={enterExitStyle.entered}
+          exit={enterExitStyle.exit}
           perspective={600}
+          // duration={800}
           // springConfig={{ stiffness: 60, damping: 9, precision: 0.1 }}
         >
           {items}
