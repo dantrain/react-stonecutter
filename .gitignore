@@ -13,4 +13,7 @@ Thumbs.db
 .sass-cache
 node_modules
 
+lib
+demo/dist
+
 public/bundle.js

@@ -1,4 +1,6 @@
 /* eslint-disable no-var */
+/* eslint-disable prefer-arrow-callback */
+/* eslint-disable prefer-template */
 
 var gulp          = require('gulp');
 var gutil         = require('gulp-util');
@@ -8,21 +10,21 @@ var webpack       = require('webpack');
 var assign        = require('lodash.assign');
 
 var webpackConfig = {
-  entry: './src/js/main.js',
+  entry: './src/main.js',
   output: {
     path: './public',
     filename: 'bundle.js'
   },
   module: {
     loaders: [
-        {
-          test: /\.jsx?$/,
-          exclude: /dist|public|node_modules/,
-          loader: 'babel',
-          query: {
-            presets: ['es2015', 'react', 'stage-2']
-          }
+      {
+        test: /\.jsx?$/,
+        exclude: /dist|public|node_modules/,
+        loader: 'babel',
+        query: {
+          presets: ['es2015', 'react', 'stage-2']
         }
+      }
     ]
   },
   resolve: {
