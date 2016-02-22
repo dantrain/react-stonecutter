@@ -4,7 +4,7 @@ import makeResponsive from '../higher-order-components/makeResponsive';
 import measureItems from '../higher-order-components/measureItems';
 import SpringGrid from '../components/SpringGrid';
 import pinterestLayout from '../layouts/pinterest';
-import { enter, entered, exit } from '../enter-exit-styles/newspaper';
+import { enter, entered, exit } from '../enter-exit-styles/simple';
 
 const alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('');
 
@@ -48,24 +48,20 @@ export default React.createClass({
     return d3Array.shuffle(alphabet)
       .slice(0, this.props.minItems +
         Math.floor(Math.random() * (26 - this.props.minItems)))
-      .sort()
-      .map(letter => ({
-        letter,
-        number: Math.floor(Math.random() * 100)
-      }));
+      .sort();
   },
 
   render() {
-    const items = this.state.data.map(d => {
-      const content = ipsum.slice(0, (d.letter.charCodeAt(0) % 3 + 1) * 50);
+    const items = this.state.data.map(letter => {
+      const content = ipsum.slice(0, (letter.charCodeAt(0) % 3 + 1) * 50);
 
       return (
         <li
           className="grid-item"
-          key={d.letter}
+          key={letter}
           style={{ width: 150 }}
         >
-          <h3>{d.letter.toUpperCase()} - {parseInt(d.number, 10)}</h3>
+          <h3>{letter.toUpperCase()}</h3>
           <p>{content}</p>
         </li>
       );

@@ -12,6 +12,7 @@ body {
   font-family: sans-serif;
   padding: 1em;
   overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 button {
@@ -30,11 +31,17 @@ button {
 
 .grid-item {
   font-size: 0.75rem;
-  text-align: center;
   padding: 20px 15px;
+  /*box-shadow: 0 2px 3px rgba(0, 0, 0, 0.075), 0 0 0 1px rgba(0,0,0,0.1);*/
+  /*border-radius: 4px;*/
+  /*background-color: white;*/
   background-color: #ccc;
   border-radius: 3px;
   border: 2px solid #aaa;
+}
+
+.grid-item h3 {
+  text-align: center;
 }
 
 .grid-item *:first-child {
