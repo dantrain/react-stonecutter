@@ -23679,24 +23679,26 @@
 
 							this.breakpoints = breakpoints.map(function (width, i, arr) {
 								return ['screen', i > 0 && '(min-width: ' + arr[i - 1] + 'px)', i < arr.length - 1 && '(max-width: ' + width + 'px)'].filter(Boolean).join(' and ');
-							});
-
-							this.breakpoints.forEach(function (breakpoint, i) {
-								return _enquire2.default.register(breakpoint, {
-									match: function match() {
+							}).map(function (breakpoint, i) {
+								return {
+									breakpoint: breakpoint,
+									handler: function handler() {
 										return _this.setState({ columns: i });
 									}
-								});
+								};
+							});
+
+							this.breakpoints.forEach(function (_ref2) {
+								var breakpoint = _ref2.breakpoint;
+								var handler = _ref2.handler;
+								return _enquire2.default.register(breakpoint, { match: handler });
 							});
 						},
 						componentWillUnmount: function componentWillUnmount() {
-							this.breakpoints.forEach(function (breakpoint) {
-								try {
-									_enquire2.default.unregister(breakpoint);
-								} catch (err) {
-									// https://github.com/WickyNilliams/enquire.js/issues/124
-									console.warn(err);
-								}
+							this.breakpoints.forEach(function (_ref3) {
+								var breakpoint = _ref3.breakpoint;
+								var handler = _ref3.handler;
+								return _enquire2.default.unregister(breakpoint, handler);
 							});
 						},
 						render: function render() {
