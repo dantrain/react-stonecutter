@@ -1,5 +1,6 @@
 import React from 'react';
-import d3Array from 'd3-array';
+import RadioGroup from 'react-radio-group';
+import shuffle from 'lodash.shuffle';
 import Grid from './Grid';
 
 const alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('');
@@ -23,7 +24,15 @@ export default React.createClass({
 
   getInitialState() {
     return {
-      data: this.generateData()
+      data: this.generateData(),
+      useCSS: false,
+      measured: true,
+      responsive: true,
+      layout: 'pinterest',
+      enterExitStyle: 'simple',
+      duration: 800,
+      stiffness: 60,
+      damping: 14
     };
   },
 
@@ -34,14 +43,16 @@ export default React.createClass({
   },
 
   generateData() {
-    return d3Array.shuffle(alphabet)
+    return shuffle(alphabet)
       .slice(0, this.props.minItems +
         Math.floor(Math.random() * (26 - this.props.minItems)))
       .sort();
   },
 
   render() {
-    const items = this.state.data.map(letter => {
+    const { data, ...gridProps } = this.state;
+
+    const items = data.map(letter => {
       const content = ipsum.slice(0, (letter.charCodeAt(0) % 3 + 1) * 50);
 
       return (
@@ -58,16 +69,32 @@ export default React.createClass({
 
     return (
       <div>
-        <button
-          onClick={this.handleShuffle}
-        >Randomize</button>
+        <div>
+          <RadioGroup
+            name="useCSS"
+            selectedValue={this.state.useCSS ? 'css' : 'spring'}
+            onChange={value => this.setState({ useCSS: value === 'css' })}
+          >
+            {Radio => (
+              <div>
+                <label><Radio value="spring" />React Motion</label>
+                <label><Radio value="css" />CSS Transitions</label>
+              </div>
+            )}
+          </RadioGroup>
+          <label>
+            <input
+              type="checkbox"
+              checked={this.state.responsive}
+              onChange={ev => this.setState({ responsive: ev.target.checked })}
+            />Responsive
+          </label>
+          <button
+            onClick={this.handleShuffle}
+          >Randomize</button>
+        </div>
         <Grid
-          // useCSS
-          // duration={800}
-          measured
-          responsive
-          layout="pinterest"
-          enterExitStyle="simple"
+          {...gridProps}
         >
           {items}
         </Grid>

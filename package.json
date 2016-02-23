@@ -18,15 +18,16 @@
     "gulp": "^3.9.1",
     "gulp-util": "^3.0.7",
     "lodash.assign": "^4.0.3",
+    "lodash.isequalwith": "^4.1.0",
+    "lodash.shuffle": "^4.0.0",
     "node-libs-browser": "^1.0.0",
     "node-notifier": "^4.5.0",
+    "react-radio-group": "^2.2.0",
     "webpack": "^1.12.13"
   },
   "dependencies": {
-    "d3-array": "^0.7.1",
     "enquire.js": "^2.1.1",
     "lodash.isequal": "^4.1.0",
-    "lodash.isequalwith": "^4.1.0",
     "lodash.partition": "^4.2.0",
     "react": "^0.14.7",
     "react-addons-transition-group": "^0.14.7",

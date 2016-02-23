@@ -38,7 +38,14 @@ export default (Grid, { maxWidth, minPadding = 0, defaultColumns = 4 } = {}) =>
     },
 
     componentWillUnmount() {
-      this.breakpoints.forEach(breakpoint => enquire.unregister(breakpoint));
+      this.breakpoints.forEach(breakpoint => {
+        try {
+          enquire.unregister(breakpoint);
+        } catch (err) {
+          // https://github.com/WickyNilliams/enquire.js/issues/124
+          console.warn(err);
+        }
+      });
     },
 
     render() {
