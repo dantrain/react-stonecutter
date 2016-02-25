@@ -6,18 +6,18 @@ import Grid from './Grid';
 
 const alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('');
 
-const ipsum = `Hashtag hoodie food truck XOXO gastropub asymmetrical.
-Viral actually sartorial thundercats fixie next level. Ethical skateboard
+const ipsum = `Hashtag hoodie food truck XOXO gastropub asymmetrical
+Viral actually sartorial thundercats fixie next level Ethical skateboard
 put a bird on it bespoke, brunch small batch photo booth fashion axe
-actually cronut poutine fanny pack microdosing church-key. Post-ironic
+actually cronut poutine fanny pack microdosing church-key Post-ironic
 90's pug, master cleanse keytar normcore aesthetic viral crucifix selvage
-gastropub. Echo park yr organic typewriter blog. Health goth literally
+gastropub Echo park yr organic typewriter blog Health goth literally
 cornhole microdosing fanny pack, bespoke kinfolk heirloom ennui viral
-dreamcatcher. Offal VHS helvetica meh.`;
+dreamcatcher Offal VHS helvetica meh`.split(' ');
 
 const layouts = ['Pinterest', 'Simple'];
 const enterExitStyles = ['Simple', 'Skew', 'Newspaper',
-  'Fold Down', 'From Center', 'From Left to Right', 'From Top', 'From Top to Bottom'];
+  'Fold Up', 'From Center', 'From Left to Right', 'From Top', 'From Top to Bottom'];
 
 export default React.createClass({
 
@@ -58,10 +58,11 @@ export default React.createClass({
     const { data, ...gridProps } = this.state;
     const { useCSS, layout, enterExitStyle, responsive } = this.state;
 
-    const itemHeight = layout === 'simple' ? 200 : null;
+    const itemHeight = layout === 'simple' ? 215 : null;
 
     const items = data.map(letter => {
-      const content = ipsum.slice(0, (letter.charCodeAt(0) % 3 + 1) * 50);
+      const contentIndex = letter.charCodeAt(0) % 5 + 1;
+      const content = ipsum.slice(contentIndex * 5, contentIndex * 9).join(' ');
 
       return (
         <li

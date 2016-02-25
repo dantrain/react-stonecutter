@@ -7,7 +7,7 @@ import { default as measureItems } from './higher-order-components/measureItems'
 import { default as pinterest } from './layouts/pinterest';
 import { default as simpleLayout } from './layouts/simple';
 
-import * as foldDown from './enter-exit-styles/foldDown';
+import * as foldUp from './enter-exit-styles/foldUp';
 import * as fromCenter from './enter-exit-styles/fromCenter';
 import * as fromLeftToRight from './enter-exit-styles/fromLeftToRight';
 import * as fromTop from './enter-exit-styles/fromTop';
@@ -24,7 +24,7 @@ export const layout = {
 };
 
 export const enterExitStyle = {
-  foldDown,
+  foldUp,
   fromCenter,
   fromLeftToRight,
   fromTop,
