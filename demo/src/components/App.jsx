@@ -128,6 +128,7 @@ export default React.createClass({
                 onChange={val => this.setState({ gutters: val })}
                 min={0}
                 max={20}
+                tipFormatter={val => `${val}px`}
               />
             </div>
           </div>

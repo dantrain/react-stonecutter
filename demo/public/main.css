@@ -26,7 +26,7 @@ button {
 .slider-container {
   display: inline-block;
   width: 200px;
-  padding: 3px 10px;
+  padding: 3px 5px;
 }
 
 .rc-slider {
@@ -43,6 +43,10 @@ button {
 
 .rc-slider-handle:hover {
   border-color: #666;
+}
+
+.rc-tooltip-placement-top {
+  top: 34px !important;
 }
 
 .grid {
