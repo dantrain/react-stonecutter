@@ -3,7 +3,6 @@ import ReactTransitionGroup from 'react-addons-transition-group';
 import simpleLayout from '../layouts/simple';
 import * as simpleEnterExit from '../enter-exit-styles/simple';
 import { quartOut } from '../utils/easings';
-import { defaultUnits } from '../utils/transformHelpers';
 import CSSGridItem from './CSSGridItem';
 
 export default React.createClass({

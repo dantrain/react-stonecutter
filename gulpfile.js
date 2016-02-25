@@ -7,6 +7,7 @@ var gutil         = require('gulp-util');
 var notifier      = require('node-notifier');
 var browserSync   = require('browser-sync');
 var webpack       = require('webpack');
+var eslint        = require('gulp-eslint');
 var assign        = require('lodash.assign');
 
 var sharedWebpackConfig = {
@@ -113,6 +114,13 @@ gulp.task('watch', function() {
       e.path.substring(e.path.lastIndexOf('/') + 1)) + ' ' +
       gutil.colors.cyan(e.type + '...'));
   });
+});
+
+gulp.task('lint', function() {
+  return gulp.src(['src/**/*.js*(x)', 'demo/src/**/*.js*(x)'])
+    .pipe(eslint())
+    .pipe(eslint.format())
+    .pipe(eslint.failAfterError());
 });
 
 gulp.task('default', ['browser-sync', 'watch']);

@@ -32,11 +32,10 @@ export const buildTransform = (style, perspective, units) => {
   properties.forEach(prop => {
     if (prop.name === 'perspective') {
       if (typeof perspective !== 'undefined') {
-        arr.push('perspective(' + perspective + units[prop.unit] + ')');
+        arr.push(`perspective(${perspective}${units[prop.unit]})`);
       }
     } else if (typeof style[prop.name] !== 'undefined') {
-      arr.push(prop.name + '(' + style[prop.name] +
-                (prop.unit ? units[prop.unit] : '') + ')');
+      arr.push(`${prop.name}(${style[prop.name]}${prop.unit ? units[prop.unit] : ''})`);
     }
   });
 
