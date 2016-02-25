@@ -1,5 +1,6 @@
 import React from 'react';
 import RadioGroup from 'react-radio-group';
+import Slider from 'rc-slider';
 import shuffle from 'lodash.shuffle';
 import camelCase from 'lodash.camelcase';
 import Grid from './Grid';
@@ -32,12 +33,13 @@ export default React.createClass({
       data: this.generateData(),
       useCSS: false,
       measured: true,
-      responsive: true,
+      responsive: false,
       layout: camelCase(layouts[0]),
       enterExitStyle: camelCase(enterExitStyles[0]),
       duration: 800,
       stiffness: 60,
-      damping: 14
+      damping: 14,
+      gutters: 5
     };
   },
 
@@ -56,7 +58,7 @@ export default React.createClass({
 
   render() {
     const { data, ...gridProps } = this.state;
-    const { useCSS, layout, enterExitStyle, responsive } = this.state;
+    const { useCSS, layout, enterExitStyle, responsive, gutters } = this.state;
 
     const itemHeight = layout === 'simple' ? 215 : null;
 
@@ -100,10 +102,7 @@ export default React.createClass({
               onChange={ev => this.setState({ layout: ev.target.value })}
             >
               {layouts.map(name =>
-                <option
-                  value={camelCase(name)}
-                  key={name}
-                >{name}</option>)}
+                <option value={camelCase(name)} key={name}>{name}</option>)}
             </select>
           </label>
           <label>{'Enter/Exit Style '}
@@ -112,10 +111,7 @@ export default React.createClass({
               onChange={ev => this.setState({ enterExitStyle: ev.target.value })}
             >
               {enterExitStyles.map(name =>
-                <option
-                  value={camelCase(name)}
-                  key={name}
-                >{name}</option>)}
+                <option value={camelCase(name)} key={name}>{name}</option>)}
             </select>
           </label>
           <label>
@@ -125,6 +121,16 @@ export default React.createClass({
               onChange={ev => this.setState({ responsive: ev.target.checked })}
             />Responsive
           </label>
+          <div>{'Gutters '}
+            <div className="slider-container">
+              <Slider
+                value={gutters}
+                onChange={val => this.setState({ gutters: val })}
+                min={0}
+                max={20}
+              />
+            </div>
+          </div>
           <button
             onClick={this.handleShuffle}
           >Randomize</button>

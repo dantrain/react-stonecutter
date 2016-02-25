@@ -23,6 +23,28 @@ button {
   display: block;
 }
 
+.slider-container {
+  display: inline-block;
+  width: 200px;
+  padding: 3px 10px;
+}
+
+.rc-slider {
+  background-color: #ddd;
+}
+
+.rc-slider-track {
+  background-color: #999;
+}
+
+.rc-slider-handle {
+  border-color: #888;
+}
+
+.rc-slider-handle:hover {
+  border-color: #666;
+}
+
 .grid {
   list-style: none;
   padding: 0;

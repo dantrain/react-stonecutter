@@ -36,7 +36,7 @@ export default React.createClass({
 
   render() {
     const { children, useCSS, responsive, layout, enterExitStyle,
-      duration, stiffness, damping, ...rest } = this.props;
+      duration, stiffness, damping, gutters, ...rest } = this.props;
 
     const { Grid } = this.state;
 
@@ -50,8 +50,8 @@ export default React.createClass({
         component="ul"
         columns={!responsive ? 5 : null}
         columnWidth={150}
-        gutterWidth={5}
-        gutterHeight={5}
+        gutterWidth={gutters}
+        gutterHeight={gutters}
         layout={gridLayout}
         enter={gridEnterExitStyle.enter}
         entered={gridEnterExitStyle.entered}

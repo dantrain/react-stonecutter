@@ -33,6 +33,7 @@
     "lodash.shuffle": "^4.0.0",
     "node-libs-browser": "^1.0.0",
     "node-notifier": "^4.5.0",
+    "rc-slider": "^3.3.2",
     "react-radio-group": "^2.2.0",
     "webpack": "^1.12.13"
   },
