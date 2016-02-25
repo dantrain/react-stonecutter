@@ -36,7 +36,7 @@ export default React.createClass({
 
   render() {
     const { children, useCSS, responsive, layout, enterExitStyle,
-      duration, stiffness, damping } = this.props;
+      duration, stiffness, damping, ...rest } = this.props;
 
     const { Grid } = this.state;
 
@@ -45,6 +45,7 @@ export default React.createClass({
 
     return (
       <Grid
+        {...rest}
         className="grid"
         component="ul"
         columns={!responsive ? 5 : null}

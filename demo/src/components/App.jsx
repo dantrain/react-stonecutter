@@ -1,6 +1,7 @@
 import React from 'react';
 import RadioGroup from 'react-radio-group';
 import shuffle from 'lodash.shuffle';
+import camelCase from 'lodash.camelcase';
 import Grid from './Grid';
 
 const alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('');
@@ -13,6 +14,10 @@ actually cronut poutine fanny pack microdosing church-key. Post-ironic
 gastropub. Echo park yr organic typewriter blog. Health goth literally
 cornhole microdosing fanny pack, bespoke kinfolk heirloom ennui viral
 dreamcatcher. Offal VHS helvetica meh.`;
+
+const layouts = ['Pinterest', 'Simple'];
+const enterExitStyles = ['Simple', 'Skew', 'Newspaper',
+  'Fold Down', 'From Center', 'From Left to Right', 'From Top', 'From Top to Bottom'];
 
 export default React.createClass({
 
@@ -28,8 +33,8 @@ export default React.createClass({
       useCSS: false,
       measured: true,
       responsive: true,
-      layout: 'pinterest',
-      enterExitStyle: 'simple',
+      layout: camelCase(layouts[0]),
+      enterExitStyle: camelCase(enterExitStyles[0]),
       duration: 800,
       stiffness: 60,
       damping: 14
@@ -51,6 +56,9 @@ export default React.createClass({
 
   render() {
     const { data, ...gridProps } = this.state;
+    const { useCSS, layout, enterExitStyle, responsive } = this.state;
+
+    const itemHeight = layout === 'simple' ? 200 : null;
 
     const items = data.map(letter => {
       const content = ipsum.slice(0, (letter.charCodeAt(0) % 3 + 1) * 50);
@@ -59,7 +67,10 @@ export default React.createClass({
         <li
           className="grid-item"
           key={letter}
-          style={{ width: 150 }}
+          style={{
+            width: 150,
+            height: itemHeight
+          }}
         >
           <h3>{letter.toUpperCase()}</h3>
           <p>{content}</p>
@@ -72,7 +83,7 @@ export default React.createClass({
         <div>
           <RadioGroup
             name="useCSS"
-            selectedValue={this.state.useCSS ? 'css' : 'spring'}
+            selectedValue={useCSS ? 'css' : 'spring'}
             onChange={value => this.setState({ useCSS: value === 'css' })}
           >
             {Radio => (
@@ -82,10 +93,34 @@ export default React.createClass({
               </div>
             )}
           </RadioGroup>
+          <label>{'Layout '}
+            <select
+              value={layout}
+              onChange={ev => this.setState({ layout: ev.target.value })}
+            >
+              {layouts.map(name =>
+                <option
+                  value={camelCase(name)}
+                  key={name}
+                >{name}</option>)}
+            </select>
+          </label>
+          <label>{'Enter/Exit Style '}
+            <select
+              value={enterExitStyle}
+              onChange={ev => this.setState({ enterExitStyle: ev.target.value })}
+            >
+              {enterExitStyles.map(name =>
+                <option
+                  value={camelCase(name)}
+                  key={name}
+                >{name}</option>)}
+            </select>
+          </label>
           <label>
             <input
               type="checkbox"
-              checked={this.state.responsive}
+              checked={responsive}
               onChange={ev => this.setState({ responsive: ev.target.checked })}
             />Responsive
           </label>
@@ -94,6 +129,7 @@ export default React.createClass({
           >Randomize</button>
         </div>
         <Grid
+          itemHeight={itemHeight}
           {...gridProps}
         >
           {items}
