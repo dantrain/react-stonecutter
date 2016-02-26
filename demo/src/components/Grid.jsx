@@ -36,7 +36,7 @@ export default React.createClass({
 
   render() {
     const { children, useCSS, responsive, layout, enterExitStyle,
-      duration, stiffness, damping, gutters, ...rest } = this.props;
+      duration, easing, stiffness, damping, gutters, ...rest } = this.props;
 
     const { Grid } = this.state;
 
@@ -58,8 +58,9 @@ export default React.createClass({
         exit={gridEnterExitStyle.exit}
         perspective={600}
         duration={useCSS ? duration : null}
+        easing={useCSS ? easing : null}
         springConfig={!useCSS && stiffness && damping ?
-          { stiffness, damping, precision: 0.1 } : null}
+          { stiffness, damping } : null}
       >
         {children}
       </Grid>

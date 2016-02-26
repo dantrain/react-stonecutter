@@ -4,6 +4,7 @@ import Slider from 'rc-slider';
 import shuffle from 'lodash.shuffle';
 import camelCase from 'lodash.camelcase';
 import Grid from './Grid';
+import { easings } from '../../../lib/react-brickwork';
 
 const alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('');
 
@@ -39,7 +40,8 @@ export default React.createClass({
       duration: 800,
       stiffness: 60,
       damping: 14,
-      gutters: 5
+      gutters: 5,
+      easing: easings.quartOut
     };
   },
 
@@ -58,7 +60,8 @@ export default React.createClass({
 
   render() {
     const { data, ...gridProps } = this.state;
-    const { useCSS, layout, enterExitStyle, responsive, gutters } = this.state;
+    const { useCSS, layout, enterExitStyle, responsive, gutters,
+      stiffness, damping, duration, easing } = this.state;
 
     const itemHeight = layout === 'simple' ? 215 : null;
 
@@ -114,6 +117,16 @@ export default React.createClass({
                 <option value={camelCase(name)} key={name}>{name}</option>)}
             </select>
           </label>
+          <label>{'Easing '}
+            <select
+              value={easing}
+              onChange={ev => this.setState({ easing: ev.target.value })}
+              disabled={!useCSS}
+            >
+              {Object.keys(easings).map(name =>
+                <option value={easings[name]} key={name}>{name}</option>)}
+            </select>
+          </label>
           <label>
             <input
               type="checkbox"
@@ -121,7 +134,7 @@ export default React.createClass({
               onChange={ev => this.setState({ responsive: ev.target.checked })}
             />Responsive
           </label>
-          <div>{'Gutters '}
+          <div className="slider">{'Gutters '}
             <div className="slider-container">
               <Slider
                 value={gutters}
@@ -129,6 +142,41 @@ export default React.createClass({
                 min={0}
                 max={20}
                 tipFormatter={val => `${val}px`}
+              />
+            </div>
+          </div>
+          <div className="slider">{'Stiffness '}
+            <div className="slider-container">
+              <Slider
+                value={stiffness}
+                onChange={val => this.setState({ stiffness: val })}
+                min={0}
+                max={300}
+                disabled={useCSS}
+              />
+            </div>
+          </div>
+          <div className="slider">{'Damping '}
+            <div className="slider-container">
+              <Slider
+                value={damping}
+                onChange={val => this.setState({ damping: val })}
+                min={0}
+                max={40}
+                disabled={useCSS}
+              />
+            </div>
+          </div>
+          <div className="slider">{'Duration '}
+            <div className="slider-container">
+              <Slider
+                value={duration}
+                onChange={val => this.setState({ duration: val })}
+                min={100}
+                max={2000}
+                step={10}
+                disabled={!useCSS}
+                tipFormatter={val => `${val}ms`}
               />
             </div>
           </div>

@@ -10,22 +10,31 @@ body {
   background-color: #eee;
   color: #333;
   font-family: sans-serif;
-  padding: 1em;
+  padding: 0.5em 1em;
   overflow-y: scroll;
   overflow-x: hidden;
 }
 
 button {
-  margin: 0 0 1.5em;
+  margin: 8px 0 1.5em;
   padding: 0 1em;
   line-height: 2em;
   font-size: 1em;
   display: block;
 }
 
+label {
+  display: inline-block;
+  padding: 6px 10px 6px 0;
+}
+
+.slider {
+  padding: 6px 0;
+}
+
 .slider-container {
   display: inline-block;
-  width: 200px;
+  width: 400px;
   padding: 3px 5px;
 }
 
@@ -43,10 +52,6 @@ button {
 
 .rc-slider-handle:hover {
   border-color: #666;
-}
-
-.rc-tooltip-placement-top {
-  top: 34px !important;
 }
 
 .grid {
