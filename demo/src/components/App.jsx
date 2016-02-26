@@ -19,7 +19,7 @@ dreamcatcher Offal VHS helvetica meh`.split(' ');
 
 const layouts = ['Pinterest', 'Simple'];
 const enterExitStyles = ['Simple', 'Skew', 'Newspaper',
-  'Fold Up', 'From Center', 'From Left to Right', 'From Top', 'From Top to Bottom'];
+  'Fold Up', 'From Center', 'From Left to Right', 'From Top', 'From Bottom'];
 
 export default React.createClass({
 
@@ -86,7 +86,7 @@ export default React.createClass({
 
     return (
       <div>
-        <div>
+        <div className="controls">
           <RadioGroup
             name="useCSS"
             selectedValue={useCSS ? 'css' : 'spring'}

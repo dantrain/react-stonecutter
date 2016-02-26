@@ -11,7 +11,7 @@ import * as foldUp from './enter-exit-styles/foldUp';
 import * as fromCenter from './enter-exit-styles/fromCenter';
 import * as fromLeftToRight from './enter-exit-styles/fromLeftToRight';
 import * as fromTop from './enter-exit-styles/fromTop';
-import * as fromTopToBottom from './enter-exit-styles/fromTopToBottom';
+import * as fromBottom from './enter-exit-styles/fromBottom';
 import * as newspaper from './enter-exit-styles/newspaper';
 import * as simpleEnterExit from './enter-exit-styles/simple';
 import * as skew from './enter-exit-styles/skew';
@@ -28,7 +28,7 @@ export const enterExitStyle = {
   fromCenter,
   fromLeftToRight,
   fromTop,
-  fromTopToBottom,
+  fromBottom,
   newspaper,
   simple: simpleEnterExit,
   skew

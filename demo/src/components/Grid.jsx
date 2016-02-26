@@ -26,7 +26,7 @@ export default React.createClass({
 
     if (responsive) {
       Grid = makeResponsive(Grid, {
-        maxWidth: 1200,
+        maxWidth: 1920,
         minPadding: 100
       });
     }
