@@ -18,7 +18,9 @@ export default React.createClass({
 
   componentWillReceiveProps(nextProps) {
     if (!isEqual(nextProps, this.props)) {
-      this.setEndStyle(nextProps, 2);
+      requestAnimationFrame(() => {
+        this.setEndStyle(nextProps, 2);
+      });
     }
   },
 
@@ -28,8 +30,10 @@ export default React.createClass({
   },
 
   componentWillAppear(done) {
-    this.setEndStyle(this.props, 2);
-    done();
+    requestAnimationFrame(() => {
+      this.setEndStyle(this.props, 2);
+      done();
+    });
   },
 
   componentWillEnter(done) {
@@ -51,11 +55,13 @@ export default React.createClass({
   },
 
   componentDidEnter() {
-    this.setEndStyle(this.props, 1);
+    requestAnimationFrame(() => {
+      this.setEndStyle(this.props, 1);
+    });
   },
 
   componentWillLeave(done) {
-    this.remove = done;
+    this._remove = done;
     const { gridProps, gridState } = this.props;
 
     requestAnimationFrame(() => {
@@ -76,23 +82,21 @@ export default React.createClass({
   setEndStyle(props, zIndex) {
     clearTimeout(this.leaveTimeout);
 
-    if (this.remove) {
-      this.remove();
-      this.remove = null;
+    if (this._remove) {
+      this._remove();
+      this._remove = null;
       return;
     }
 
     const { position, gridProps, gridState } = props;
 
-    requestAnimationFrame(() => {
-      this.setState({
-        style: {
-          ...this.state.style,
-          zIndex,
-          ...gridProps.entered(props, gridProps, gridState),
-          ...positionToProperties(position)
-        }
-      });
+    this.setState({
+      style: {
+        ...this.state.style,
+        zIndex,
+        ...gridProps.entered(props, gridProps, gridState),
+        ...positionToProperties(position)
+      }
     });
   },
 
