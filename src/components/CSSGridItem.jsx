@@ -12,6 +12,10 @@ export default React.createClass({
     };
   },
 
+  componentDidMount() {
+    this._isMounted = true;
+  },
+
   componentWillReceiveProps(nextProps) {
     if (!isEqual(nextProps, this.props)) {
       this.setEndStyle(nextProps, 2);
@@ -19,8 +23,8 @@ export default React.createClass({
   },
 
   componentWillUnmount() {
+    this._isMounted = false;
     clearTimeout(this.leaveTimeout);
-    clearTimeout(this.enterTimeout);
   },
 
   componentWillAppear(done) {
@@ -32,36 +36,41 @@ export default React.createClass({
     clearTimeout(this.leaveTimeout);
     const { position, gridProps, gridState } = this.props;
 
-    this.setState({
-      style: {
-        ...this.state.style,
-        ...positionToProperties(position),
-        zIndex: 1,
-        ...gridProps.enter(this.props, gridProps, gridState)
-      }
-    });
+    requestAnimationFrame(() => {
+      this.setState({
+        style: {
+          ...this.state.style,
+          ...positionToProperties(position),
+          zIndex: 1,
+          ...gridProps.enter(this.props, gridProps, gridState)
+        }
+      });
 
-    this.enterTimeout = setTimeout(() => {
-      this.setEndStyle(this.props, 1);
       done();
-    }, 17);
+    });
+  },
+
+  componentDidEnter() {
+    this.setEndStyle(this.props, 1);
   },
 
   componentWillLeave(done) {
     this.remove = done;
     const { gridProps, gridState } = this.props;
 
-    this.leaveTimeout = setTimeout(() => {
-      this.setState({
-        style: {
-          ...this.state.style,
-          zIndex: 0,
-          ...gridProps.exit(this.props, gridProps, gridState)
-        }
-      });
+    requestAnimationFrame(() => {
+      if (this._isMounted) {
+        this.setState({
+          style: {
+            ...this.state.style,
+            zIndex: 0,
+            ...gridProps.exit(this.props, gridProps, gridState)
+          }
+        });
 
-      this.leaveTimeout = setTimeout(done, this.props.duration);
-    }, 0);
+        this.leaveTimeout = setTimeout(done, this.props.duration);
+      }
+    });
   },
 
   setEndStyle(props, zIndex) {
@@ -70,17 +79,20 @@ export default React.createClass({
     if (this.remove) {
       this.remove();
       this.remove = null;
+      return;
     }
 
     const { position, gridProps, gridState } = props;
 
-    this.setState({
-      style: {
-        ...this.state.style,
-        zIndex,
-        ...gridProps.entered(props, gridProps, gridState),
-        ...positionToProperties(position)
-      }
+    requestAnimationFrame(() => {
+      this.setState({
+        style: {
+          ...this.state.style,
+          zIndex,
+          ...gridProps.entered(props, gridProps, gridState),
+          ...positionToProperties(position)
+        }
+      });
     });
   },
 
