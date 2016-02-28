@@ -30,25 +30,28 @@ export default React.createClass({
   },
 
   componentWillAppear(done) {
-    requestAnimationFrame(() => {
-      this.setEndStyle(this.props, 2);
-      done();
-    });
+    this.setEndStyle(this.props, 2);
+    done();
   },
 
   componentWillEnter(done) {
+    const wasLeaving = this._isLeaving;
+    this._isLeaving = false;
     clearTimeout(this.leaveTimeout);
+
     const { position, gridProps, gridState } = this.props;
 
     requestAnimationFrame(() => {
-      this.setState({
-        style: {
-          ...this.state.style,
-          ...positionToProperties(position),
-          zIndex: 1,
-          ...gridProps.enter(this.props, gridProps, gridState)
-        }
-      });
+      if (!wasLeaving) {
+        this.setState({
+          style: {
+            ...this.state.style,
+            ...positionToProperties(position),
+            zIndex: 1,
+            ...gridProps.enter(this.props, gridProps, gridState)
+          }
+        });
+      }
 
       done();
     });
@@ -56,7 +59,9 @@ export default React.createClass({
 
   componentDidEnter() {
     requestAnimationFrame(() => {
-      this.setEndStyle(this.props, 1);
+      requestAnimationFrame(() => {
+        this.setEndStyle(this.props, 1);
+      });
     });
   },
 
@@ -66,6 +71,8 @@ export default React.createClass({
 
     requestAnimationFrame(() => {
       if (this._isMounted) {
+        this._isLeaving = true;
+
         this.setState({
           style: {
             ...this.state.style,
@@ -87,6 +94,8 @@ export default React.createClass({
       this._remove = null;
       return;
     }
+
+    if (!this._isMounted) return;
 
     const { position, gridProps, gridState } = props;
 
@@ -125,7 +134,9 @@ export default React.createClass({
         zIndex,
         opacity,
         transform,
-        transition
+        transition,
+        WebkitTransform: transform,
+        WebkitTransition: transition
       }
     });
   }

@@ -32,8 +32,7 @@ export default React.createClass({
   getInitialState() {
     return {
       data: this.generateData(),
-      useCSS: true,
-      measured: true,
+      useCSS: false,
       responsive: false,
       layout: camelCase(layouts[0]),
       enterExitStyle: camelCase(enterExitStyles[0]),
@@ -186,6 +185,7 @@ export default React.createClass({
         </div>
         <Grid
           itemHeight={itemHeight}
+          measured={layout !== 'simple'}
           {...gridProps}
         >
           {items}

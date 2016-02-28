@@ -132,7 +132,9 @@ export default React.createClass({
                 left: 0,
                 zIndex,
                 opacity,
-                transform
+                transform,
+                WebkitTransform: transform,
+                msTransform: transform
               }
             });
           }))}
