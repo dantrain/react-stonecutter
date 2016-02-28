@@ -32,7 +32,7 @@ export default React.createClass({
   getInitialState() {
     return {
       data: this.generateData(),
-      useCSS: false,
+      useCSS: true,
       measured: true,
       responsive: false,
       layout: camelCase(layouts[0]),
@@ -41,7 +41,7 @@ export default React.createClass({
       stiffness: 60,
       damping: 14,
       gutters: 5,
-      easing: easings.quartOut
+      easing: easings.cubicOut
     };
   },
 

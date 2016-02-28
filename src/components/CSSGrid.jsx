@@ -2,7 +2,7 @@ import React from 'react';
 import ReactTransitionGroup from 'react-addons-transition-group';
 import simpleLayout from '../layouts/simple';
 import * as simpleEnterExit from '../enter-exit-styles/simple';
-import { quartOut } from '../utils/easings';
+import { cubicOut } from '../utils/easings';
 import CSSGridItem from './CSSGridItem';
 
 export default React.createClass({
@@ -31,7 +31,7 @@ export default React.createClass({
       enter: simpleEnterExit.enter,
       entered: simpleEnterExit.entered,
       exit: simpleEnterExit.exit,
-      easing: quartOut
+      easing: cubicOut
     };
   },
 
