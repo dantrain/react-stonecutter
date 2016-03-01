@@ -10,6 +10,8 @@ var webpack       = require('webpack');
 var eslint        = require('gulp-eslint');
 var filter        = require('gulp-filter');
 var rename        = require('gulp-rename');
+var shell         = require('gulp-shell');
+var runSequence   = require('run-sequence');
 var assign        = require('lodash.assign');
 
 var sharedWebpackConfig = {
@@ -131,6 +133,29 @@ gulp.task('watch', function() {
   });
 
   gulp.watch('demo/src/*.@(html|css)', ['demo-html-css']);
+});
+
+gulp.task('gh-pages-start', shell.task([
+  'git stash',
+  'git checkout gh-pages'
+]));
+
+gulp.task('gh-pages-middle', function() {
+  return gulp.src('./demo/public/**/*')
+    .pipe(gulp.dest('./'));
+});
+
+gulp.task('gh-pages-end', shell.task([
+  'git add *.html',
+  'git add *.css',
+  'git add *.js',
+  'git commit --amend --no-edit',
+  'git checkout master',
+  'git stash apply'
+]));
+
+gulp.task('gh-pages', function(done) {
+  runSequence('gh-pages-start', 'gh-pages-middle', 'gh-pages-end', done);
 });
 
 gulp.task('lint', function() {
