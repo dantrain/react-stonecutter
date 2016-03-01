@@ -39,6 +39,7 @@ export default React.createClass({
       duration: 800,
       stiffness: 60,
       damping: 14,
+      columns: 5,
       gutters: 5,
       easing: easings.cubicOut
     };
@@ -59,7 +60,7 @@ export default React.createClass({
 
   render() {
     const { data, ...gridProps } = this.state;
-    const { useCSS, layout, enterExitStyle, responsive, gutters,
+    const { useCSS, layout, enterExitStyle, responsive, columns, gutters,
       stiffness, damping, duration, easing } = this.state;
 
     const itemHeight = layout === 'simple' ? 215 : null;
@@ -133,6 +134,17 @@ export default React.createClass({
               onChange={ev => this.setState({ responsive: ev.target.checked })}
             />Responsive
           </label>
+          <div className="slider">{'Columns '}
+            <div className="slider-container">
+              <Slider
+                value={columns}
+                onChange={val => this.setState({ columns: val })}
+                min={1}
+                max={8}
+                disabled={responsive}
+              />
+            </div>
+          </div>
           <div className="slider">{'Gutters '}
             <div className="slider-container">
               <Slider
