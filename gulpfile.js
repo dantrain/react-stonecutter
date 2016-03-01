@@ -111,8 +111,8 @@ gulp.task('browser-sync', ['webpack', 'demo-html-css'], function() {
 });
 
 gulp.task('demo-html-css', function() {
-  var sliderCssFilter = filter('node_modules/rc-slider/assets/index.css', {
-    restore: true });
+  var sliderCssFilter = filter('node_modules/rc-slider/assets/index.css',
+                               { restore: true });
 
   return gulp.src(['demo/src/*.@(html|css)',
     'node_modules/rc-slider/assets/index.css'])
