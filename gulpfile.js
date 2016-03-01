@@ -140,7 +140,7 @@ gulp.task('gh-pages-start', shell.task([
   'git checkout gh-pages'
 ]));
 
-gulp.task('gh-pages-middle', function() {
+gulp.task('copy-demo-to-root', function() {
   return gulp.src('./demo/public/**/*')
     .pipe(gulp.dest('./'));
 });
@@ -154,7 +154,7 @@ gulp.task('gh-pages-end', shell.task([
 ]));
 
 gulp.task('gh-pages', function(done) {
-  runSequence('gh-pages-start', 'gh-pages-middle', 'gh-pages-end', done);
+  runSequence('gh-pages-start', 'copy-demo-to-root', 'gh-pages-end', done);
 });
 
 gulp.task('lint', function() {
