@@ -146,10 +146,9 @@ gulp.task('gh-pages-middle', function() {
 });
 
 gulp.task('gh-pages-end', shell.task([
-  'git add *.html',
-  'git add *.css',
-  'git add *.js',
+  'git add index.html demo.js *.css',
   'git commit --amend --no-edit',
+  'git push origin gh-pages --force',
   'git checkout master',
   'git stash apply'
 ]));
