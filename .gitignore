@@ -15,5 +15,5 @@ node_modules
 
 lib
 
-demo/public/demo.js
+demo/public
 public/bundle.js

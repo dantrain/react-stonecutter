@@ -8,6 +8,8 @@ var notifier      = require('node-notifier');
 var browserSync   = require('browser-sync');
 var webpack       = require('webpack');
 var eslint        = require('gulp-eslint');
+var filter        = require('gulp-filter');
+var rename        = require('gulp-rename');
 var assign        = require('lodash.assign');
 
 var sharedWebpackConfig = {
@@ -99,7 +101,7 @@ gulp.task('webpack', function(done) {
   });
 });
 
-gulp.task('browser-sync', ['webpack'], function() {
+gulp.task('browser-sync', ['webpack', 'demo-html-css'], function() {
   browserSync({
     notify: false,
     server: {
@@ -108,12 +110,27 @@ gulp.task('browser-sync', ['webpack'], function() {
   });
 });
 
+gulp.task('demo-html-css', function() {
+  var sliderCssFilter = filter('node_modules/rc-slider/assets/index.css', {
+    restore: true });
+
+  return gulp.src(['demo/src/*.@(html|css)',
+    'node_modules/rc-slider/assets/index.css'])
+    .pipe(sliderCssFilter)
+    .pipe(rename('rc-slider.css'))
+    .pipe(sliderCssFilter.restore)
+    .pipe(gulp.dest('demo/public'))
+    .pipe(browserSync.reload({ stream: true }));
+});
+
 gulp.task('watch', function() {
   gulp.watch('src/js/**/*', function(e) {
     gutil.log(gutil.colors.magenta(
       e.path.substring(e.path.lastIndexOf('/') + 1)) + ' ' +
       gutil.colors.cyan(e.type + '...'));
   });
+
+  gulp.watch('demo/src/*.@(html|css)', ['demo-html-css']);
 });
 
 gulp.task('lint', function() {
