@@ -4,7 +4,7 @@ import Slider from 'rc-slider';
 import shuffle from 'lodash.shuffle';
 import camelCase from 'lodash.camelcase';
 import Grid from './Grid';
-import { easings } from '../../../lib/react-brickwork';
+import { easings } from '../../../src/index';
 
 const alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('');
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import isEqualWith from 'lodash.isequalwith';
 import reactBrickwork, { SpringGrid, CSSGrid,
-  makeResponsive, measureItems } from '../../../lib/react-brickwork';
+  makeResponsive, measureItems } from '../../../src/index';
 
 export default React.createClass({
 
