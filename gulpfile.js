@@ -5,7 +5,7 @@
 var gulp          = require('gulp');
 var gutil         = require('gulp-util');
 var notifier      = require('node-notifier');
-var browserSync   = require('browser-sync');
+var browserSync   = require('browser-sync').create();
 var webpack       = require('webpack');
 var eslint        = require('gulp-eslint');
 var filter        = require('gulp-filter');
@@ -104,8 +104,9 @@ gulp.task('webpack', function(done) {
 });
 
 gulp.task('browser-sync', ['webpack', 'demo-html-css'], function() {
-  browserSync({
+  browserSync.init({
     notify: false,
+    ghostMode: false,
     server: {
       baseDir: 'demo/public'
     }
