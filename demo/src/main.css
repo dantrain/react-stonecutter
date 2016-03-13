@@ -77,6 +77,10 @@ label {
   text-align: center;
 }
 
+.grid-item p {
+  margin: 0.5em 0;
+}
+
 .grid-item *:first-child {
   margin-top: 0;
 }

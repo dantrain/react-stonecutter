@@ -8,14 +8,14 @@ import { easings } from '../../../src/index';
 
 const alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('');
 
-const ipsum = `Hashtag hoodie food truck XOXO gastropub asymmetrical
-Viral actually sartorial thundercats fixie next level Ethical skateboard
-put a bird on it bespoke, brunch small batch photo booth fashion axe
-actually cronut poutine fanny pack microdosing church-key Post-ironic
-90's pug, master cleanse keytar normcore aesthetic viral crucifix selvage
-gastropub Echo park yr organic typewriter blog Health goth literally
-cornhole microdosing fanny pack, bespoke kinfolk heirloom ennui viral
-dreamcatcher Offal VHS helvetica meh`.split(' ');
+const ipsum = `Who controls the British crown?
+Who keeps the metric system down?
+Who keeps Atlantis off the maps?
+Who keeps the Martians under wraps?
+Who holds back the electric car?
+Who makes Steve Guttenberg a star?
+Who robs cavefish of their sight?
+Who rigs every Oscar night?`.split('\n');
 
 const layouts = ['Pinterest', 'Simple'];
 const enterExitStyles = ['Simple', 'Skew', 'Newspaper',
@@ -63,11 +63,11 @@ export default React.createClass({
     const { useCSS, layout, enterExitStyle, responsive, columns, gutters,
       stiffness, damping, duration, easing } = this.state;
 
-    const itemHeight = layout === 'simple' ? 215 : null;
+    const itemHeight = layout === 'simple' ? 190 : null;
 
     const items = data.map(letter => {
-      const contentIndex = letter.charCodeAt(0) % 5 + 1;
-      const content = ipsum.slice(contentIndex * 5, contentIndex * 9).join(' ');
+      const contentIndex = letter.charCodeAt(0) % 6;
+      const content = ipsum.slice(contentIndex, (contentIndex * 1.5 | 0) + 1);
 
       return (
         <li
@@ -79,7 +79,8 @@ export default React.createClass({
           }}
         >
           <h3>{letter.toUpperCase()}</h3>
-          <p>{content}</p>
+          {content.map((p, i) => <p key={i}>{p}</p>)}
+          <p>{'We do! We do!'}</p>
         </li>
       );
     });

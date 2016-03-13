@@ -71,7 +71,7 @@ const Grid = measureItems(SpringGrid);
 <Grid
   // ...etc.
 >
-  <li key="A">Who controls the Britsh crown?</li>
+  <li key="A">Who controls the British crown?</li>
   <li key="B">Who keeps the metric system down?</li>
   <li key="C">We do!</li>
   <li key="D">We do!</li>
