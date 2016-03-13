@@ -1,7 +1,7 @@
 {
   "name": "react-brickwork",
   "version": "0.1.0",
-  "description": "",
+  "description": "Animated grid layout component for React",
   "main": "lib/react-brickwork.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

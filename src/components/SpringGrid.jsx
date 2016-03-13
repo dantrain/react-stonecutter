@@ -1,37 +1,25 @@
 import React from 'react';
 import { TransitionMotion, spring } from 'react-motion';
 import stripStyle from 'react-motion/lib/stripStyle';
-import { buildTransform, defaultUnits, positionToProperties } from '../utils/transformHelpers';
+import { buildTransform, positionToProperties } from '../utils/transformHelpers';
 import isEqual from 'lodash.isequal';
-import simpleLayout from '../layouts/simple';
-import * as simpleEnterExit from '../enter-exit-styles/simple';
+import { commonPropTypes, commonDefaultProps } from '../utils/commonProps';
 
 export default React.createClass({
 
   propTypes: {
-    columns: React.PropTypes.number.isRequired,
-    columnWidth: React.PropTypes.number.isRequired,
-    gutterWidth: React.PropTypes.number,
-    gutterHeight: React.PropTypes.number,
-    springConfig: React.PropTypes.object,
-    component: React.PropTypes.string,
-    layout: React.PropTypes.func,
-    enter: React.PropTypes.func,
-    entered: React.PropTypes.func,
-    exit: React.PropTypes.func,
-    perspective: React.PropTypes.number
+    ...commonPropTypes,
+    springConfig: React.PropTypes.shape({
+      stiffness: React.PropTypes.number,
+      damping: React.PropTypes.number,
+      precision: React.PropTypes.number
+    })
   },
 
   getDefaultProps() {
     return {
-      springConfig: { stiffness: 60, damping: 14, precision: 0.1 },
-      component: 'div',
-      gutterWidth: 0,
-      gutterHeight: 0,
-      layout: simpleLayout,
-      enter: simpleEnterExit.enter,
-      entered: simpleEnterExit.entered,
-      exit: simpleEnterExit.exit
+      ...commonDefaultProps,
+      springConfig: { stiffness: 60, damping: 14, precision: 0.1 }
     };
   },
 
@@ -99,7 +87,6 @@ export default React.createClass({
 
   render() {
     const { component, style, perspective, units, ...rest } = this.props;
-    const lengthUnit = units && units.length || 'px';
 
     return (
       <TransitionMotion
@@ -112,17 +99,14 @@ export default React.createClass({
             style: {
               position: 'relative',
               ...style,
-              width: `${this.state.gridWidth}${lengthUnit}`,
-              height: `${this.state.gridHeight}${lengthUnit}`
+              width: `${this.state.gridWidth}${units.length}`,
+              height: `${this.state.gridHeight}${units.length}`
             },
             ...rest
           }, interpolatedStyles.map(config => {
             const { style: { opacity, zIndex }, data } = config;
 
-            const transform = buildTransform(config.style, perspective, {
-              ...defaultUnits,
-              ...units
-            });
+            const transform = buildTransform(config.style, perspective, units);
 
             return React.cloneElement(data.element, {
               style: {

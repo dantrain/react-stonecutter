@@ -16,11 +16,6 @@ const properties = [
   { name: 'rotateY', unit: 'angle' }
 ];
 
-export const defaultUnits = {
-  length: 'px',
-  angle: 'deg'
-};
-
 export const positionToProperties = position => ({
   translateX: position[0],
   translateY: position[1]
