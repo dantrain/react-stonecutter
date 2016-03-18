@@ -22,7 +22,7 @@
     "browser-sync": "^2.11.0",
     "eslint": "^2.4.0",
     "eslint-config-airbnb": "^6.1.0",
-    "eslint-plugin-react": "^4.2.1",
+    "eslint-plugin-react": "^4.2.3",
     "ghooks": "^1.0.3",
     "gulp": "^3.9.1",
     "gulp-eslint": "^2.0.0",
@@ -36,7 +36,7 @@
     "lodash.shuffle": "^4.0.0",
     "node-libs-browser": "^1.0.0",
     "node-notifier": "^4.5.0",
-    "rc-slider": "^3.3.2",
+    "rc-slider": "^3.4.0",
     "react-radio-group": "^2.2.0",
     "run-sequence": "^1.1.5",
     "webpack": "^1.12.14"
