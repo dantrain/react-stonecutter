@@ -34,8 +34,8 @@ var libWebpackConfig = assign({}, sharedWebpackConfig, {
   entry: './src/index.js',
   output: {
     path: './lib',
-    filename: 'react-brickwork.js',
-    library: 'reactBrickwork',
+    filename: 'react-stonecutter.js',
+    library: 'reactStonecutter',
     libraryTarget: 'umd'
   },
   externals: {

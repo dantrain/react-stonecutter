@@ -1,8 +1,8 @@
 {
-  "name": "react-brickwork",
+  "name": "react-stonecutter",
   "version": "0.1.0",
   "description": "Animated grid layout component for React",
-  "main": "lib/react-brickwork.js",
+  "main": "lib/react-stonecutter.js",
   "scripts": {
     "test": "mocha -R spec --compilers jsx:babel-register test/*.jsx",
     "start": "gulp"
