@@ -20,10 +20,7 @@ var sharedWebpackConfig = {
       {
         test: /\.jsx?$/,
         exclude: /dist|public|node_modules/,
-        loader: 'babel',
-        query: {
-          presets: ['es2015', 'react', 'stage-2']
-        }
+        loader: 'babel'
       }
     ]
   },
@@ -159,10 +156,14 @@ gulp.task('gh-pages', function(done) {
 });
 
 gulp.task('lint', function() {
-  return gulp.src(['src/**/*.js*(x)', 'demo/src/**/*.js*(x)'])
-    .pipe(eslint())
-    .pipe(eslint.format())
-    .pipe(eslint.failAfterError());
+  return gulp.src([
+    'src/**/*.js*(x)',
+    'demo/src/**/*.js*(x)',
+    'test/**/*.js'
+  ])
+  .pipe(eslint())
+  .pipe(eslint.format())
+  .pipe(eslint.failAfterError());
 });
 
 gulp.task('default', ['browser-sync', 'watch']);

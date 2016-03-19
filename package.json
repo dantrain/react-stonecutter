@@ -4,7 +4,7 @@
   "description": "Animated grid layout component for React",
   "main": "lib/react-brickwork.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha --compilers js:babel-register",
     "start": "gulp"
   },
   "author": "Dan Train",
@@ -20,6 +20,9 @@
     "babel-preset-react": "^6.5.0",
     "babel-preset-stage-2": "^6.5.0",
     "browser-sync": "^2.11.0",
+    "chai": "^3.5.0",
+    "chai-enzyme": "^0.4.1",
+    "enzyme": "^2.1.0",
     "eslint": "^2.4.0",
     "eslint-config-airbnb": "^6.1.0",
     "eslint-plugin-react": "^4.2.3",
@@ -34,9 +37,11 @@
     "lodash.camelcase": "^4.1.0",
     "lodash.isequalwith": "^4.1.1",
     "lodash.shuffle": "^4.0.0",
+    "mocha": "^2.4.5",
     "node-libs-browser": "^1.0.0",
     "node-notifier": "^4.5.0",
     "rc-slider": "^3.4.0",
+    "react-addons-test-utils": "^0.14.7",
     "react-radio-group": "^2.2.0",
     "run-sequence": "^1.1.5",
     "webpack": "^1.12.14"
