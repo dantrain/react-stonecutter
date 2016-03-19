@@ -94,7 +94,7 @@ export default React.createClass({
             onChange={value => this.setState({ useCSS: value === 'css' })}
           >
             {Radio => (
-              <div>
+              <div className="radio-group">
                 <label><Radio value="spring" />React Motion</label>
                 <label><Radio value="css" />CSS Transitions</label>
               </div>
@@ -128,7 +128,7 @@ export default React.createClass({
                 <option value={easings[name]} key={name}>{name}</option>)}
             </select>
           </label>
-          <label>
+          <label className="checkbox">
             <input
               type="checkbox"
               checked={responsive}
@@ -194,7 +194,7 @@ export default React.createClass({
           </div>
           <button
             onClick={this.handleShuffle}
-          >Randomize</button>
+          >Randomize children</button>
         </div>
         <Grid
           itemHeight={itemHeight}

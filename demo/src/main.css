@@ -34,6 +34,14 @@ label {
   margin: 0 auto;
 }
 
+.radio-group label,
+.radio-group input,
+.checkbox,
+.checkbox input,
+button {
+  cursor: pointer;
+}
+
 .slider {
   padding: 6px 0;
 }
