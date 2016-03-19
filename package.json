@@ -4,7 +4,7 @@
   "description": "Animated grid layout component for React",
   "main": "lib/react-brickwork.js",
   "scripts": {
-    "test": "mocha --compilers jsx:babel-register test/test.jsx",
+    "test": "mocha -R spec --compilers jsx:babel-register test/*.jsx",
     "start": "gulp"
   },
   "author": "Dan Train",
