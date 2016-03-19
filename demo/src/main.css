@@ -13,10 +13,11 @@ body {
   padding: 0.5em 1em;
   overflow-y: scroll;
   overflow-x: hidden;
+  text-align: center;
 }
 
 button {
-  margin: 6px auto 1.5em;
+  margin: 8px auto 1.5em;
   padding: 0 1em;
   line-height: 2em;
   font-size: 1em;
@@ -37,9 +38,15 @@ label {
   padding: 6px 0;
 }
 
+.slider > span:first-child {
+  display: inline-block;
+  min-width: 70px;
+  text-align: left;
+}
+
 .slider-container {
   display: inline-block;
-  width: 400px;
+  width: 590px;
   padding: 3px 5px;
 }
 
@@ -73,11 +80,8 @@ label {
   border: 2px solid #aaa;
 }
 
-.grid-item h3 {
-  text-align: center;
-}
-
 .grid-item p {
+  text-align: left;
   margin: 0.5em 0;
 }
 
