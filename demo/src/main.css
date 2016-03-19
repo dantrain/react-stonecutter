@@ -29,11 +29,6 @@ label {
   padding: 6px 10px 6px 0;
 }
 
-.controls {
-  max-width: 800px;
-  margin: 0 auto;
-}
-
 .radio-group label,
 .radio-group input,
 .checkbox,
