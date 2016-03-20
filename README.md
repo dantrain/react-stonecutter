@@ -87,3 +87,65 @@ const Grid = makeResponsive(measureItems(CSSGrid), {
   minPadding: 100
 });
 ```
+
+## API Reference
+
+### SpringGrid and CSSGrid props
+
+**columns={`Number`}**  
+Number of columns. Required.  
+You can wrap the Grid component in the `makeResponsive` higher-order component to set this dynamically.
+
+**columnWidth={`Number`}**  
+Width of a single column, by default in `px` units. Required.
+
+**gutterWidth={`Number`}**  
+Width of space between columns. Default: `0`.
+
+**gutterHeight={`Number`}**  
+Height of vertical space between items. Default: `0`.
+
+**component={`String`}**  
+Change the HTML tagName of the Grid element, for example to `ul` or `ol` for a list. Default: `div`.
+
+**layout={`Function`}**  
+TODO
+
+**enter={`Function`}**  
+**entered={`Function`}**  
+**exit={`Function`}**  
+TODO
+
+**perspective={`Number`}**  
+TODO
+
+**units={`Object`}**  
+TODO
+
+### SpringGrid only props
+
+**springConfig={`Object`}**  
+TODO. Default: `{ stiffness: 60, damping: 14, precision: 0.1 }`.
+
+### CSSGrid only props
+
+**duration={`Number`}**  
+TODO. Required.
+
+**easing={`Number`}**  
+TODO. Default: `easings.cubicOut`.
+
+### makeResponsive options
+Pass like this:
+```js
+const Grid = makeResponsive(SpringGrid, { maxWidth: 1920 })
+```
+
+**maxWidth: `Number`**  
+TODO. Required.
+
+**minPadding: `Number`**  
+TODO. Default: `0`.
+
+**defaultColumns: `Number`**  
+TODO. Default: `4`.
