@@ -1,20 +1,18 @@
-/* eslint-disable no-var */
-/* eslint-disable prefer-arrow-callback */
-/* eslint-disable prefer-template */
+import gulp from 'gulp';
+import gutil from 'gulp-util';
+import notifier from 'node-notifier';
+import { create as browserSyncCreate } from 'browser-sync';
+import webpack from 'webpack';
+import eslint from 'gulp-eslint';
+import filter from 'gulp-filter';
+import rename from 'gulp-rename';
+import shell from 'gulp-shell';
+import runSequence from 'run-sequence';
+import assign from 'lodash.assign';
 
-var gulp          = require('gulp');
-var gutil         = require('gulp-util');
-var notifier      = require('node-notifier');
-var browserSync   = require('browser-sync').create();
-var webpack       = require('webpack');
-var eslint        = require('gulp-eslint');
-var filter        = require('gulp-filter');
-var rename        = require('gulp-rename');
-var shell         = require('gulp-shell');
-var runSequence   = require('run-sequence');
-var assign        = require('lodash.assign');
+const browserSync = browserSyncCreate();
 
-var sharedWebpackConfig = {
+const sharedWebpackConfig = {
   module: {
     loaders: [
       {
@@ -30,7 +28,7 @@ var sharedWebpackConfig = {
   watch: false
 };
 
-var libWebpackConfig = assign({}, sharedWebpackConfig, {
+const libWebpackConfig = assign({}, sharedWebpackConfig, {
   entry: './src/index.js',
   output: {
     path: './lib',
@@ -49,7 +47,7 @@ var libWebpackConfig = assign({}, sharedWebpackConfig, {
   }
 });
 
-var demoWebpackConfig = assign({}, sharedWebpackConfig, {
+const demoWebpackConfig = assign({}, sharedWebpackConfig, {
   entry: './demo/src/main.js',
   output: {
     path: './demo/public',
@@ -62,20 +60,20 @@ var demoWebpackConfig = assign({}, sharedWebpackConfig, {
 //   assign({}, demoWebpackConfig, { devtool: 'inline-source-map' })
 // ]);
 
-var devCompiler = webpack([libWebpackConfig, demoWebpackConfig]);
+const devCompiler = webpack([libWebpackConfig, demoWebpackConfig]);
 
-gulp.task('webpack', function(done) {
-  var firstTime = true;
+gulp.task('webpack', done => {
+  let firstTime = true;
 
   devCompiler.watch({
     aggregateTimeout: 100
-  }, function(err, stats) {
+  }, (err, stats) => {
     if (err) {
       notifier.notify({ title: 'Webpack Error', message: err });
       throw new gutil.PluginError('webpack', err);
     }
 
-    var jsonStats = stats.toJson();
+    const jsonStats = stats.toJson();
 
     if (jsonStats.errors.length > 0) {
       notifier.notify({ title: 'Webpack Error', message: jsonStats.errors[0] });
@@ -100,7 +98,7 @@ gulp.task('webpack', function(done) {
   });
 });
 
-gulp.task('browser-sync', ['webpack', 'demo-html-css'], function() {
+gulp.task('browser-sync', ['webpack', 'demo-html-css'], () => {
   browserSync.init({
     notify: false,
     ghostMode: false,
@@ -110,8 +108,8 @@ gulp.task('browser-sync', ['webpack', 'demo-html-css'], function() {
   });
 });
 
-gulp.task('demo-html-css', function() {
-  var sliderCssFilter = filter('node_modules/rc-slider/assets/index.css',
+gulp.task('demo-html-css', () => {
+  const sliderCssFilter = filter('node_modules/rc-slider/assets/index.css',
                                { restore: true });
 
   return gulp.src(['demo/src/*.@(html|css)',
@@ -123,11 +121,11 @@ gulp.task('demo-html-css', function() {
     .pipe(browserSync.reload({ stream: true }));
 });
 
-gulp.task('watch', function() {
-  gulp.watch('src/js/**/*', function(e) {
-    gutil.log(gutil.colors.magenta(
-      e.path.substring(e.path.lastIndexOf('/') + 1)) + ' ' +
-      gutil.colors.cyan(e.type + '...'));
+gulp.task('watch', () => {
+  gulp.watch('src/js/**/*', e => {
+    const path = gutil.colors.magenta(e.path.substring(e.path.lastIndexOf('/') + 1));
+    const type = gutil.colors.cyan(`${e.type}...`);
+    gutil.log(`${path} ${type}`);
   });
 
   gulp.watch('demo/src/*.@(html|css)', ['demo-html-css']);
@@ -138,10 +136,9 @@ gulp.task('gh-pages-start', shell.task([
   'git checkout gh-pages'
 ]));
 
-gulp.task('copy-demo-to-root', function() {
-  return gulp.src('./demo/public/**/*')
-    .pipe(gulp.dest('./'));
-});
+gulp.task('copy-demo-to-root', () =>
+  gulp.src('./demo/public/**/*')
+    .pipe(gulp.dest('./')));
 
 gulp.task('gh-pages-end', shell.task([
   'git add index.html demo.js *.css',
@@ -151,19 +148,18 @@ gulp.task('gh-pages-end', shell.task([
   'git stash apply'
 ]));
 
-gulp.task('gh-pages', function(done) {
+gulp.task('gh-pages', done => {
   runSequence('gh-pages-start', 'copy-demo-to-root', 'gh-pages-end', done);
 });
 
-gulp.task('lint', function() {
-  return gulp.src([
+gulp.task('lint', () =>
+  gulp.src([
     'src/**/*.js*(x)',
     'demo/src/**/*.js*(x)',
     'test/**/*.js'
   ])
   .pipe(eslint())
   .pipe(eslint.format())
-  .pipe(eslint.failAfterError());
-});
+  .pipe(eslint.failAfterError()));
 
 gulp.task('default', ['browser-sync', 'watch']);
