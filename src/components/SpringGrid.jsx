@@ -86,7 +86,7 @@ export default React.createClass({
   },
 
   render() {
-    const { component, style, perspective, units, ...rest } = this.props;
+    const { component, style, perspective, lengthUnit, angleUnit, ...rest } = this.props;
 
     return (
       <TransitionMotion
@@ -99,14 +99,16 @@ export default React.createClass({
             style: {
               position: 'relative',
               ...style,
-              width: `${this.state.gridWidth}${units.length}`,
-              height: `${this.state.gridHeight}${units.length}`
+              width: `${this.state.gridWidth}${lengthUnit}`,
+              height: `${this.state.gridHeight}${lengthUnit}`
             },
             ...rest
           }, interpolatedStyles.map(config => {
             const { style: { opacity, zIndex }, data } = config;
 
-            const transform = buildTransform(config.style, perspective, units);
+            const transform = buildTransform(config.style, perspective, {
+              length: lengthUnit, angle: angleUnit
+            });
 
             return React.cloneElement(data.element, {
               style: {

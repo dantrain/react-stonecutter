@@ -39,7 +39,7 @@ export default React.createClass({
   },
 
   render() {
-    const { component, style, children, duration, easing, units, ...rest } = this.props;
+    const { component, style, children, duration, easing, lengthUnit, ...rest } = this.props;
     const items = React.Children.toArray(children);
     const { positions, gridWidth, gridHeight } = this.state;
 
@@ -64,8 +64,8 @@ export default React.createClass({
         style={{
           position: 'relative',
           ...style,
-          width: `${gridWidth}${units.length}`,
-          height: `${gridHeight}${units.length}`
+          width: `${gridWidth}${lengthUnit}`,
+          height: `${gridHeight}${lengthUnit}`
         }}
         {...rest}
       >

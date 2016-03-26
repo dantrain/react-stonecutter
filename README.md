@@ -5,7 +5,7 @@ Choose between CSS Transitions or [React-Motion](https://github.com/chenglou/rea
 
 [Demo](http://dantrain.github.io/react-stonecutter)  
 
-[![](http://i.imgur.com/VVv8lB2.gif)](http://dantrain.github.io/react-stonecutter)
+[](http://dantrain.github.io/react-stonecutter)
 
 ## Installation
 
@@ -63,7 +63,7 @@ import { CSSGrid, layout } from 'react-stonecutter';
 If you don't know the heights of your items ahead of time, use the `measureItems` higher-order component to measure them in the browser before layout:
 
 ```js
-import { SpringGrid, measureItems, layout } from 'react-stonecutter';
+import { SpringGrid, measureItems } from 'react-stonecutter';
 
 const Grid = measureItems(SpringGrid);
 ```
@@ -90,6 +90,15 @@ const Grid = makeResponsive(measureItems(CSSGrid), {
 
 ## API Reference
 
+Exports:
+* `SpringGrid`
+* `CSSGrid`
+* `measureItems`
+* `makeResponsive`
+* `layout`
+* `enterExitStyle`
+* `easings`
+
 ### SpringGrid and CSSGrid props
 
 **columns={`Number`}**  
@@ -106,10 +115,27 @@ Width of space between columns. Default: `0`.
 Height of vertical space between items. Default: `0`.
 
 **component={`String`}**  
-Change the HTML tagName of the Grid element, for example to `ul` or `ol` for a list. Default: `div`.
+Change the HTML tagName of the Grid element, for example to `'ul'` or `'ol'` for a list. Default: `'div'`.
 
 **layout={`Function`}**  
-TODO
+Use one of the included layouts, or create your own. Defaults to a 'simple' layout with items of fixed height.  
+Included layouts:
+```js
+import { layout } from 'react-stonecutter';
+
+const { simple, pinterest } = layout;
+```
+
+The function is passed two parameters; an `Array` of the props of each item, and the props of the Grid itself.
+It must return an object with this shape:
+```js
+{
+  positions: // an Array of [x, y] coordinate pairs like this: [[0, 0], [20, 0], [0, 30]]
+  gridWidth: // width of the entire grid (Number)
+  gridHeight: // height of the entire grid (Number)
+}
+```
+Have a look at the code for the included layouts to get a feel for creating your own.
 
 **enter={`Function`}**  
 **entered={`Function`}**  
@@ -119,21 +145,31 @@ TODO
 **perspective={`Number`}**  
 TODO
 
-**units={`Object`}**  
-TODO
+**lengthUnit={`String`}**  
+TODO. Default: `'px'`.
+
+**angleUnit={`String`}**  
+TODO. Default: `'deg'`.
 
 ### SpringGrid only props
 
 **springConfig={`Object`}**  
-TODO. Default: `{ stiffness: 60, damping: 14, precision: 0.1 }`.
+Configuration of the React-Motion spring. See the [React-Motion docs](https://github.com/chenglou/react-motion#helpers) for more info.
+Default: `{ stiffness: 60, damping: 14, precision: 0.1 }`.
 
 ### CSSGrid only props
 
 **duration={`Number`}**  
-TODO. Required.
+Animation duration in `ms`. Required.
 
-**easing={`Number`}**  
-TODO. Default: `easings.cubicOut`.
+**easing={`String`}**  
+Animation easing function in CSS [transition-timing-function](https://developer.mozilla.org/en/docs/Web/CSS/transition-timing-function) format. Some [Penner easings](https://matthewlein.com/ceaser/) are included for convenience:
+```js
+import { easings } from 'react-stonecutter';
+
+const { quadIn, quadOut, /* ..etc. */  } = easings;
+```
+Default: `easings.cubicOut`.
 
 ### makeResponsive options
 Pass like this:
@@ -142,10 +178,10 @@ const Grid = makeResponsive(SpringGrid, { maxWidth: 1920 })
 ```
 
 **maxWidth: `Number`**  
-TODO. Required.
+Maximum width for the Grid in `px`.
 
 **minPadding: `Number`**  
-TODO. Default: `0`.
+Minimum horizontal length between the edge of the Grid and the edge of the viewport in `px`. Default: `0`.
 
 **defaultColumns: `Number`**  
-TODO. Default: `4`.
+Default number of columns before the breakpoints kick in. May be useful when rendering server-side in a universal app. Default: `4`.

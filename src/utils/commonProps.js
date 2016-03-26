@@ -13,17 +13,13 @@ export const commonPropTypes = {
   entered: React.PropTypes.func,
   exit: React.PropTypes.func,
   perspective: React.PropTypes.number,
-  units: React.PropTypes.shape({
-    length: React.PropTypes.string,
-    angle: React.PropTypes.string
-  })
+  lengthUnit: React.PropTypes.string,
+  angleUnit: React.PropTypes.string
 };
 
 export const commonDefaultProps = {
-  units: {
-    length: 'px',
-    angle: 'deg'
-  },
+  lengthUnit: 'px',
+  angleUnit: 'deg',
   component: 'div',
   gutterWidth: 0,
   gutterHeight: 0,
