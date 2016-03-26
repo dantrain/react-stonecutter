@@ -185,3 +185,7 @@ Minimum horizontal length between the edge of the Grid and the edge of the viewp
 
 **defaultColumns: `Number`**  
 Default number of columns before the breakpoints kick in. May be useful when rendering server-side in a universal app. Default: `4`.
+
+## License
+
+MIT
