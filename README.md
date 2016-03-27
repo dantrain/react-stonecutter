@@ -140,16 +140,48 @@ Have a look at the code for the included layouts to get a feel for creating your
 **enter={`Function`}**  
 **entered={`Function`}**  
 **exit={`Function`}**  
-TODO
+These allow you to change how items animate as they appear and disappear from the grid.
+Supply functions that return objects with the `opacity` and `transform` values for an item's start and end states.
+By default the item's `scale` and `opacity` go from `0` to `1` and back to `0` on exit, like this:
+```js
+enter={() => ({ scale: 0, opacity: 0 })}
+entered={() => ({ scale: 1, opacity: 1 })}
+exit={() => ({ scale: 0, opacity: 0 })}
+```
+The functions are passed three parameters, the item props, grid props and grid state which includes the current height and width of the grid. For example to have disappearing items fall off the bottom of the grid:
+```js
+exit={(itemProps, gridProps, gridState) => ({ translateY: gridState.gridHeight + 500 })}
+```
+CSS [`transform-functions`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function) are split up so they can be easily animated individually. Supported functions:
+* `translateX`
+* `translateY`
+* `translateZ`
+* `skew`
+* `skewX`
+* `skewY`
+* `scale`
+* `scaleX`
+* `scaleY`
+* `rotate`
+* `rotateX`
+* `rotateY`  
+
+Some example functions are included:
+```js
+import { enterExitStyle } from 'react-stonecutter';
+
+const { enter, entered, exit } = enterExitStyle.foldUp;
+```
+Check out the [demo](http://dantrain.github.io/react-stonecutter) to see them in action.
 
 **perspective={`Number`}**  
-TODO
+The [`perspective`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/perspective) distance used for 3D transforms. If you are using a transform function like `rotateX`, use this to strengthen the effect. Default is no perspective applied.
 
 **lengthUnit={`String`}**  
-TODO. Default: `'px'`.
+The [length](https://developer.mozilla.org/en-US/docs/Web/CSS/length) unit used throughout. Default: `'px'`. Experimental. You could try using `'em'` or `'rem'` and then adjust the `font-size` for a fluid layout, but it may not work well with the `measureItems` and `makeResponsive` higher-order components. `%` does not work well due to the way CSS transforms work.
 
 **angleUnit={`String`}**  
-TODO. Default: `'deg'`.
+The [angle](https://developer.mozilla.org/en-US/docs/Web/CSS/angle) unit. Affects `transform-functions` such as `rotate`. Default: `'deg'`.
 
 ### SpringGrid only props
 
