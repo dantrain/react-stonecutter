@@ -30,7 +30,8 @@ export const buildTransform = (style, perspective, units) => {
         arr.push(`perspective(${perspective}${units[prop.unit]})`);
       }
     } else if (typeof style[prop.name] !== 'undefined') {
-      arr.push(`${prop.name}(${style[prop.name]}${prop.unit ? units[prop.unit] : ''})`);
+      const val = isNaN(style[prop.name]) ? 0 : style[prop.name];
+      arr.push(`${prop.name}(${val}${prop.unit ? units[prop.unit] : ''})`);
     }
   });
 

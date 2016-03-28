@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactTransitionGroup from 'react-addons-transition-group';
+import isEqual from 'lodash.isequal';
 import { commonPropTypes, commonDefaultProps } from '../utils/commonProps';
 import { cubicOut } from '../utils/easings';
 import CSSGridItem from './CSSGridItem';
@@ -24,7 +25,9 @@ export default React.createClass({
   },
 
   componentWillReceiveProps(nextProps) {
-    this.doLayout(nextProps);
+    if (!isEqual(nextProps, this.props)) {
+      this.setState(this.doLayout(nextProps));
+    }
   },
 
   doLayout(props) {

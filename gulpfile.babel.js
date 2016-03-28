@@ -12,6 +12,13 @@ import assign from 'lodash.assign';
 
 const browserSync = browserSyncCreate();
 
+browserSync.use({
+  plugin() {},
+  hooks: {
+    'client:js': '___browserSync___.socket.on("disconnect", window.close.bind(window));'
+  }
+});
+
 const sharedWebpackConfig = {
   module: {
     loaders: [

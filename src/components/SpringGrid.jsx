@@ -53,8 +53,8 @@ export default React.createClass({
       style: {
         ...items[i].style,
         zIndex: 2,
-        ...springify(this.props.entered(items[i].data.element.props,
-          this.props, { gridWidth, gridHeight }), props.springConfig),
+        ...springify(props.entered(items[i].data.element.props,
+          props, { gridWidth, gridHeight }), props.springConfig),
         ...springify(positionToProperties(position), props.springConfig)
       }
     }));
