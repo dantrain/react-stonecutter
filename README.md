@@ -1,11 +1,10 @@
 # react-stonecutter
+<a href="http://dantrain.github.io/react-stonecutter" title="Demo"><img align="left" src="http://i.imgur.com/HrICPRB.png" width="120" hspace="10"></a>
 
 Animated grid layout component for React, inspired by [Masonry](http://masonry.desandro.com/).  
 Choose between CSS Transitions or [React-Motion](https://github.com/chenglou/react-motion) for animation.
 
 [Demo](http://dantrain.github.io/react-stonecutter)  
-
-[](http://dantrain.github.io/react-stonecutter)
 
 ## Installation
 
