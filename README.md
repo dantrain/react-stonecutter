@@ -217,6 +217,10 @@ Minimum horizontal length between the edge of the Grid and the edge of the viewp
 **defaultColumns: `Number`**  
 Default number of columns before the breakpoints kick in. May be useful when rendering server-side in a universal app. Default: `4`.
 
+## Alternatives
+
+If you have a list already nicely laid out by the browser, check out [React Flip Move](https://github.com/joshwcomeau/react-flip-move) which uses the very cool FLIP technique.
+
 ## License
 
 MIT
