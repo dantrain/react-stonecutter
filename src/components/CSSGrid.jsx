@@ -21,7 +21,7 @@ export default React.createClass({
   },
 
   componentWillMount() {
-    this.doLayout(this.props);
+    this.setState(this.doLayout(this.props));
   },
 
   componentWillReceiveProps(nextProps) {
@@ -38,7 +38,7 @@ export default React.createClass({
           key: item.key
         })), props);
 
-    this.setState({ gridWidth, gridHeight, positions });
+    return { gridWidth, gridHeight, positions };
   },
 
   render() {
