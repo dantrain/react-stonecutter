@@ -60,7 +60,7 @@
     "react-motion": "^0.4.2"
   },
   "peerDependencies": {
-    "react": "^0.14.7",
-    "react-dom": "^0.14.7"
+    "react": "^0.14.8",
+    "react-dom": "^0.14.8"
   }
 }
