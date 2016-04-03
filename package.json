@@ -2,6 +2,11 @@
   "name": "react-stonecutter",
   "version": "0.1.0",
   "description": "Animated grid layout component for React",
+  "keywords": [
+    "react",
+    "react-component",
+    "grid"
+  ],
   "main": "lib/react-stonecutter.js",
   "scripts": {
     "test": "mocha -R spec --compilers jsx:babel-register test/*.jsx",
