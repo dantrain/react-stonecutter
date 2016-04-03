@@ -1,4 +1,4 @@
-# react-stonecutter
+# react-stonecutter [![npm version](https://img.shields.io/npm/v/react-stonecutter.svg?style=flat)](https://www.npmjs.com/package/react-stonecutterm)
 <a href="http://dantrain.github.io/react-stonecutter" title="Demo"><img align="left" src="http://i.imgur.com/qLCLyTN.png" width="120" hspace="10"></a>
 
 Animated grid layout component for React, inspired by [Masonry](http://masonry.desandro.com/).  
