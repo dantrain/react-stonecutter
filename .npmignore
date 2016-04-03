@@ -1,0 +1,14 @@
+_MACOSX
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+*.sublime-workspace
+
+.sass-cache
+
+demo/public
