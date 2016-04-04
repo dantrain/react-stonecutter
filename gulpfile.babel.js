@@ -150,7 +150,7 @@ gulp.task('copy-demo-to-root', () =>
 gulp.task('gh-pages-end', shell.task([
   'git add index.html demo.js *.css',
   'git commit --amend --no-edit',
-  'git push origin gh-pages --force',
+  'git push github gh-pages --force',
   'git checkout master',
   'git stash apply'
 ]));
