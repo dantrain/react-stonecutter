@@ -97,6 +97,13 @@ export default React.createClass({
               <div className="radio-group">
                 <label><Radio value="spring" />React Motion</label>
                 <label><Radio value="css" />CSS Transitions</label>
+                <a href="https://github.com/dantrain/react-stonecutter">
+                  <img
+                    className="github-stars-badge"
+                    src="https://img.shields.io/github/stars/dantrain/react-stonecutter.svg?style=social&label=Star"
+                    alt="GitHub stars"
+                  ></img>
+                </a>
               </div>
             )}
           </RadioGroup>

@@ -37,6 +37,11 @@ button {
   cursor: pointer;
 }
 
+.github-stars-badge {
+  min-width: 70px;
+  margin-bottom: -0.3em;
+}
+
 .slider {
   padding: 6px 0;
 }
