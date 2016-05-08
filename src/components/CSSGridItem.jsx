@@ -1,5 +1,5 @@
 import React from 'react';
-import isEqual from 'lodash.isequal';
+import shallowEqual from 'shallowequal';
 import { buildTransform, positionToProperties } from '../utils/transformHelpers';
 
 export default React.createClass({
@@ -17,7 +17,7 @@ export default React.createClass({
   },
 
   componentWillReceiveProps(nextProps) {
-    if (!isEqual(nextProps, this.props)) {
+    if (!shallowEqual(nextProps, this.props)) {
       requestAnimationFrame(() => {
         this.setEndStyle(nextProps, 2);
       });

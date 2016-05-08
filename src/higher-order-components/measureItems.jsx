@@ -29,7 +29,7 @@ export default Grid => React.createClass({
 
       if (elements.length) {
         const newRects = Array.from(elements).reduce((acc, el) => {
-          acc[el.dataset.key] = el.getBoundingClientRect();
+          acc[el.dataset.stonecutterkey] = el.getBoundingClientRect();
           return acc;
         }, {});
 
@@ -56,7 +56,7 @@ export default Grid => React.createClass({
           ...element.props.style,
           width: this.props.columnWidth
         },
-        'data-key': element.key
+        'data-stonecutterkey': element.key
       })
     );
 

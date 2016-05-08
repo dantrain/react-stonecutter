@@ -2,7 +2,7 @@ import React from 'react';
 import { TransitionMotion, spring } from 'react-motion';
 import stripStyle from 'react-motion/lib/stripStyle';
 import { buildTransform, positionToProperties } from '../utils/transformHelpers';
-import isEqual from 'lodash.isequal';
+import shallowEqual from 'shallowequal';
 import { commonPropTypes, commonDefaultProps } from '../utils/commonProps';
 
 export default React.createClass({
@@ -28,7 +28,7 @@ export default React.createClass({
   },
 
   componentWillReceiveProps(nextProps) {
-    if (!isEqual(nextProps, this.props)) {
+    if (!shallowEqual(nextProps, this.props)) {
       this.setState(this.doLayout(nextProps));
     }
   },
