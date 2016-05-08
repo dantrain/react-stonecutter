@@ -15,34 +15,48 @@ export default Grid => React.createClass({
     };
   },
 
+  componentDidMount() {
+    this.measureElements();
+  },
+
+  componentDidUpdate() {
+    this.measureElements();
+  },
+
+  measureElements() {
+    if (this._elementsToMeasureContainer) {
+      const elements = this._elementsToMeasureContainer.children;
+
+      if (elements.length) {
+        const newRects = Array.from(elements).reduce((acc, el) => {
+          acc[el.dataset.key] = el.getBoundingClientRect();
+          return acc;
+        }, {});
+
+        this.setState({
+          rects: {
+            ...this.state.rects,
+            ...newRects
+          }
+        });
+      }
+    }
+  },
+
   render() {
     const { component } = this.props;
-    const newRects = {};
 
     const [newElements, existingElements] = partition(
       React.Children.toArray(this.props.children),
       element => !this.state.rects[element.key]);
 
-    const elementsToMeasure = newElements.map((element, index, arr) =>
+    const elementsToMeasure = newElements.map(element =>
       React.cloneElement(element, {
-        style: {
+        'style': {
           ...element.props.style,
           width: this.props.columnWidth
         },
-        ref: el => {
-          if (el) {
-            newRects[element.key] = el.getBoundingClientRect();
-
-            if (index === arr.length - 1) {
-              this.setState({
-                rects: {
-                  ...this.state.rects,  // Memory leak here?
-                  ...newRects
-                }
-              });
-            }
-          }
-        }
+        'data-key': element.key
       })
     );
 
@@ -69,7 +83,8 @@ export default Grid => React.createClass({
               margin: 0,
               overflow: 'hidden',
               visibility: 'hidden'
-            }
+            },
+            ref: el => { this._elementsToMeasureContainer = el; }
           }, elementsToMeasure)}
       </span>
     );
