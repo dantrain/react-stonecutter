@@ -1,7 +1,9 @@
 import React from 'react';
+import imagesLoaded from 'imagesloaded';
 import partition from 'lodash.partition';
+import debounce from 'lodash.debounce';
 
-export default Grid => React.createClass({
+export default (Grid, { measureImages, background } = {}) => React.createClass({
 
   getDefaultProps() {
     return {
@@ -13,6 +15,12 @@ export default Grid => React.createClass({
     return {
       rects: {}
     };
+  },
+
+  componentWillMount() {
+    this._updateRectsDebounced = debounce(this.updateRects, 20);
+    this._rects = {};
+    this._loading = {};
   },
 
   componentDidMount() {
@@ -28,19 +36,40 @@ export default Grid => React.createClass({
       const elements = this._elementsToMeasureContainer.children;
 
       if (elements.length) {
-        const newRects = Array.from(elements).reduce((acc, el) => {
-          acc[el.dataset.stonecutterkey] = el.getBoundingClientRect();
-          return acc;
-        }, {});
+        if (measureImages) {
+          Array.from(elements)
+            .filter(el => !this._loading[el.dataset.stonecutterkey])
+            .forEach(el => {
+              this._loading[el.dataset.stonecutterkey] = true;
 
-        this.setState({
-          rects: {
-            ...this.state.rects,
-            ...newRects
-          }
-        });
+              imagesLoaded(el, { background }, () => {
+                this._rects[el.dataset.stonecutterkey] = el.getBoundingClientRect();
+                delete this._loading[el.dataset.stonecutterkey];
+
+                this._updateRectsDebounced();
+              });
+            });
+        } else {
+          this._rects = Array.from(elements).reduce((acc, el) => {
+            acc[el.dataset.stonecutterkey] = el.getBoundingClientRect();
+            return acc;
+          }, {});
+
+          this.updateRects();
+        }
       }
     }
+  },
+
+  updateRects() {
+    this.setState({
+      rects: {
+        ...this.state.rects,
+        ...this._rects
+      }
+    });
+
+    this._rects = {};
   },
 
   render() {
@@ -68,7 +97,7 @@ export default Grid => React.createClass({
 
     return (
       <span>
-        {measuredElements.length &&
+        {measuredElements.length > 0 &&
           <Grid
             {...this.props}
           >

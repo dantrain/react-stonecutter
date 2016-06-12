@@ -202,6 +202,18 @@ const { quadIn, quadOut, /* ..etc. */  } = easings;
 ```
 Default: `easings.cubicOut`.
 
+### measureItems options
+Pass like this:
+```js
+const Grid = measureItems(SpringGrid, { measureImages: true })
+```
+
+**measureImages: `Boolean`**  
+If set to true, waits for images to load before measuring items and adding them to the Grid. This may be necessary if you don't know the height of your images ahead of time. Powered by [imagesLoaded](https://github.com/desandro/imagesloaded).
+
+**background: `Boolean|String`**  
+This option is passed through to the [imagesLoaded](https://github.com/desandro/imagesloaded) library. It allows you to wait for background images to load, in addition to `<img>` tags.
+
 ### makeResponsive options
 Pass like this:
 ```js

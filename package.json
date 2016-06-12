@@ -59,6 +59,8 @@
   },
   "dependencies": {
     "enquire.js": "^2.1.1",
+    "imagesloaded": "^4.1.0",
+    "lodash.debounce": "^4.0.6",
     "lodash.isequal": "^4.2.0",
     "lodash.partition": "^4.4.0",
     "react-addons-transition-group": "^15.1.0",
