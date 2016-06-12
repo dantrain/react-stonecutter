@@ -9,6 +9,7 @@ import rename from 'gulp-rename';
 import shell from 'gulp-shell';
 import runSequence from 'run-sequence';
 import assign from 'lodash.assign';
+import packageJson from './package.json';
 
 const browserSync = browserSyncCreate();
 
@@ -43,15 +44,13 @@ const libWebpackConfig = assign({}, sharedWebpackConfig, {
     library: 'reactStonecutter',
     libraryTarget: 'umd'
   },
-  externals: {
-    'react': 'react',
-    'react-dom': 'react-dom',
-    'react-addons-transition-group': 'react-addons-transition-group',
-    'react-motion': 'react-motion',
-    'enquire.js': 'enquire.js',
-    'lodash.isequal': 'lodash.isequal',
-    'lodash.partition': 'lodash.partition'
-  }
+  externals: [
+    ...Object.keys(packageJson.dependencies),
+    ...Object.keys(packageJson.peerDependencies)
+  ].reduce((acc, val) => {
+    acc[val] = val;
+    return acc;
+  }, {})
 });
 
 const demoWebpackConfig = assign({}, sharedWebpackConfig, {
