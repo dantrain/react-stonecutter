@@ -1,7 +1,7 @@
 import React from 'react';
-import imagesLoaded from 'imagesloaded';
 import partition from 'lodash.partition';
 import debounce from 'lodash.debounce';
+const imagesLoaded = typeof window !== undefined ? require('imagesLoaded') : null;
 
 export default (Grid, { measureImages, background } = {}) => React.createClass({
 
@@ -18,12 +18,12 @@ export default (Grid, { measureImages, background } = {}) => React.createClass({
   },
 
   componentWillMount() {
-    this._updateRectsDebounced = debounce(this.updateRects, 20);
     this._rects = {};
     this._loading = {};
   },
 
   componentDidMount() {
+    this._updateRectsDebounced = debounce(this.updateRects, 20);
     this.measureElements();
   },
 

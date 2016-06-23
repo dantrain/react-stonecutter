@@ -1,5 +1,5 @@
 import React from 'react';
-import enquire from 'enquire.js';
+const enquire = typeof window !== undefined ? require('enquire.js') : null;
 
 export default (Grid, { maxWidth, minPadding = 0, defaultColumns = 4 } = {}) =>
   React.createClass({
@@ -16,7 +16,7 @@ export default (Grid, { maxWidth, minPadding = 0, defaultColumns = 4 } = {}) =>
       };
     },
 
-    componentWillMount() {
+    componentDidMount() {
       const { columnWidth, gutterWidth } = this.props;
 
       const breakpoints = [];
