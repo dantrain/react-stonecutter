@@ -1,5 +1,5 @@
 import React from 'react';
-const enquire = typeof window !== undefined ? require('enquire.js') : null;
+const enquire = typeof window !== 'undefined' ? require('enquire.js') : null;
 
 export default (Grid, { maxWidth, minPadding = 0, defaultColumns = 4 } = {}) =>
   React.createClass({

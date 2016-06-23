@@ -1,7 +1,7 @@
 import React from 'react';
 import partition from 'lodash.partition';
 import debounce from 'lodash.debounce';
-const imagesLoaded = typeof window !== undefined ? require('imagesLoaded') : null;
+const imagesLoaded = typeof window !== 'undefined' ? require('imagesloaded') : null;
 
 export default (Grid, { measureImages, background } = {}) => React.createClass({
 

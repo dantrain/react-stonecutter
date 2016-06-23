@@ -42,7 +42,7 @@ const libWebpackConfig = assign({}, sharedWebpackConfig, {
     path: './lib',
     filename: 'react-stonecutter.js',
     library: 'reactStonecutter',
-    libraryTarget: 'umd'
+    libraryTarget: 'commonjs2'
   },
   externals: [
     ...Object.keys(packageJson.dependencies),
@@ -50,7 +50,16 @@ const libWebpackConfig = assign({}, sharedWebpackConfig, {
   ].reduce((acc, val) => {
     acc[val] = val;
     return acc;
-  }, {})
+  }, {}),
+  plugins: [
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: '"production"'
+      }
+    }),
+    new webpack.optimize.DedupePlugin(),
+    new webpack.optimize.OccurrenceOrderPlugin()
+  ]
 });
 
 const demoWebpackConfig = assign({}, sharedWebpackConfig, {
