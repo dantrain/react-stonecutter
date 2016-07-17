@@ -86,7 +86,11 @@ export default React.createClass({
   },
 
   render() {
-    const { component, style, perspective, lengthUnit, angleUnit, ...rest } = this.props;
+    /* eslint-disable no-unused-vars */
+    const { component, style, perspective, lengthUnit, angleUnit,
+      itemHeight, measured, columns, columnWidth, gutterWidth, gutterHeight,
+      layout, enter, entered, exit, duration, easing, springConfig, ...rest } = this.props;
+    /* eslint-enable no-unused-vars */
 
     return (
       <TransitionMotion
@@ -110,9 +114,14 @@ export default React.createClass({
               length: lengthUnit, angle: angleUnit
             });
 
-            return React.cloneElement(data.element, {
+            const itemProps = Object.assign({}, data.element.props);
+            delete itemProps.itemRect;
+
+            return React.createElement(data.element.type, {
+              key: data.element.key,
+              ...itemProps,
               style: {
-                ...data.element.props.style,
+                ...itemProps.style,
                 position: 'absolute',
                 top: 0,
                 left: 0,

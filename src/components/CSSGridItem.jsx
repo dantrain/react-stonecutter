@@ -111,7 +111,6 @@ export default React.createClass({
 
   render() {
     const item = React.Children.only(this.props.children);
-    const { style: itemStyle } = item.props;
     const { transition, perspective, lengthUnit, angleUnit } = this.props;
 
     const { style: { translateX, translateY, opacity, zIndex } } = this.state;
@@ -124,9 +123,13 @@ export default React.createClass({
       length: lengthUnit, angle: angleUnit
     });
 
-    return React.cloneElement(item, {
+    const itemProps = Object.assign({}, item.props);
+    delete itemProps.itemRect;
+
+    return React.createElement(item.type, {
+      ...itemProps,
       style: {
-        ...itemStyle,
+        ...itemProps.style,
         position: 'absolute',
         top: 0,
         left: 0,

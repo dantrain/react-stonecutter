@@ -42,7 +42,12 @@ export default React.createClass({
   },
 
   render() {
-    const { component, style, children, duration, easing, lengthUnit, ...rest } = this.props;
+    /* eslint-disable no-unused-vars */
+    const { component, style, children, duration, easing, lengthUnit,
+      itemHeight, measured, columns, columnWidth, gutterWidth, gutterHeight,
+      layout, enter, entered, exit, perspective, springConfig, angleUnit, ...rest } = this.props;
+    /* eslint-enable no-unused-vars */
+
     const items = React.Children.toArray(children);
     const { positions, gridWidth, gridHeight } = this.state;
 
