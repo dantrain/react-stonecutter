@@ -1,5 +1,5 @@
 import React from 'react';
-import RadioGroup from 'react-radio-group';
+import { RadioGroup, Radio } from 'react-radio-group';
 import Slider from 'rc-slider';
 import shuffle from 'lodash.shuffle';
 import camelCase from 'lodash.camelcase';
@@ -89,23 +89,20 @@ export default React.createClass({
       <div>
         <div className="controls">
           <RadioGroup
+            className="radio-group"
             name="useCSS"
             selectedValue={useCSS ? 'css' : 'spring'}
             onChange={value => this.setState({ useCSS: value === 'css' })}
           >
-            {Radio => (
-              <div className="radio-group">
-                <label><Radio value="spring" />React Motion</label>
-                <label><Radio value="css" />CSS Transitions</label>
-                <a href="https://github.com/dantrain/react-stonecutter">
-                  <img
-                    className="github-stars-badge"
-                    src="https://img.shields.io/github/stars/dantrain/react-stonecutter.svg?style=social&label=Star"
-                    alt="GitHub stars"
-                  ></img>
-                </a>
-              </div>
-            )}
+            <label><Radio value="spring" />React Motion</label>
+            <label><Radio value="css" />CSS Transitions</label>
+            <a href="https://github.com/dantrain/react-stonecutter">
+              <img
+                className="github-stars-badge"
+                src="https://img.shields.io/github/stars/dantrain/react-stonecutter.svg?style=social&label=Star"
+                alt="GitHub stars"
+              ></img>
+            </a>
           </RadioGroup>
           <label>{'Layout '}
             <select
