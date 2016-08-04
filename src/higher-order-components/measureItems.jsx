@@ -43,10 +43,14 @@ export default (Grid, { measureImages, background } = {}) => React.createClass({
               this._loading[el.dataset.stonecutterkey] = true;
 
               imagesLoaded(el, { background }, () => {
-                this._rects[el.dataset.stonecutterkey] = el.getBoundingClientRect();
-                delete this._loading[el.dataset.stonecutterkey];
 
-                this._updateRectsDebounced();
+                const clientRect = el.getBoundingClientRect();
+                if (clientRect.height > 0) {
+
+                  this._rects[el.dataset.stonecutterkey] = clientRect;
+                  delete this._loading[el.dataset.stonecutterkey];
+                  this._updateRectsDebounced();
+                }
               });
             });
         } else {
