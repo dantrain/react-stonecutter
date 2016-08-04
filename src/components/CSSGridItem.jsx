@@ -1,5 +1,6 @@
 import React from 'react';
 import shallowEqual from 'shallowequal';
+import omit from 'lodash.omit';
 import { buildTransform, positionToProperties } from '../utils/transformHelpers';
 
 export default React.createClass({
@@ -123,8 +124,7 @@ export default React.createClass({
       length: lengthUnit, angle: angleUnit
     });
 
-    const itemProps = Object.assign({}, item.props);
-    delete itemProps.itemRect;
+    const itemProps = omit(item.props, ['itemRect', 'itemHeight']);
 
     return React.createElement(item.type, {
       ...itemProps,

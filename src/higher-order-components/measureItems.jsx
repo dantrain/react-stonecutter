@@ -1,13 +1,14 @@
 import React from 'react';
 import partition from 'lodash.partition';
 import debounce from 'lodash.debounce';
+import { commonDefaultProps } from '../utils/commonProps';
 const imagesLoaded = typeof window !== 'undefined' ? require('imagesloaded') : null;
 
 export default (Grid, { measureImages, background } = {}) => React.createClass({
 
   getDefaultProps() {
     return {
-      component: 'span'
+      component: commonDefaultProps.component
     };
   },
 
@@ -20,6 +21,7 @@ export default (Grid, { measureImages, background } = {}) => React.createClass({
   componentWillMount() {
     this._rects = {};
     this._loading = {};
+    this._retryTimeouts = {};
   },
 
   componentDidMount() {
@@ -29,6 +31,12 @@ export default (Grid, { measureImages, background } = {}) => React.createClass({
 
   componentDidUpdate() {
     this.measureElements();
+  },
+
+  componentWillUnmount() {
+    Object.keys(this._retryTimeouts).forEach(key => {
+      clearTimeout(this._retryTimeouts[key]);
+    });
   },
 
   measureElements() {
@@ -43,14 +51,7 @@ export default (Grid, { measureImages, background } = {}) => React.createClass({
               this._loading[el.dataset.stonecutterkey] = true;
 
               imagesLoaded(el, { background }, () => {
-
-                const clientRect = el.getBoundingClientRect();
-                if (clientRect.height > 0) {
-
-                  this._rects[el.dataset.stonecutterkey] = clientRect;
-                  delete this._loading[el.dataset.stonecutterkey];
-                  this._updateRectsDebounced();
-                }
+                this.measureElementWithImages(el, 5);
               });
             });
         } else {
@@ -62,6 +63,20 @@ export default (Grid, { measureImages, background } = {}) => React.createClass({
           this.updateRects();
         }
       }
+    }
+  },
+
+  measureElementWithImages(el, retries) {
+    const clientRect = el.getBoundingClientRect();
+
+    if (clientRect && clientRect.height > 0) {
+      this._rects[el.dataset.stonecutterkey] = clientRect;
+      delete this._loading[el.dataset.stonecutterkey];
+      this._updateRectsDebounced();
+    } else if (retries > 0) {
+      clearTimeout(this._retryTimeouts[el.dataset.stonecutterkey]);
+      this._retryTimeouts[el.dataset.stonecutterkey] =
+        setTimeout(this.measureElement, 20, el, --retries);
     }
   },
 

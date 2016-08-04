@@ -3,6 +3,7 @@ import { TransitionMotion, spring } from 'react-motion';
 import stripStyle from 'react-motion/lib/stripStyle';
 import { buildTransform, positionToProperties } from '../utils/transformHelpers';
 import shallowEqual from 'shallowequal';
+import omit from 'lodash.omit';
 import { commonPropTypes, commonDefaultProps } from '../utils/commonProps';
 
 export default React.createClass({
@@ -86,11 +87,10 @@ export default React.createClass({
   },
 
   render() {
-    /* eslint-disable no-unused-vars */
-    const { component, style, perspective, lengthUnit, angleUnit,
-      itemHeight, measured, columns, columnWidth, gutterWidth, gutterHeight,
-      layout, enter, entered, exit, duration, easing, springConfig, ...rest } = this.props;
-    /* eslint-enable no-unused-vars */
+    const { component, style, perspective, lengthUnit,
+            angleUnit, ...rest } = omit(this.props, ['itemHeight', 'measured', 'columns',
+              'columnWidth', 'gutterWidth', 'gutterHeight', 'layout', 'enter', 'entered',
+              'exit', 'perspective', 'springConfig', 'angleUnit', 'duration', 'easing']);
 
     return (
       <TransitionMotion
@@ -114,8 +114,7 @@ export default React.createClass({
               length: lengthUnit, angle: angleUnit
             });
 
-            const itemProps = Object.assign({}, data.element.props);
-            delete itemProps.itemRect;
+            const itemProps = omit(data.element.props, ['itemRect', 'itemHeight']);
 
             return React.createElement(data.element.type, {
               key: data.element.key,

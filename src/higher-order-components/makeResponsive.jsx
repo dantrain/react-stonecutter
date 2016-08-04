@@ -4,12 +4,6 @@ const enquire = typeof window !== 'undefined' ? require('enquire.js') : null;
 export default (Grid, { maxWidth, minPadding = 0, defaultColumns = 4 } = {}) =>
   React.createClass({
 
-    getDefaultProps() {
-      return {
-        minPadding: 0
-      };
-    },
-
     getInitialState() {
       return {
         columns: defaultColumns

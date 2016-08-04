@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactTransitionGroup from 'react-addons-transition-group';
 import shallowEqual from 'shallowequal';
+import omit from 'lodash.omit';
 import { commonPropTypes, commonDefaultProps } from '../utils/commonProps';
 import { cubicOut } from '../utils/easings';
 import CSSGridItem from './CSSGridItem';
@@ -42,11 +43,10 @@ export default React.createClass({
   },
 
   render() {
-    /* eslint-disable no-unused-vars */
-    const { component, style, children, duration, easing, lengthUnit,
-      itemHeight, measured, columns, columnWidth, gutterWidth, gutterHeight,
-      layout, enter, entered, exit, perspective, springConfig, angleUnit, ...rest } = this.props;
-    /* eslint-enable no-unused-vars */
+    const { component, style, children, duration,
+            easing, lengthUnit, ...rest } = omit(this.props, ['itemHeight', 'measured',
+              'columns', 'columnWidth', 'gutterWidth', 'gutterHeight', 'layout', 'enter',
+              'entered', 'exit', 'perspective', 'springConfig', 'angleUnit']);
 
     const items = React.Children.toArray(children);
     const { positions, gridWidth, gridHeight } = this.state;

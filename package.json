@@ -62,6 +62,7 @@
     "imagesloaded": "^4.1.0",
     "lodash.debounce": "^4.0.7",
     "lodash.isequal": "^4.3.1",
+    "lodash.omit": "^4.4.1",
     "lodash.partition": "^4.5.1",
     "react-addons-transition-group": "^15.3.0",
     "react-motion": "^0.4.4",
