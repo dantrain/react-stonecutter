@@ -52,7 +52,9 @@
     "node-libs-browser": "^1.0.0",
     "node-notifier": "^4.6.0",
     "rc-slider": "^3.8.2",
+    "react": "^15.3.0",
     "react-addons-test-utils": "^15.3.0",
+    "react-dom": "^15.3.0",
     "react-radio-group": "^3.0.1",
     "run-sequence": "^1.2.2",
     "webpack": "^1.13.1"
@@ -61,7 +63,6 @@
     "enquire.js": "^2.1.1",
     "imagesloaded": "^4.1.0",
     "lodash.debounce": "^4.0.7",
-    "lodash.isequal": "^4.3.1",
     "lodash.omit": "^4.4.1",
     "lodash.partition": "^4.5.1",
     "react-addons-transition-group": "^15.3.0",

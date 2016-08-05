@@ -88,9 +88,9 @@ export default React.createClass({
 
   render() {
     const { component, style, perspective, lengthUnit,
-            angleUnit, ...rest } = omit(this.props, ['itemHeight', 'measured', 'columns',
-              'columnWidth', 'gutterWidth', 'gutterHeight', 'layout', 'enter', 'entered',
-              'exit', 'perspective', 'springConfig', 'angleUnit', 'duration', 'easing']);
+            angleUnit, ...rest } = omit(this.props, ['itemHeight', 'measured',
+              'columns', 'columnWidth', 'gutterWidth', 'gutterHeight', 'layout',
+              'enter', 'entered', 'exit', 'springConfig', 'duration', 'easing']);
 
     return (
       <TransitionMotion
