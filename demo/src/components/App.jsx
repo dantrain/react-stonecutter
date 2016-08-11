@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { RadioGroup, Radio } from 'react-radio-group';
 import Slider from 'rc-slider';
 import shuffle from 'lodash.shuffle';
@@ -21,16 +21,16 @@ const layouts = ['Pinterest', 'Simple'];
 const enterExitStyles = ['Simple', 'Skew', 'Newspaper',
   'Fold Up', 'From Center', 'From Left to Right', 'From Top', 'From Bottom'];
 
-export default React.createClass({
+export default class extends Component {
 
-  getDefaultProps() {
-    return {
-      minItems: 10
-    };
-  },
+  static defaultProps = {
+    minItems: 10
+  };
 
-  getInitialState() {
-    return {
+  constructor(props) {
+    super(props);
+
+    this.state = {
       data: this.generateData(),
       useCSS: false,
       responsive: false,
@@ -43,20 +43,18 @@ export default React.createClass({
       gutters: 5,
       easing: easings.cubicOut
     };
-  },
+  }
 
-  handleShuffle() {
+  handleShuffle = () => {
     this.setState({
       data: this.generateData()
     });
-  },
+  };
 
-  generateData() {
-    return shuffle(alphabet)
-      .slice(0, this.props.minItems +
-        Math.floor(Math.random() * (26 - this.props.minItems)))
-      .sort();
-  },
+  generateData = () => shuffle(alphabet)
+    .slice(0, this.props.minItems +
+      Math.floor(Math.random() * (26 - this.props.minItems)))
+    .sort();
 
   render() {
     const { data, ...gridProps } = this.state;
@@ -101,7 +99,7 @@ export default React.createClass({
                 className="github-stars-badge"
                 src="https://img.shields.io/github/stars/dantrain/react-stonecutter.svg?style=social&label=Star"
                 alt="GitHub stars"
-              ></img>
+              />
             </a>
           </RadioGroup>
           <label>{'Layout '}
@@ -210,4 +208,4 @@ export default React.createClass({
       </div>
     );
   }
-});
+}

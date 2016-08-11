@@ -1,61 +1,62 @@
-import React from 'react';
+import React, { Component } from 'react';
 import partition from 'lodash.partition';
 import debounce from 'lodash.debounce';
 import { commonDefaultProps } from '../utils/commonProps';
+
 const imagesLoaded = typeof window !== 'undefined' ? require('imagesloaded') : null;
 
-export default (Grid, { measureImages, background } = {}) => React.createClass({
+export default (Grid, { measureImages, background } = {}) => class extends Component {
 
-  getDefaultProps() {
-    return {
-      component: commonDefaultProps.component
-    };
-  },
+  static defaultProps = {
+    component: commonDefaultProps.component
+  };
 
-  getInitialState() {
-    return {
+  constructor(props) {
+    super(props);
+
+    this.state = {
       rects: {}
     };
-  },
+  }
 
   componentWillMount() {
-    this._rects = {};
-    this._loading = {};
-    this._retryTimeouts = {};
-  },
+    this.rects = {};
+    this.loading = {};
+    this.retryTimeouts = {};
+  }
 
   componentDidMount() {
-    this._updateRectsDebounced = debounce(this.updateRects, 20);
+    this.updateRectsDebounced = debounce(this.updateRects, 20);
     this.measureElements();
-  },
+  }
 
   componentDidUpdate() {
     this.measureElements();
-  },
+  }
 
   componentWillUnmount() {
-    Object.keys(this._retryTimeouts).forEach(key => {
-      clearTimeout(this._retryTimeouts[key]);
+    Object.keys(this.retryTimeouts).forEach(key => {
+      clearTimeout(this.retryTimeouts[key]);
     });
-  },
+  }
 
-  measureElements() {
-    if (this._elementsToMeasureContainer) {
-      const elements = this._elementsToMeasureContainer.children;
+  measureElements = () => {
+    if (this.elementsToMeasureContainer) {
+      const elements = this.elementsToMeasureContainer.children;
 
       if (elements.length) {
         if (measureImages) {
           Array.from(elements)
-            .filter(el => !this._loading[el.dataset.stonecutterkey])
+            .filter(el => !this.loading[el.dataset.stonecutterkey])
             .forEach(el => {
-              this._loading[el.dataset.stonecutterkey] = true;
+              this.loading[el.dataset.stonecutterkey] = true;
 
               imagesLoaded(el, { background }, () => {
                 this.measureElementWithImages(el, 5);
               });
             });
         } else {
-          this._rects = Array.from(elements).reduce((acc, el) => {
+          this.rects = Array.from(elements).reduce((acc, el) => {
             acc[el.dataset.stonecutterkey] = el.getBoundingClientRect();
             return acc;
           }, {});
@@ -64,32 +65,32 @@ export default (Grid, { measureImages, background } = {}) => React.createClass({
         }
       }
     }
-  },
+  };
 
-  measureElementWithImages(el, retries) {
+  measureElementWithImages = (el, retries) => {
     const clientRect = el.getBoundingClientRect();
 
     if (clientRect && clientRect.height > 0) {
-      this._rects[el.dataset.stonecutterkey] = clientRect;
-      delete this._loading[el.dataset.stonecutterkey];
-      this._updateRectsDebounced();
+      this.rects[el.dataset.stonecutterkey] = clientRect;
+      delete this.loading[el.dataset.stonecutterkey];
+      this.updateRectsDebounced();
     } else if (retries > 0) {
-      clearTimeout(this._retryTimeouts[el.dataset.stonecutterkey]);
-      this._retryTimeouts[el.dataset.stonecutterkey] =
+      clearTimeout(this.retryTimeouts[el.dataset.stonecutterkey]);
+      this.retryTimeouts[el.dataset.stonecutterkey] =
         setTimeout(this.measureElement, 20, el, --retries);
     }
-  },
+  };
 
-  updateRects() {
+  updateRects = () => {
     this.setState({
       rects: {
         ...this.state.rects,
-        ...this._rects
+        ...this.rects
       }
     });
 
-    this._rects = {};
-  },
+    this.rects = {};
+  };
 
   render() {
     const { component } = this.props;
@@ -132,10 +133,10 @@ export default (Grid, { measureImages, background } = {}) => React.createClass({
               overflow: 'hidden',
               visibility: 'hidden'
             },
-            ref: el => { this._elementsToMeasureContainer = el; }
+            ref: el => { this.elementsToMeasureContainer = el; }
           }, elementsToMeasure)}
       </span>
     );
   }
 
-});
+};

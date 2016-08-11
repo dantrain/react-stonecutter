@@ -19,9 +19,13 @@
         "no-unused-vars": [1, { "vars": "local", "args": "after-used" }],
         "no-param-reassign": 0,
         "consistent-return": 0,
+        "no-confusing-arrow": 0,
+        "no-mixed-operators": [2, { "allowSamePrecedence": true }],
+        "import/no-extraneous-dependencies": 0,
         "react/prefer-es6-class": 0,
         "react/prop-types": 0,
         "react/jsx-no-bind": 0,
+        "jsx-a11y/label-has-for": 0,
         "react/sort-comp": [2, {
             "order": [
                 "lifecycle",
@@ -58,13 +62,9 @@
         "browser": true
     },
     "extends": "airbnb",
+    "parser": "babel-eslint",
     "parserOptions": {
-      "ecmaVersion": 6,
-      "sourceType": "module",
-      "ecmaFeatures": {
-          "jsx": true,
-          "experimentalObjectRestSpread": true
-      }
+      "sourceType": "module"
     },
     "plugins": [
         "react"

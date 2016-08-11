@@ -1,13 +1,19 @@
-import React from 'react';
+import React, { Component } from 'react';
 import isEqualWith from 'lodash.isequalwith';
-import reactBrickwork, { SpringGrid, CSSGrid,
-  makeResponsive, measureItems } from '../../../src/index';
+import {
+  SpringGrid,
+  CSSGrid,
+  makeResponsive,
+  measureItems,
+  layout as layouts,
+  enterExitStyle as enterExitStyles
+} from '../../../src/index';
 
-export default React.createClass({
+export default class extends Component {
 
   componentWillMount() {
     this.createGrid(this.props);
-  },
+  }
 
   componentWillReceiveProps(nextProps) {
     if (!isEqualWith(nextProps, this.props, (a, b, key) => {
@@ -15,9 +21,9 @@ export default React.createClass({
     })) {
       this.createGrid(nextProps);
     }
-  },
+  }
 
-  createGrid({ useCSS, measured, responsive }) {
+  createGrid = ({ useCSS, measured, responsive }) => {
     let Grid = useCSS ? CSSGrid : SpringGrid;
 
     if (measured) {
@@ -32,7 +38,7 @@ export default React.createClass({
     }
 
     this.setState({ Grid });
-  },
+  };
 
   render() {
     const { children, useCSS, responsive, layout, enterExitStyle,
@@ -40,8 +46,8 @@ export default React.createClass({
 
     const { Grid } = this.state;
 
-    const gridLayout = reactBrickwork.layout[layout];
-    const gridEnterExitStyle = reactBrickwork.enterExitStyle[enterExitStyle];
+    const gridLayout = layouts[layout];
+    const gridEnterExitStyle = enterExitStyles[enterExitStyle];
 
     return (
       <Grid
@@ -67,4 +73,4 @@ export default React.createClass({
     );
   }
 
-});
+}

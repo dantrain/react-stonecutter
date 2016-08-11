@@ -63,7 +63,7 @@ const libWebpackConfig = assign({}, sharedWebpackConfig, {
 });
 
 const demoWebpackConfig = assign({}, sharedWebpackConfig, {
-  entry: './demo/src/main.js',
+  entry: './demo/src/main.jsx',
   output: {
     path: './demo/public',
     filename: 'demo.js'

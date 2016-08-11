@@ -7,15 +7,15 @@ export default function(items, props) {
     const column = i % columns;
     const row = Math.floor(i / columns);
 
-    const x = column * columnWidth + column * gutterWidth;
-    const y = row * itemHeight + row * gutterHeight;
+    const x = (column * columnWidth) + (column * gutterWidth);
+    const y = (row * itemHeight) + (row * gutterHeight);
 
     return [x, y];
   });
 
-  const gridWidth = columns * columnWidth + ((columns - 1) * gutterWidth);
-  const gridHeight = Math.ceil(items.length / columns) *
-    (itemHeight + gutterHeight) - gutterHeight;
+  const gridWidth = (columns * columnWidth) + ((columns - 1) * gutterWidth);
+  const gridHeight = (Math.ceil(items.length / columns) *
+    (itemHeight + gutterHeight)) - gutterHeight;
 
   return { positions, gridWidth, gridHeight };
 }

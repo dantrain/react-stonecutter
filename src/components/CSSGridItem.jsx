@@ -1,21 +1,23 @@
-import React from 'react';
+import React, { Component } from 'react';
 import shallowEqual from 'shallowequal';
 import omit from 'lodash.omit';
 import { buildTransform, positionToProperties } from '../utils/transformHelpers';
 
-export default React.createClass({
+export default class extends Component {
 
-  getInitialState() {
-    return {
+  constructor(props) {
+    super(props);
+
+    this.state = {
       style: {
         zIndex: 2
       }
     };
-  },
+  }
 
   componentDidMount() {
-    this._isMounted = true;
-  },
+    this.itemIsMounted = true;
+  }
 
   componentWillReceiveProps(nextProps) {
     if (!shallowEqual(nextProps, this.props)) {
@@ -23,21 +25,21 @@ export default React.createClass({
         this.setEndStyle(nextProps, 2);
       });
     }
-  },
+  }
 
   componentWillUnmount() {
-    this._isMounted = false;
+    this.itemIsMounted = false;
     clearTimeout(this.leaveTimeout);
-  },
+  }
 
   componentWillAppear(done) {
     this.setEndStyle(this.props, 2);
     done();
-  },
+  }
 
   componentWillEnter(done) {
-    const wasLeaving = this._isLeaving;
-    this._isLeaving = false;
+    const wasLeaving = this.isLeaving;
+    this.isLeaving = false;
     clearTimeout(this.leaveTimeout);
 
     const { position, gridProps, gridState } = this.props;
@@ -56,7 +58,7 @@ export default React.createClass({
 
       done();
     });
-  },
+  }
 
   componentDidEnter() {
     requestAnimationFrame(() => {
@@ -64,15 +66,15 @@ export default React.createClass({
         this.setEndStyle(this.props, 1);
       });
     });
-  },
+  }
 
   componentWillLeave(done) {
-    this._remove = done;
+    this.remove = done;
     const { gridProps, gridState } = this.props;
 
     requestAnimationFrame(() => {
-      if (this._isMounted) {
-        this._isLeaving = true;
+      if (this.itemIsMounted) {
+        this.isLeaving = true;
 
         this.setState({
           style: {
@@ -85,18 +87,18 @@ export default React.createClass({
         this.leaveTimeout = setTimeout(done, this.props.duration);
       }
     });
-  },
+  }
 
-  setEndStyle(props, zIndex) {
+  setEndStyle = (props, zIndex) => {
     clearTimeout(this.leaveTimeout);
 
-    if (this._remove) {
-      this._remove();
-      this._remove = null;
+    if (this.remove) {
+      this.remove();
+      this.remove = null;
       return;
     }
 
-    if (!this._isMounted) return;
+    if (!this.itemIsMounted) return;
 
     const { position, gridProps, gridState } = props;
 
@@ -108,7 +110,7 @@ export default React.createClass({
         ...positionToProperties(position)
       }
     });
-  },
+  };
 
   render() {
     const item = React.Children.only(this.props.children);
@@ -143,4 +145,4 @@ export default React.createClass({
     });
   }
 
-});
+}

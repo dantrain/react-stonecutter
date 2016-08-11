@@ -1,38 +1,36 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { TransitionMotion, spring } from 'react-motion';
 import stripStyle from 'react-motion/lib/stripStyle';
-import { buildTransform, positionToProperties } from '../utils/transformHelpers';
 import shallowEqual from 'shallowequal';
 import omit from 'lodash.omit';
+import { buildTransform, positionToProperties } from '../utils/transformHelpers';
 import { commonPropTypes, commonDefaultProps } from '../utils/commonProps';
 
-export default React.createClass({
+export default class extends Component {
 
-  propTypes: {
+  static propTypes = {
     ...commonPropTypes,
     springConfig: React.PropTypes.shape({
       stiffness: React.PropTypes.number,
       damping: React.PropTypes.number,
       precision: React.PropTypes.number
     })
-  },
+  };
 
-  getDefaultProps() {
-    return {
-      ...commonDefaultProps,
-      springConfig: { stiffness: 60, damping: 14, precision: 0.1 }
-    };
-  },
+  static defaultProps = {
+    ...commonDefaultProps,
+    springConfig: { stiffness: 60, damping: 14, precision: 0.1 }
+  };
 
   componentWillMount() {
     this.setState(this.doLayout(this.props));
-  },
+  }
 
   componentWillReceiveProps(nextProps) {
     if (!shallowEqual(nextProps, this.props)) {
       this.setState(this.doLayout(nextProps));
     }
-  },
+  }
 
   doLayout(props) {
     const items = React.Children.toArray(props.children)
@@ -61,9 +59,9 @@ export default React.createClass({
     }));
 
     return { styles, gridWidth, gridHeight };
-  },
+  }
 
-  willEnter(transitionStyle) {
+  willEnter = (transitionStyle) => {
     const { gridWidth, gridHeight } = this.state;
 
     return {
@@ -72,9 +70,9 @@ export default React.createClass({
       ...this.props.enter(transitionStyle.data.element.props,
         this.props, { gridWidth, gridHeight })
     };
-  },
+  };
 
-  willLeave(transitionStyle) {
+  willLeave = (transitionStyle) => {
     const { gridWidth, gridHeight } = this.state;
     const exitStyle = this.props.exit(transitionStyle.data.element.props,
       this.props, { gridWidth, gridHeight });
@@ -84,7 +82,7 @@ export default React.createClass({
       zIndex: 0,
       ...springify(exitStyle, this.props.springConfig)
     };
-  },
+  };
 
   render() {
     const { component, style, perspective, lengthUnit,
@@ -136,7 +134,7 @@ export default React.createClass({
     );
   }
 
-});
+}
 
 function springify(style, springConfig) {
   return Object.keys(style).reduce((obj, key) => {

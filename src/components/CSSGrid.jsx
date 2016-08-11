@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import ReactTransitionGroup from 'react-addons-transition-group';
 import shallowEqual from 'shallowequal';
 import omit from 'lodash.omit';
@@ -6,30 +6,28 @@ import { commonPropTypes, commonDefaultProps } from '../utils/commonProps';
 import { cubicOut } from '../utils/easings';
 import CSSGridItem from './CSSGridItem';
 
-export default React.createClass({
+export default class extends Component {
 
-  propTypes: {
+  static propTypes = {
     ...commonPropTypes,
     duration: React.PropTypes.number.isRequired,
     easing: React.PropTypes.string
-  },
+  };
 
-  getDefaultProps() {
-    return {
-      ...commonDefaultProps,
-      easing: cubicOut
-    };
-  },
+  static defaultProps = {
+    ...commonDefaultProps,
+    easing: cubicOut
+  };
 
   componentWillMount() {
     this.setState(this.doLayout(this.props));
-  },
+  }
 
   componentWillReceiveProps(nextProps) {
     if (!shallowEqual(nextProps, this.props)) {
       this.setState(this.doLayout(nextProps));
     }
-  },
+  }
 
   doLayout(props) {
     const { positions, gridWidth, gridHeight } =
@@ -40,7 +38,7 @@ export default React.createClass({
         })), props);
 
     return { gridWidth, gridHeight, positions };
-  },
+  }
 
   render() {
     const { component, style, children, duration,
@@ -82,4 +80,4 @@ export default React.createClass({
     );
   }
 
-});
+}
