@@ -11,15 +11,16 @@ import {
 
 export default class extends Component {
 
-  componentWillMount() {
-    this.createGrid(this.props);
+  constructor(props) {
+    super(props);
+    this.state = this.createGrid(props);
   }
 
   componentWillReceiveProps(nextProps) {
     if (!isEqualWith(nextProps, this.props, (a, b, key) => {
       if (key === 'children') return true;
     })) {
-      this.createGrid(nextProps);
+      this.setState(this.createGrid(nextProps));
     }
   }
 
@@ -37,7 +38,7 @@ export default class extends Component {
       });
     }
 
-    this.setState({ Grid });
+    return { Grid };
   };
 
   render() {

@@ -19,8 +19,9 @@ export default class extends Component {
     easing: cubicOut
   };
 
-  componentWillMount() {
-    this.setState(this.doLayout(this.props));
+  constructor(props) {
+    super(props);
+    this.state = this.doLayout(props);
   }
 
   componentWillReceiveProps(nextProps) {

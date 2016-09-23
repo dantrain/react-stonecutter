@@ -22,8 +22,9 @@ export default class extends Component {
     springConfig: { stiffness: 60, damping: 14, precision: 0.1 }
   };
 
-  componentWillMount() {
-    this.setState(this.doLayout(this.props));
+  constructor(props) {
+    super(props);
+    this.state = this.doLayout(props);
   }
 
   componentWillReceiveProps(nextProps) {

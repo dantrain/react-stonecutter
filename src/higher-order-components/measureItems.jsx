@@ -14,15 +14,13 @@ export default (Grid, { measureImages, background } = {}) => class extends Compo
   constructor(props) {
     super(props);
 
-    this.state = {
-      rects: {}
-    };
-  }
-
-  componentWillMount() {
     this.rects = {};
     this.loading = {};
     this.retryTimeouts = {};
+
+    this.state = {
+      rects: {}
+    };
   }
 
   componentDidMount() {
