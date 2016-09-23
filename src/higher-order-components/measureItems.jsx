@@ -33,7 +33,7 @@ export default (Grid, { measureImages, background } = {}) => class extends Compo
   }
 
   componentWillUnmount() {
-    Object.keys(this.retryTimeouts).forEach(key => {
+    Object.keys(this.retryTimeouts).forEach((key) => {
       clearTimeout(this.retryTimeouts[key]);
     });
   }
@@ -46,7 +46,7 @@ export default (Grid, { measureImages, background } = {}) => class extends Compo
         if (measureImages) {
           Array.from(elements)
             .filter(el => !this.loading[el.dataset.stonecutterkey])
-            .forEach(el => {
+            .forEach((el) => {
               this.loading[el.dataset.stonecutterkey] = true;
 
               imagesLoaded(el, { background }, () => {
@@ -131,7 +131,7 @@ export default (Grid, { measureImages, background } = {}) => class extends Compo
               overflow: 'hidden',
               visibility: 'hidden'
             },
-            ref: el => { this.elementsToMeasureContainer = el; }
+            ref: (el) => { this.elementsToMeasureContainer = el; }
           }, elementsToMeasure)}
       </span>
     );

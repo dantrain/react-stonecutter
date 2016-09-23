@@ -21,6 +21,8 @@
         "consistent-return": 0,
         "no-confusing-arrow": 0,
         "no-mixed-operators": [2, { "allowSamePrecedence": true }],
+        "class-methods-use-this": 0,
+        "no-plusplus": 0,
         "import/no-extraneous-dependencies": 0,
         "react/prefer-es6-class": 0,
         "react/prop-types": 0,

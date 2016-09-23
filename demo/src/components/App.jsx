@@ -63,9 +63,9 @@ export default class extends Component {
 
     const itemHeight = layout === 'simple' ? 190 : null;
 
-    const items = data.map(letter => {
+    const items = data.map((letter) => {
       const contentIndex = letter.charCodeAt(0) % 6;
-      const content = ipsum.slice(contentIndex, (contentIndex * 1.5 | 0) + 1);
+      const content = ipsum.slice(contentIndex, Math.floor(contentIndex * 1.5) + 1);
 
       return (
         <li

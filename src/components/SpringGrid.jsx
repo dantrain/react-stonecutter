@@ -106,7 +106,7 @@ export default class extends Component {
               height: `${this.state.gridHeight}${lengthUnit}`
             },
             ...rest
-          }, interpolatedStyles.map(config => {
+          }, interpolatedStyles.map((config) => {
             const { style: { opacity, zIndex }, data } = config;
 
             const transform = buildTransform(config.style, perspective, {

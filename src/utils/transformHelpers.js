@@ -24,7 +24,7 @@ export const positionToProperties = position => ({
 export const buildTransform = (style, perspective, units) => {
   const arr = [];
 
-  properties.forEach(prop => {
+  properties.forEach((prop) => {
     if (prop.name === 'perspective') {
       if (typeof perspective !== 'undefined') {
         arr.push(`perspective(${perspective}${units[prop.unit]})`);
