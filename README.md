@@ -59,6 +59,21 @@ import { CSSGrid, layout } from 'react-stonecutter';
 </CSSGrid>
 ```
 
+To render React components as children, wrap them in simple elements. This gives you full control of your markup:
+
+```xml
+<SpringGrid
+  component="ul"
+  // ...etc.
+>
+  {data.map((datum) => (
+    <li key={datum.id}>
+      <MyComponent datum={datum} />
+    </li>
+  ))}
+</SpringGrid>
+```
+
 If you don't know the heights of your items ahead of time, use the `measureItems` higher-order component to measure them in the browser before layout:
 
 ```js
