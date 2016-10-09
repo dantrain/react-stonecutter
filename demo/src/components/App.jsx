@@ -69,8 +69,8 @@ export default class extends Component {
 
       return (
         <li
-          className="grid-item"
           key={letter}
+          className="grid-item"
           style={{
             width: 150,
             height: itemHeight

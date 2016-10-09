@@ -5,6 +5,7 @@ import shallowEqual from 'shallowequal';
 import omit from 'lodash.omit';
 import { buildTransform, positionToProperties } from '../utils/transformHelpers';
 import { commonPropTypes, commonDefaultProps } from '../utils/commonProps';
+import assertIsElement from '../utils/assertIsElement';
 
 export default class extends Component {
 
@@ -35,12 +36,16 @@ export default class extends Component {
 
   doLayout(props) {
     const items = React.Children.toArray(props.children)
-      .map(element => ({
-        key: element.key,
-        data: {
-          element
-        }
-      }));
+      .map((element) => {
+        assertIsElement(element);
+
+        return {
+          key: element.key,
+          data: {
+            element
+          }
+        };
+      });
 
     const { positions, gridWidth, gridHeight } =
       props.layout(items.map(item => ({
@@ -86,7 +91,7 @@ export default class extends Component {
   };
 
   render() {
-    const { component, style, perspective, lengthUnit,
+    const { component: Parent, style, perspective, lengthUnit,
             angleUnit, ...rest } = omit(this.props, ['itemHeight', 'measured',
               'columns', 'columnWidth', 'gutterWidth', 'gutterHeight', 'layout',
               'enter', 'entered', 'exit', 'springConfig', 'duration', 'easing']);
@@ -98,39 +103,45 @@ export default class extends Component {
         willLeave={this.willLeave}
       >
         {interpolatedStyles =>
-          React.createElement(component, {
-            style: {
+          <Parent
+            style={{
               position: 'relative',
               ...style,
               width: `${this.state.gridWidth}${lengthUnit}`,
               height: `${this.state.gridHeight}${lengthUnit}`
-            },
-            ...rest
-          }, interpolatedStyles.map((config) => {
-            const { style: { opacity, zIndex }, data } = config;
+            }}
+            {...rest}
+          >
+            {interpolatedStyles.map((config) => {
+              const { style: { opacity, zIndex }, data } = config;
+              const Child = data.element.type;
 
-            const transform = buildTransform(config.style, perspective, {
-              length: lengthUnit, angle: angleUnit
-            });
+              const transform = buildTransform(config.style, perspective, {
+                length: lengthUnit, angle: angleUnit
+              });
 
-            const itemProps = omit(data.element.props, ['itemRect', 'itemHeight']);
+              const itemProps = omit(data.element.props, ['itemRect', 'itemHeight']);
 
-            return React.createElement(data.element.type, {
-              key: data.element.key,
-              ...itemProps,
-              style: {
-                ...itemProps.style,
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                zIndex,
-                opacity,
-                transform,
-                WebkitTransform: transform,
-                msTransform: transform
-              }
-            });
-          }))}
+              return (
+                <Child
+                  key={data.element.key}
+                  {...itemProps}
+                  style={{
+                    ...itemProps.style,
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    zIndex,
+                    opacity,
+                    transform,
+                    WebkitTransform: transform,
+                    msTransform: transform
+                  }}
+                />
+              );
+            })}
+          </Parent>
+        }
       </TransitionMotion>
     );
   }

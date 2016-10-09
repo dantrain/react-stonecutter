@@ -115,6 +115,7 @@ export default class extends Component {
   render() {
     const item = React.Children.only(this.props.children);
     const { transition, perspective, lengthUnit, angleUnit } = this.props;
+    const Element = item.type;
 
     const { style: { translateX, translateY, opacity, zIndex } } = this.state;
 
@@ -128,21 +129,23 @@ export default class extends Component {
 
     const itemProps = omit(item.props, ['itemRect', 'itemHeight']);
 
-    return React.createElement(item.type, {
-      ...itemProps,
-      style: {
-        ...itemProps.style,
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        zIndex,
-        opacity,
-        transform,
-        transition,
-        WebkitTransform: transform,
-        WebkitTransition: transition
-      }
-    });
+    return (
+      <Element
+        {...itemProps}
+        style={{
+          ...itemProps.style,
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          zIndex,
+          opacity,
+          transform,
+          transition,
+          WebkitTransform: transform,
+          WebkitTransition: transition
+        }}
+      />
+    );
   }
 
 }

@@ -4,6 +4,7 @@ import shallowEqual from 'shallowequal';
 import omit from 'lodash.omit';
 import { commonPropTypes, commonDefaultProps } from '../utils/commonProps';
 import { cubicOut } from '../utils/easings';
+import assertIsElement from '../utils/assertIsElement';
 import CSSGridItem from './CSSGridItem';
 
 export default class extends Component {
@@ -33,10 +34,14 @@ export default class extends Component {
   doLayout(props) {
     const { positions, gridWidth, gridHeight } =
       props.layout(React.Children.toArray(props.children)
-        .map(item => ({
-          ...item.props,
-          key: item.key
-        })), props);
+        .map((item) => {
+          assertIsElement(item);
+
+          return {
+            ...item.props,
+            key: item.key
+          };
+        }), props);
 
     return { gridWidth, gridHeight, positions };
   }
