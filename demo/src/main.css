@@ -55,10 +55,18 @@ button {
 .slider-container {
   display: inline-block;
   width: 590px;
-  padding: 3px 5px;
+  padding: 0 5px;
 }
 
 .rc-slider {
+  margin-bottom: -2px;
+}
+
+.rc-slider-disabled {
+  background-color: transparent;
+}
+
+.rc-slider-rail {
   background-color: #ddd;
 }
 
