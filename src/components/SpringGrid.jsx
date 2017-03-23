@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { TransitionMotion, spring } from 'react-motion';
 import stripStyle from 'react-motion/lib/stripStyle';
 import shallowEqual from 'shallowequal';
-import omit from 'lodash.omit';
+import omit from 'just-omit';
 import { buildTransform, positionToProperties } from '../utils/transformHelpers';
 import { commonPropTypes, commonDefaultProps } from '../utils/commonProps';
 import assertIsElement from '../utils/assertIsElement';

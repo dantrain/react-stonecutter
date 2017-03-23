@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import partition from 'lodash.partition';
-import debounce from 'lodash.debounce';
+import debounce from 'debounce';
 import { commonDefaultProps } from '../utils/commonProps';
 
 const imagesLoaded = typeof window !== 'undefined' ? require('imagesloaded') : null;
@@ -93,9 +92,9 @@ export default (Grid, { measureImages, background } = {}) => class extends Compo
   render() {
     const { component } = this.props;
 
-    const [newElements, existingElements] = partition(
-      React.Children.toArray(this.props.children),
-      element => !this.state.rects[element.key]);
+    const children = React.Children.toArray(this.props.children);
+    const newElements = children.filter(element => !this.state.rects[element.key]);
+    const existingElements = children.filter(element => this.state.rects[element.key]);
 
     const elementsToMeasure = newElements.map(element =>
       React.cloneElement(element, {

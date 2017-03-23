@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ReactTransitionGroup from 'react-addons-transition-group';
 import shallowEqual from 'shallowequal';
-import omit from 'lodash.omit';
+import omit from 'just-omit';
 import { commonPropTypes, commonDefaultProps } from '../utils/commonProps';
 import { cubicOut } from '../utils/easings';
 import assertIsElement from '../utils/assertIsElement';

@@ -51,6 +51,7 @@
     "lodash.camelcase": "^4.3.0",
     "lodash.isequalwith": "^4.4.0",
     "lodash.shuffle": "^4.2.0",
+    "lodash.omit": "^4.5.0",
     "mocha": "^3.2.0",
     "node-notifier": "^4.6.1",
     "rc-slider": "^5.4.3",
@@ -62,11 +63,10 @@
     "webpack": "^1.14.0"
   },
   "dependencies": {
+    "debounce": "^1.0.0",
     "enquire.js": "^2.1.1",
     "imagesloaded": "^4.1.1",
-    "lodash.debounce": "^4.0.8",
-    "lodash.omit": "^4.5.0",
-    "lodash.partition": "^4.6.0",
+    "just-omit": "^1.0.1",
     "react-addons-transition-group": "^15.4.2",
     "react-motion": "^0.4.7",
     "shallowequal": "^0.2.2"
