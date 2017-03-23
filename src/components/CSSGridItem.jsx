@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import shallowEqual from 'shallowequal';
-import omit from 'lodash.omit';
+import omit from 'just-omit';
 import { buildTransform, positionToProperties } from '../utils/transformHelpers';
 
 export default class extends Component {
