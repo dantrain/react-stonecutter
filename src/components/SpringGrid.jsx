@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { TransitionMotion, spring } from 'react-motion';
 import stripStyle from 'react-motion/lib/stripStyle';
 import shallowEqual from 'shallowequal';
@@ -11,10 +12,10 @@ export default class extends Component {
 
   static propTypes = {
     ...commonPropTypes,
-    springConfig: React.PropTypes.shape({
-      stiffness: React.PropTypes.number,
-      damping: React.PropTypes.number,
-      precision: React.PropTypes.number
+    springConfig: PropTypes.shape({
+      stiffness: PropTypes.number,
+      damping: PropTypes.number,
+      precision: PropTypes.number
     })
   };
 
