@@ -1,11 +1,11 @@
-import { default as CSSGrid } from './components/CSSGrid';
-import { default as SpringGrid } from './components/SpringGrid';
+import CSSGrid from './components/CSSGrid';
+import SpringGrid from './components/SpringGrid';
 
-import { default as makeResponsive } from './higher-order-components/makeResponsive';
-import { default as measureItems } from './higher-order-components/measureItems';
+import makeResponsive from './higher-order-components/makeResponsive';
+import measureItems from './higher-order-components/measureItems';
 
-import { default as pinterest } from './layouts/pinterest';
-import { default as simpleLayout } from './layouts/simple';
+import pinterest from './layouts/pinterest';
+import simpleLayout from './layouts/simple';
 
 import * as foldUp from './enter-exit-styles/foldUp';
 import * as fromCenter from './enter-exit-styles/fromCenter';

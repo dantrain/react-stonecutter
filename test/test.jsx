@@ -26,8 +26,8 @@ describe('Grid components common features', function() {
               columnWidth={150}
               duration={2000}
             >
-              <span className="item"></span>
-              <span className="item"></span>
+              <span className="item" />
+              <span className="item" />
             </Grid>
           </div>
         );

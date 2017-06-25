@@ -58,7 +58,7 @@ export default class extends Component {
     const transition = ['opacity', 'transform'].map(prop =>
       `${prop} ${duration}ms ${easing}`).join(', ');
 
-    const wrappedItems = items.map((item, i) =>
+    const wrappedItems = items.map((item, i) => (
       <CSSGridItem
         key={item.key}
         position={positions[i]}
@@ -68,7 +68,8 @@ export default class extends Component {
         gridState={this.state}
       >
         {item}
-      </CSSGridItem>);
+      </CSSGridItem>
+    ));
 
     return (
       <ReactTransitionGroup

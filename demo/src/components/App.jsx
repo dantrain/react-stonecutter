@@ -1,6 +1,7 @@
+/* eslint-disable react/no-array-index-key */
 import React, { Component } from 'react';
 import { RadioGroup, Radio } from 'react-radio-group';
-import Slider from 'rc-slider';
+import Slider, { createSliderWithTooltip } from 'rc-slider';
 import shuffle from 'lodash.shuffle';
 import camelCase from 'lodash.camelcase';
 import Grid from './Grid';
@@ -20,6 +21,8 @@ Who rigs every Oscar night?`.split('\n');
 const layouts = ['Pinterest', 'Simple'];
 const enterExitStyles = ['Simple', 'Skew', 'Newspaper',
   'Fold Up', 'From Center', 'From Left to Right', 'From Top', 'From Bottom'];
+
+const SliderWithTooltip = createSliderWithTooltip(Slider);
 
 export default class extends Component {
 
@@ -139,7 +142,7 @@ export default class extends Component {
           </label>
           <div className="slider">{'Columns '}
             <div className="slider-container">
-              <Slider
+              <SliderWithTooltip
                 value={columns}
                 onChange={val => this.setState({ columns: val })}
                 min={1}
@@ -150,7 +153,7 @@ export default class extends Component {
           </div>
           <div className="slider">{'Gutters '}
             <div className="slider-container">
-              <Slider
+              <SliderWithTooltip
                 value={gutters}
                 onChange={val => this.setState({ gutters: val })}
                 min={0}
@@ -161,7 +164,7 @@ export default class extends Component {
           </div>
           <div className="slider">{'Stiffness '}
             <div className="slider-container">
-              <Slider
+              <SliderWithTooltip
                 value={stiffness}
                 onChange={val => this.setState({ stiffness: val })}
                 min={0}
@@ -172,7 +175,7 @@ export default class extends Component {
           </div>
           <div className="slider">{'Damping '}
             <div className="slider-container">
-              <Slider
+              <SliderWithTooltip
                 value={damping}
                 onChange={val => this.setState({ damping: val })}
                 min={0}
@@ -183,7 +186,7 @@ export default class extends Component {
           </div>
           <div className="slider">{'Duration '}
             <div className="slider-container">
-              <Slider
+              <SliderWithTooltip
                 value={duration}
                 onChange={val => this.setState({ duration: val })}
                 min={100}

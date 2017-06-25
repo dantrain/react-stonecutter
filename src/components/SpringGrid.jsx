@@ -102,7 +102,7 @@ export default class extends Component {
         willEnter={this.willEnter}
         willLeave={this.willLeave}
       >
-        {interpolatedStyles =>
+        {interpolatedStyles => (
           <Parent
             style={{
               position: 'relative',
@@ -141,7 +141,7 @@ export default class extends Component {
               );
             })}
           </Parent>
-        }
+        )}
       </TransitionMotion>
     );
   }
