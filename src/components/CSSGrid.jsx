@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import ReactTransitionGroup from 'react-addons-transition-group';
+import TransitionGroup from 'react-transition-group/TransitionGroup';
 import shallowEqual from 'shallowequal';
 import omit from 'lodash.omit';
 import { commonPropTypes, commonDefaultProps } from '../utils/commonProps';
@@ -73,7 +73,7 @@ export default class extends Component {
     ));
 
     return (
-      <ReactTransitionGroup
+      <TransitionGroup
         component={component}
         style={{
           position: 'relative',
@@ -84,7 +84,7 @@ export default class extends Component {
         {...rest}
       >
         {wrappedItems}
-      </ReactTransitionGroup>
+      </TransitionGroup>
     );
   }
 
