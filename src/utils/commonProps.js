@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import simpleLayout from '../layouts/simple';
 import * as simpleEnterExit from '../enter-exit-styles/simple';
