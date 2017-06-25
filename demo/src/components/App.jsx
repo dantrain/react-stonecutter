@@ -35,7 +35,7 @@ export default class extends Component {
 
     this.state = {
       data: this.generateData(),
-      useCSS: false,
+      useCSS: true,
       responsive: false,
       layout: camelCase(layouts[0]),
       enterExitStyle: camelCase(enterExitStyles[0]),

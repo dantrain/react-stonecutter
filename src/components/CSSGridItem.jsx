@@ -4,7 +4,6 @@ import omit from 'lodash.omit';
 import { buildTransform, positionToProperties } from '../utils/transformHelpers';
 
 export default class extends Component {
-
   constructor(props) {
     super(props);
 
@@ -38,28 +37,23 @@ export default class extends Component {
   }
 
   componentWillEnter(done) {
-    const wasLeaving = this.isLeaving;
-    this.isLeaving = false;
     clearTimeout(this.leaveTimeout);
 
     const { position, gridProps, gridState } = this.props;
 
     requestAnimationFrame(() => {
-      if (!wasLeaving) {
-        this.setState({
-          style: {
-            ...this.state.style,
-            ...positionToProperties(position),
-            zIndex: 1,
-            ...gridProps.enter(this.props, gridProps, gridState)
-          }
-        });
-      }
+      this.setState({
+        style: {
+          ...this.state.style,
+          ...positionToProperties(position),
+          zIndex: 1,
+          ...gridProps.enter(this.props, gridProps, gridState)
+        }
+      });
 
       done();
     });
   }
-
   componentDidEnter() {
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
@@ -67,15 +61,11 @@ export default class extends Component {
       });
     });
   }
-
   componentWillLeave(done) {
-    this.remove = done;
     const { gridProps, gridState } = this.props;
 
     requestAnimationFrame(() => {
       if (this.itemIsMounted) {
-        this.isLeaving = true;
-
         this.setState({
           style: {
             ...this.state.style,
@@ -88,15 +78,8 @@ export default class extends Component {
       }
     });
   }
-
   setEndStyle = (props, zIndex) => {
     clearTimeout(this.leaveTimeout);
-
-    if (this.remove) {
-      this.remove();
-      this.remove = null;
-      return;
-    }
 
     if (!this.itemIsMounted) return;
 
@@ -124,7 +107,8 @@ export default class extends Component {
     }
 
     const transform = buildTransform(this.state.style, perspective, {
-      length: lengthUnit, angle: angleUnit
+      length: lengthUnit,
+      angle: angleUnit
     });
 
     const itemProps = omit(item.props, ['itemRect', 'itemHeight']);
@@ -147,5 +131,4 @@ export default class extends Component {
       />
     );
   }
-
 }

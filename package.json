@@ -70,7 +70,7 @@
     "lodash.partition": "^4.6.0",
     "prop-types": "^15.5.10",
     "react-motion": "^0.5.0",
-    "react-transition-group": "^1.2.0",
+    "react-transition-group-plus": "^0.5.0-alpha.1",
     "shallowequal": "^1.0.1"
   },
   "peerDependencies": {
