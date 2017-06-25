@@ -68,6 +68,7 @@
     "lodash.debounce": "^4.0.8",
     "lodash.omit": "^4.5.0",
     "lodash.partition": "^4.6.0",
+    "prop-types": "^15.5.10",
     "react-addons-transition-group": "^15.6.0",
     "react-motion": "^0.5.0",
     "shallowequal": "^1.0.1"

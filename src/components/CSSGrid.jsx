@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import ReactTransitionGroup from 'react-addons-transition-group';
 import shallowEqual from 'shallowequal';
 import omit from 'lodash.omit';
@@ -11,8 +12,8 @@ export default class extends Component {
 
   static propTypes = {
     ...commonPropTypes,
-    duration: React.PropTypes.number.isRequired,
-    easing: React.PropTypes.string
+    duration: PropTypes.number.isRequired,
+    easing: PropTypes.string
   };
 
   static defaultProps = {

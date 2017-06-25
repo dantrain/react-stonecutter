@@ -1,20 +1,21 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import simpleLayout from '../layouts/simple';
 import * as simpleEnterExit from '../enter-exit-styles/simple';
 
 export const commonPropTypes = {
-  columns: React.PropTypes.number.isRequired,
-  columnWidth: React.PropTypes.number.isRequired,
-  gutterWidth: React.PropTypes.number,
-  gutterHeight: React.PropTypes.number,
-  component: React.PropTypes.string,
-  layout: React.PropTypes.func,
-  enter: React.PropTypes.func,
-  entered: React.PropTypes.func,
-  exit: React.PropTypes.func,
-  perspective: React.PropTypes.number,
-  lengthUnit: React.PropTypes.string,
-  angleUnit: React.PropTypes.string
+  columns: PropTypes.number.isRequired,
+  columnWidth: PropTypes.number.isRequired,
+  gutterWidth: PropTypes.number,
+  gutterHeight: PropTypes.number,
+  component: PropTypes.string,
+  layout: PropTypes.func,
+  enter: PropTypes.func,
+  entered: PropTypes.func,
+  exit: PropTypes.func,
+  perspective: PropTypes.number,
+  lengthUnit: PropTypes.string,
+  angleUnit: PropTypes.string
 };
 
 export const commonDefaultProps = {
