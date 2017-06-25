@@ -1,4 +1,3 @@
-
 const properties = [
   { name: 'translateX', unit: 'length' },
   { name: 'translateY', unit: 'length' },

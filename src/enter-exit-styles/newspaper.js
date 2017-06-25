@@ -1,4 +1,3 @@
-
 export const enter = () => ({
   scale: 0,
   opacity: 0,

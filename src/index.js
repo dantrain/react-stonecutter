@@ -34,13 +34,7 @@ export const enterExitStyle = {
   skew
 };
 
-export {
-  CSSGrid,
-  SpringGrid,
-  measureItems,
-  makeResponsive,
-  easings
-};
+export { CSSGrid, SpringGrid, measureItems, makeResponsive, easings };
 
 export default {
   CSSGrid,

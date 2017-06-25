@@ -10,7 +10,6 @@ import assertIsElement from '../utils/assertIsElement';
 import CSSGridItem from './CSSGridItem';
 
 export default class extends Component {
-
   static propTypes = {
     ...commonPropTypes,
     duration: PropTypes.number.isRequired,
@@ -34,34 +33,47 @@ export default class extends Component {
   }
 
   doLayout(props) {
-    const { positions, gridWidth, gridHeight } =
-      props.layout(React.Children.toArray(props.children)
-        .map((item) => {
-          assertIsElement(item);
+    const { positions, gridWidth, gridHeight } = props.layout(
+      React.Children.toArray(props.children).map((item) => {
+        assertIsElement(item);
 
-          return {
-            ...item.props,
-            key: item.key
-          };
-        }), props);
+        return {
+          ...item.props,
+          key: item.key
+        };
+      }),
+      props
+    );
 
     return { gridWidth, gridHeight, positions };
   }
 
   render() {
-    const { component, style, children, duration,
-            easing, lengthUnit, ...rest } = omit(this.props, ['itemHeight', 'measured',
-              'columns', 'columnWidth', 'gutterWidth', 'gutterHeight', 'layout', 'enter',
-              'entered', 'exit', 'perspective', 'springConfig', 'angleUnit']);
+    const { component, style, children, duration, easing, lengthUnit, ...rest } = omit(this.props, [
+      'itemHeight',
+      'measured',
+      'columns',
+      'columnWidth',
+      'gutterWidth',
+      'gutterHeight',
+      'layout',
+      'enter',
+      'entered',
+      'exit',
+      'perspective',
+      'springConfig',
+      'angleUnit'
+    ]);
 
     const items = React.Children.toArray(children);
     const { positions, gridWidth, gridHeight } = this.state;
 
-    const transition = ['opacity', 'transform'].map(prop =>
-      `${prop} ${duration}ms ${easing}`).join(', ');
+    const transition = ['opacity', 'transform']
+      .map(prop => `${prop} ${duration}ms ${easing}`)
+      .join(', ');
 
-    const wrappedItems = items.map((item, i) => (
-      <CSSGridItem
+    const wrappedItems = items.map((item, i) =>
+      (<CSSGridItem
         key={item.key}
         position={positions[i]}
         {...this.props}
@@ -70,8 +82,8 @@ export default class extends Component {
         gridState={this.state}
       >
         {item}
-      </CSSGridItem>
-    ));
+      </CSSGridItem>)
+    );
 
     return (
       <TransitionGroup
@@ -88,5 +100,4 @@ export default class extends Component {
       </TransitionGroup>
     );
   }
-
 }

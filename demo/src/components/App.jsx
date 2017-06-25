@@ -19,13 +19,20 @@ Who robs cavefish of their sight?
 Who rigs every Oscar night?`.split('\n');
 
 const layouts = ['Pinterest', 'Simple'];
-const enterExitStyles = ['Simple', 'Skew', 'Newspaper',
-  'Fold Up', 'From Center', 'From Left to Right', 'From Top', 'From Bottom'];
+const enterExitStyles = [
+  'Simple',
+  'Skew',
+  'Newspaper',
+  'Fold Up',
+  'From Center',
+  'From Left to Right',
+  'From Top',
+  'From Bottom'
+];
 
 const SliderWithTooltip = createSliderWithTooltip(Slider);
 
 export default class extends Component {
-
   static defaultProps = {
     minItems: 10
   };
@@ -35,7 +42,7 @@ export default class extends Component {
 
     this.state = {
       data: this.generateData(),
-      useCSS: true,
+      useCSS: false,
       responsive: false,
       layout: camelCase(layouts[0]),
       enterExitStyle: camelCase(enterExitStyles[0]),
@@ -54,15 +61,25 @@ export default class extends Component {
     });
   };
 
-  generateData = () => shuffle(alphabet)
-    .slice(0, this.props.minItems +
-      Math.floor(Math.random() * (26 - this.props.minItems)))
-    .sort();
+  generateData = () =>
+    shuffle(alphabet)
+      .slice(0, this.props.minItems + Math.floor(Math.random() * (26 - this.props.minItems)))
+      .sort();
 
   render() {
     const { data, ...gridProps } = this.state;
-    const { useCSS, layout, enterExitStyle, responsive, columns, gutters,
-      stiffness, damping, duration, easing } = this.state;
+    const {
+      useCSS,
+      layout,
+      enterExitStyle,
+      responsive,
+      columns,
+      gutters,
+      stiffness,
+      damping,
+      duration,
+      easing
+    } = this.state;
 
     const itemHeight = layout === 'simple' ? 190 : null;
 
@@ -105,32 +122,33 @@ export default class extends Component {
               />
             </a>
           </RadioGroup>
-          <label>{'Layout '}
-            <select
-              value={layout}
-              onChange={ev => this.setState({ layout: ev.target.value })}
-            >
-              {layouts.map(name =>
-                <option value={camelCase(name)} key={name}>{name}</option>)}
+          <label>
+            {'Layout '}
+            <select value={layout} onChange={ev => this.setState({ layout: ev.target.value })}>
+              {layouts.map(name => <option value={camelCase(name)} key={name}>{name}</option>)}
             </select>
           </label>
-          <label>{'Enter/Exit Style '}
+          <label>
+            {'Enter/Exit Style '}
             <select
               value={enterExitStyle}
               onChange={ev => this.setState({ enterExitStyle: ev.target.value })}
             >
               {enterExitStyles.map(name =>
-                <option value={camelCase(name)} key={name}>{name}</option>)}
+                <option value={camelCase(name)} key={name}>{name}</option>
+              )}
             </select>
           </label>
-          <label>{'Easing '}
+          <label>
+            {'Easing '}
             <select
               value={easing}
               onChange={ev => this.setState({ easing: ev.target.value })}
               disabled={!useCSS}
             >
               {Object.keys(easings).map(name =>
-                <option value={easings[name]} key={name}>{name}</option>)}
+                <option value={easings[name]} key={name}>{name}</option>
+              )}
             </select>
           </label>
           <label className="checkbox">
@@ -140,7 +158,8 @@ export default class extends Component {
               onChange={ev => this.setState({ responsive: ev.target.checked })}
             />Responsive
           </label>
-          <div className="slider">{'Columns '}
+          <div className="slider">
+            {'Columns '}
             <div className="slider-container">
               <SliderWithTooltip
                 value={columns}
@@ -151,7 +170,8 @@ export default class extends Component {
               />
             </div>
           </div>
-          <div className="slider">{'Gutters '}
+          <div className="slider">
+            {'Gutters '}
             <div className="slider-container">
               <SliderWithTooltip
                 value={gutters}
@@ -162,7 +182,8 @@ export default class extends Component {
               />
             </div>
           </div>
-          <div className="slider">{'Stiffness '}
+          <div className="slider">
+            {'Stiffness '}
             <div className="slider-container">
               <SliderWithTooltip
                 value={stiffness}
@@ -173,7 +194,8 @@ export default class extends Component {
               />
             </div>
           </div>
-          <div className="slider">{'Damping '}
+          <div className="slider">
+            {'Damping '}
             <div className="slider-container">
               <SliderWithTooltip
                 value={damping}
@@ -184,7 +206,8 @@ export default class extends Component {
               />
             </div>
           </div>
-          <div className="slider">{'Duration '}
+          <div className="slider">
+            {'Duration '}
             <div className="slider-container">
               <SliderWithTooltip
                 value={duration}
@@ -197,15 +220,9 @@ export default class extends Component {
               />
             </div>
           </div>
-          <button
-            onClick={this.handleShuffle}
-          >Randomize children</button>
+          <button onClick={this.handleShuffle}>Randomize children</button>
         </div>
-        <Grid
-          itemHeight={itemHeight}
-          measured={layout !== 'simple'}
-          {...gridProps}
-        >
+        <Grid itemHeight={itemHeight} measured={layout !== 'simple'} {...gridProps}>
           {items}
         </Grid>
       </div>

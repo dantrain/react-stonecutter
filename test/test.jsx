@@ -15,17 +15,11 @@ describe('Grid components common features', function() {
   ];
 
   grids.forEach(function({ name, component: Grid }) {
-
     describe(`<${name} />`, function() {
-
       it('Renders children', function() {
         const wrapper = shallow(
           <div>
-            <Grid
-              columns={4}
-              columnWidth={150}
-              duration={2000}
-            >
+            <Grid columns={4} columnWidth={150} duration={2000}>
               <span className="item" />
               <span className="item" />
             </Grid>
@@ -37,18 +31,11 @@ describe('Grid components common features', function() {
 
       it('Can change tag name', function() {
         const wrapper = shallow(
-          <Grid
-            component="ul"
-            columns={4}
-            columnWidth={150}
-            duration={2000}
-          />
+          <Grid component="ul" columns={4} columnWidth={150} duration={2000} />
         );
 
         expect(wrapper).to.have.tagName('ul');
       });
-
     });
-
   });
 });

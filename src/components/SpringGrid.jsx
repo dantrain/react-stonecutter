@@ -9,7 +9,6 @@ import { commonPropTypes, commonDefaultProps } from '../utils/commonProps';
 import assertIsElement from '../utils/assertIsElement';
 
 export default class extends Component {
-
   static propTypes = {
     ...commonPropTypes,
     springConfig: PropTypes.shape({
@@ -36,31 +35,34 @@ export default class extends Component {
   }
 
   doLayout(props) {
-    const items = React.Children.toArray(props.children)
-      .map((element) => {
-        assertIsElement(element);
+    const items = React.Children.toArray(props.children).map((element) => {
+      assertIsElement(element);
 
-        return {
-          key: element.key,
-          data: {
-            element
-          }
-        };
-      });
+      return {
+        key: element.key,
+        data: {
+          element
+        }
+      };
+    });
 
-    const { positions, gridWidth, gridHeight } =
-      props.layout(items.map(item => ({
+    const { positions, gridWidth, gridHeight } = props.layout(
+      items.map(item => ({
         ...item.data.element.props,
         key: item.data.element.key
-      })), props);
+      })),
+      props
+    );
 
     const styles = positions.map((position, i) => ({
       ...items[i],
       style: {
         ...items[i].style,
         zIndex: 2,
-        ...springify(props.entered(items[i].data.element.props,
-          props, { gridWidth, gridHeight }), props.springConfig),
+        ...springify(
+          props.entered(items[i].data.element.props, props, { gridWidth, gridHeight }),
+          props.springConfig
+        ),
         ...springify(positionToProperties(position), props.springConfig)
       }
     }));
@@ -74,15 +76,16 @@ export default class extends Component {
     return {
       ...stripStyle(transitionStyle.style),
       zIndex: 1,
-      ...this.props.enter(transitionStyle.data.element.props,
-        this.props, { gridWidth, gridHeight })
+      ...this.props.enter(transitionStyle.data.element.props, this.props, { gridWidth, gridHeight })
     };
   };
 
   willLeave = (transitionStyle) => {
     const { gridWidth, gridHeight } = this.state;
-    const exitStyle = this.props.exit(transitionStyle.data.element.props,
-      this.props, { gridWidth, gridHeight });
+    const exitStyle = this.props.exit(transitionStyle.data.element.props, this.props, {
+      gridWidth,
+      gridHeight
+    });
 
     return {
       ...transitionStyle.style,
@@ -92,10 +95,24 @@ export default class extends Component {
   };
 
   render() {
-    const { component: Parent, style, perspective, lengthUnit,
-            angleUnit, ...rest } = omit(this.props, ['itemHeight', 'measured',
-              'columns', 'columnWidth', 'gutterWidth', 'gutterHeight', 'layout',
-              'enter', 'entered', 'exit', 'springConfig', 'duration', 'easing']);
+    const { component: Parent, style, perspective, lengthUnit, angleUnit, ...rest } = omit(
+      this.props,
+      [
+        'itemHeight',
+        'measured',
+        'columns',
+        'columnWidth',
+        'gutterWidth',
+        'gutterHeight',
+        'layout',
+        'enter',
+        'entered',
+        'exit',
+        'springConfig',
+        'duration',
+        'easing'
+      ]
+    );
 
     return (
       <TransitionMotion
@@ -103,8 +120,8 @@ export default class extends Component {
         willEnter={this.willEnter}
         willLeave={this.willLeave}
       >
-        {interpolatedStyles => (
-          <Parent
+        {interpolatedStyles =>
+          (<Parent
             style={{
               position: 'relative',
               ...style,
@@ -118,7 +135,8 @@ export default class extends Component {
               const Child = data.element.type;
 
               const transform = buildTransform(config.style, perspective, {
-                length: lengthUnit, angle: angleUnit
+                length: lengthUnit,
+                angle: angleUnit
               });
 
               const itemProps = omit(data.element.props, ['itemRect', 'itemHeight']);
@@ -141,12 +159,10 @@ export default class extends Component {
                 />
               );
             })}
-          </Parent>
-        )}
+          </Parent>)}
       </TransitionMotion>
     );
   }
-
 }
 
 function springify(style, springConfig) {

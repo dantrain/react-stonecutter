@@ -10,16 +10,17 @@ import {
 } from '../../../src/index';
 
 export default class extends Component {
-
   constructor(props) {
     super(props);
     this.state = this.createGrid(props);
   }
 
   componentWillReceiveProps(nextProps) {
-    if (!isEqualWith(nextProps, this.props, (a, b, key) => {
-      if (key === 'children') return true;
-    })) {
+    if (
+      !isEqualWith(nextProps, this.props, (a, b, key) => {
+        if (key === 'children') return true;
+      })
+    ) {
       this.setState(this.createGrid(nextProps));
     }
   }
@@ -42,8 +43,20 @@ export default class extends Component {
   };
 
   render() {
-    const { children, useCSS, responsive, layout, enterExitStyle,
-      duration, easing, stiffness, damping, gutters, columns, ...rest } = this.props;
+    const {
+      children,
+      useCSS,
+      responsive,
+      layout,
+      enterExitStyle,
+      duration,
+      easing,
+      stiffness,
+      damping,
+      gutters,
+      columns,
+      ...rest
+    } = this.props;
 
     const { Grid } = this.state;
 
@@ -66,12 +79,10 @@ export default class extends Component {
         perspective={600}
         duration={useCSS ? duration : null}
         easing={useCSS ? easing : null}
-        springConfig={!useCSS && stiffness && damping ?
-          { stiffness, damping } : null}
+        springConfig={!useCSS && stiffness && damping ? { stiffness, damping } : null}
       >
         {children}
       </Grid>
     );
   }
-
 }
