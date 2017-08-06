@@ -1,17 +1,14 @@
 /* eslint-disable no-mixed-operators */
 import React, { Component } from 'react';
+import { commonDefaultProps } from '../utils/commonProps';
 
 const enquire = typeof window !== 'undefined' ? require('enquire.js') : null;
 
 export default (Grid, { maxWidth, minPadding = 0, defaultColumns = 4 } = {}) =>
   class extends Component {
-    constructor(props) {
-      super(props);
-
-      this.state = {
-        columns: defaultColumns
-      };
-    }
+    static defaultProps = {
+      gutterWidth: commonDefaultProps.gutterWidth
+    };
 
     componentDidMount() {
       const { columnWidth, gutterWidth } = this.props;
@@ -48,6 +45,10 @@ export default (Grid, { maxWidth, minPadding = 0, defaultColumns = 4 } = {}) =>
         enquire.unregister(breakpoint, handler)
       );
     }
+
+    state = {
+      columns: defaultColumns
+    };
 
     render() {
       return <Grid {...this.props} {...this.state} />;

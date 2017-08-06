@@ -4,16 +4,6 @@ import omit from 'lodash.omit';
 import { buildTransform, positionToProperties } from '../utils/transformHelpers';
 
 export default class extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      style: {
-        zIndex: 2
-      }
-    };
-  }
-
   componentDidMount() {
     this.itemIsMounted = true;
   }
@@ -54,6 +44,7 @@ export default class extends Component {
       done();
     });
   }
+
   componentDidEnter() {
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
@@ -61,6 +52,7 @@ export default class extends Component {
       });
     });
   }
+
   componentWillLeave(done) {
     const { gridProps, gridState } = this.props;
 
@@ -78,6 +70,13 @@ export default class extends Component {
       }
     });
   }
+
+  state = {
+    style: {
+      zIndex: 2
+    }
+  };
+
   setEndStyle = (props, zIndex) => {
     clearTimeout(this.leaveTimeout);
 
