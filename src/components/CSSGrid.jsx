@@ -48,7 +48,15 @@ export default class extends Component {
   }
 
   render() {
-    const { component, style, children, duration, easing, lengthUnit, ...rest } = omit(this.props, [
+    const {
+      component,
+      style,
+      children,
+      duration,
+      easing,
+      lengthUnit,
+      ...rest
+    } = omit(this.props, [
       'itemHeight',
       'measured',
       'columns',

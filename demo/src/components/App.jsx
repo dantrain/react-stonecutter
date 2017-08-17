@@ -63,7 +63,11 @@ export default class extends Component {
 
   generateData = () =>
     shuffle(alphabet)
-      .slice(0, this.props.minItems + Math.floor(Math.random() * (26 - this.props.minItems)))
+      .slice(
+        0,
+        this.props.minItems +
+          Math.floor(Math.random() * (26 - this.props.minItems))
+      )
       .sort();
 
   render() {
@@ -85,7 +89,10 @@ export default class extends Component {
 
     const items = data.map((letter) => {
       const contentIndex = letter.charCodeAt(0) % 6;
-      const content = ipsum.slice(contentIndex, Math.floor(contentIndex * 1.5) + 1);
+      const content = ipsum.slice(
+        contentIndex,
+        Math.floor(contentIndex * 1.5) + 1
+      );
 
       return (
         <li
@@ -96,9 +103,17 @@ export default class extends Component {
             height: itemHeight
           }}
         >
-          <h3>{letter.toUpperCase()}</h3>
-          {content.map((p, i) => <p key={i}>{p}</p>)}
-          <p>{'We do! We do!'}</p>
+          <h3>
+            {letter.toUpperCase()}
+          </h3>
+          {content.map((p, i) =>
+            (<p key={i}>
+              {p}
+            </p>)
+          )}
+          <p>
+            {'We do! We do!'}
+          </p>
         </li>
       );
     });
@@ -112,8 +127,12 @@ export default class extends Component {
             selectedValue={useCSS ? 'css' : 'spring'}
             onChange={value => this.setState({ useCSS: value === 'css' })}
           >
-            <label><Radio value="spring" />React Motion</label>
-            <label><Radio value="css" />CSS Transitions</label>
+            <label>
+              <Radio value="spring" />React Motion
+            </label>
+            <label>
+              <Radio value="css" />CSS Transitions
+            </label>
             <a href="https://github.com/dantrain/react-stonecutter">
               <img
                 className="github-stars-badge"
@@ -124,18 +143,28 @@ export default class extends Component {
           </RadioGroup>
           <label>
             {'Layout '}
-            <select value={layout} onChange={ev => this.setState({ layout: ev.target.value })}>
-              {layouts.map(name => <option value={camelCase(name)} key={name}>{name}</option>)}
+            <select
+              value={layout}
+              onChange={ev => this.setState({ layout: ev.target.value })}
+            >
+              {layouts.map(name =>
+                (<option value={camelCase(name)} key={name}>
+                  {name}
+                </option>)
+              )}
             </select>
           </label>
           <label>
             {'Enter/Exit Style '}
             <select
               value={enterExitStyle}
-              onChange={ev => this.setState({ enterExitStyle: ev.target.value })}
+              onChange={ev =>
+                this.setState({ enterExitStyle: ev.target.value })}
             >
               {enterExitStyles.map(name =>
-                <option value={camelCase(name)} key={name}>{name}</option>
+                (<option value={camelCase(name)} key={name}>
+                  {name}
+                </option>)
               )}
             </select>
           </label>
@@ -147,7 +176,9 @@ export default class extends Component {
               disabled={!useCSS}
             >
               {Object.keys(easings).map(name =>
-                <option value={easings[name]} key={name}>{name}</option>
+                (<option value={easings[name]} key={name}>
+                  {name}
+                </option>)
               )}
             </select>
           </label>
@@ -222,7 +253,11 @@ export default class extends Component {
           </div>
           <button onClick={this.handleShuffle}>Randomize children</button>
         </div>
-        <Grid itemHeight={itemHeight} measured={layout !== 'simple'} {...gridProps}>
+        <Grid
+          itemHeight={itemHeight}
+          measured={layout !== 'simple'}
+          {...gridProps}
+        >
           {items}
         </Grid>
       </div>

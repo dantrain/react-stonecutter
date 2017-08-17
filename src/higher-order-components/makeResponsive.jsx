@@ -14,9 +14,14 @@ export default (Grid, { maxWidth, minPadding = 0, defaultColumns = 4 } = {}) =>
       const { columnWidth, gutterWidth } = this.props;
 
       const breakpoints = [];
-      const getWidth = i => i * (columnWidth + gutterWidth) - gutterWidth + minPadding;
+      const getWidth = i =>
+        i * (columnWidth + gutterWidth) - gutterWidth + minPadding;
 
-      for (let i = 1; getWidth(i) <= maxWidth + columnWidth + gutterWidth; i++) {
+      for (
+        let i = 1;
+        getWidth(i) <= maxWidth + columnWidth + gutterWidth;
+        i++
+      ) {
         breakpoints.push(getWidth(i));
       }
 

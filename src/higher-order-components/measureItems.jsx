@@ -3,7 +3,8 @@ import partition from 'lodash.partition';
 import debounce from 'lodash.debounce';
 import { commonDefaultProps } from '../utils/commonProps';
 
-const imagesLoaded = typeof window !== 'undefined' ? require('imagesloaded') : null;
+const imagesLoaded =
+  typeof window !== 'undefined' ? require('imagesloaded') : null;
 
 export default (Grid, { measureImages, background } = {}) =>
   class extends Component {

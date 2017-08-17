@@ -79,7 +79,9 @@ export default class extends Component {
         perspective={600}
         duration={useCSS ? duration : null}
         easing={useCSS ? easing : null}
-        springConfig={!useCSS && stiffness && damping ? { stiffness, damping } : null}
+        springConfig={
+          !useCSS && stiffness && damping ? { stiffness, damping } : null
+        }
       >
         {children}
       </Grid>

@@ -4,7 +4,10 @@ import { TransitionMotion, spring } from 'react-motion';
 import stripStyle from 'react-motion/lib/stripStyle';
 import shallowEqual from 'shallowequal';
 import omit from 'lodash.omit';
-import { buildTransform, positionToProperties } from '../utils/transformHelpers';
+import {
+  buildTransform,
+  positionToProperties
+} from '../utils/transformHelpers';
 import { commonPropTypes, commonDefaultProps } from '../utils/commonProps';
 import assertIsElement from '../utils/assertIsElement';
 
@@ -60,7 +63,10 @@ export default class extends Component {
         ...items[i].style,
         zIndex: 2,
         ...springify(
-          props.entered(items[i].data.element.props, props, { gridWidth, gridHeight }),
+          props.entered(items[i].data.element.props, props, {
+            gridWidth,
+            gridHeight
+          }),
           props.springConfig
         ),
         ...springify(positionToProperties(position), props.springConfig)
@@ -76,16 +82,23 @@ export default class extends Component {
     return {
       ...stripStyle(transitionStyle.style),
       zIndex: 1,
-      ...this.props.enter(transitionStyle.data.element.props, this.props, { gridWidth, gridHeight })
+      ...this.props.enter(transitionStyle.data.element.props, this.props, {
+        gridWidth,
+        gridHeight
+      })
     };
   };
 
   willLeave = (transitionStyle) => {
     const { gridWidth, gridHeight } = this.state;
-    const exitStyle = this.props.exit(transitionStyle.data.element.props, this.props, {
-      gridWidth,
-      gridHeight
-    });
+    const exitStyle = this.props.exit(
+      transitionStyle.data.element.props,
+      this.props,
+      {
+        gridWidth,
+        gridHeight
+      }
+    );
 
     return {
       ...transitionStyle.style,
@@ -95,24 +108,28 @@ export default class extends Component {
   };
 
   render() {
-    const { component: Parent, style, perspective, lengthUnit, angleUnit, ...rest } = omit(
-      this.props,
-      [
-        'itemHeight',
-        'measured',
-        'columns',
-        'columnWidth',
-        'gutterWidth',
-        'gutterHeight',
-        'layout',
-        'enter',
-        'entered',
-        'exit',
-        'springConfig',
-        'duration',
-        'easing'
-      ]
-    );
+    const {
+      component: Parent,
+      style,
+      perspective,
+      lengthUnit,
+      angleUnit,
+      ...rest
+    } = omit(this.props, [
+      'itemHeight',
+      'measured',
+      'columns',
+      'columnWidth',
+      'gutterWidth',
+      'gutterHeight',
+      'layout',
+      'enter',
+      'entered',
+      'exit',
+      'springConfig',
+      'duration',
+      'easing'
+    ]);
 
     return (
       <TransitionMotion
@@ -139,7 +156,10 @@ export default class extends Component {
                 angle: angleUnit
               });
 
-              const itemProps = omit(data.element.props, ['itemRect', 'itemHeight']);
+              const itemProps = omit(data.element.props, [
+                'itemRect',
+                'itemHeight'
+              ]);
 
               return (
                 <Child
