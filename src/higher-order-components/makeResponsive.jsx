@@ -18,7 +18,7 @@ export default (Grid, { maxWidth, minPadding = 0, defaultColumns = 4 } = {}) =>
         i * (columnWidth + gutterWidth) - gutterWidth + minPadding;
 
       for (
-        let i = 1;
+        let i = 2;
         getWidth(i) <= maxWidth + columnWidth + gutterWidth;
         i++
       ) {
@@ -37,7 +37,7 @@ export default (Grid, { maxWidth, minPadding = 0, defaultColumns = 4 } = {}) =>
         )
         .map((breakpoint, i) => ({
           breakpoint,
-          handler: () => this.setState({ columns: i })
+          handler: () => this.setState({ columns: i + 1 })
         }));
 
       this.breakpoints.forEach(({ breakpoint, handler }) =>
