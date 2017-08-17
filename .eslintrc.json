@@ -1,74 +1,71 @@
 {
-    "rules": {
-        "strict": 0,
-        "indent": [2, 2, { "VariableDeclarator": 2, "SwitchCase": 1 }],
-        "linebreak-style": [2, "unix"],
-        "no-multi-spaces": [2, { "exceptions": { "VariableDeclarator": true } }],
-        "no-console": 0,
-        "func-names": 0,
-        "vars-on-top": 0,
-        "one-var": 0,
-        "one-var-declaration-per-line": [2, "initializations"],
-        "space-before-function-paren": [2, "never"],
-        "no-use-before-define": [2, "nofunc"],
-        "comma-dangle": [2, "never"],
-        "padded-blocks": 0,
-        "max-len": [1, 100, 2, { "ignoreComments": true, "ignoreUrls": true }],
-        "quote-props": [1, "consistent-as-needed"],
-        "radix": 0,
-        "no-unused-vars": [1, { "vars": "local", "args": "after-used" }],
-        "no-param-reassign": 0,
-        "consistent-return": 0,
-        "no-confusing-arrow": 0,
-        "no-mixed-operators": [2, { "allowSamePrecedence": true }],
-        "class-methods-use-this": 0,
-        "no-plusplus": 0,
-        "import/no-extraneous-dependencies": 0,
-        "react/prefer-es6-class": 0,
-        "react/prop-types": 0,
-        "react/jsx-no-bind": 0,
-        "jsx-a11y/label-has-for": 0,
-        "react/sort-comp": [2, {
-            "order": [
-                "lifecycle",
-                "everything-else",
-                "render"
-            ],
-            "groups": {
-                "lifecycle": [
-                    "displayName",
-                    "propTypes",
-                    "contextTypes",
-                    "childContextTypes",
-                    "mixins",
-                    "statics",
-                    "defaultProps",
-                    "constructor",
-                    "getDefaultProps",
-                    "getInitialState",
-                    "getChildContext",
-                    "componentWillMount",
-                    "componentDidMount",
-                    "componentWillReceiveProps",
-                    "shouldComponentUpdate",
-                    "componentWillUpdate",
-                    "componentDidUpdate",
-                    "componentWillUnmount"
-                ]
-            }
-        }]
-    },
-    "env": {
-        "es6": true,
-        "node": true,
-        "browser": true
-    },
-    "extends": "airbnb",
-    "parser": "babel-eslint",
-    "parserOptions": {
-      "sourceType": "module"
-    },
-    "plugins": [
-        "react"
+  "rules": {
+    "strict": 0,
+    "indent": [2, 2, { "VariableDeclarator": 2, "SwitchCase": 1 }],
+    "linebreak-style": [2, "unix"],
+    "no-multi-spaces": [2, { "exceptions": { "VariableDeclarator": true } }],
+    "no-console": 0,
+    "func-names": 0,
+    "vars-on-top": 0,
+    "one-var": 0,
+    "one-var-declaration-per-line": [2, "initializations"],
+    "space-before-function-paren": [2, "never"],
+    "no-use-before-define": [2, "nofunc"],
+    "comma-dangle": [2, "never"],
+    "padded-blocks": 0,
+    "max-len": [1, 100, 2, { "ignoreComments": true, "ignoreUrls": true }],
+    "quote-props": [1, "consistent-as-needed"],
+    "radix": 0,
+    "no-unused-vars": [1, { "vars": "local", "args": "after-used" }],
+    "no-param-reassign": 0,
+    "consistent-return": 0,
+    "no-confusing-arrow": 0,
+    "no-mixed-operators": [2, { "allowSamePrecedence": true }],
+    "class-methods-use-this": 0,
+    "no-plusplus": 0,
+    "import/no-extraneous-dependencies": 0,
+    "react/prefer-es6-class": 0,
+    "react/prop-types": 0,
+    "react/jsx-no-bind": 0,
+    "jsx-a11y/label-has-for": 0,
+    "react/sort-comp": [
+      2,
+      {
+        "order": ["lifecycle", "everything-else", "render"],
+        "groups": {
+          "lifecycle": [
+            "displayName",
+            "propTypes",
+            "contextTypes",
+            "childContextTypes",
+            "mixins",
+            "statics",
+            "defaultProps",
+            "constructor",
+            "getDefaultProps",
+            "getInitialState",
+            "getChildContext",
+            "componentWillMount",
+            "componentDidMount",
+            "componentWillReceiveProps",
+            "shouldComponentUpdate",
+            "componentWillUpdate",
+            "componentDidUpdate",
+            "componentWillUnmount"
+          ]
+        }
+      }
     ]
+  },
+  "env": {
+    "es6": true,
+    "node": true,
+    "browser": true
+  },
+  "extends": "airbnb",
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "sourceType": "module"
+  },
+  "plugins": ["react"]
 }
