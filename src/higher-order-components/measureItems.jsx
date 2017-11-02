@@ -110,21 +110,18 @@ export default (Grid, { measureImages, background } = {}) =>
             width: this.props.columnWidth
           },
           'data-stonecutterkey': element.key
-        })
-      );
+        }));
 
       const measuredElements = existingElements.map(element =>
         React.cloneElement(element, {
           itemRect: this.state.rects[element.key]
-        })
-      );
+        }));
 
       return (
         <span>
-          {measuredElements.length > 0 &&
-            <Grid {...this.props}>
-              {measuredElements}
-            </Grid>}
+          {measuredElements.length > 0 && (
+            <Grid {...this.props}>{measuredElements}</Grid>
+          )}
           {elementsToMeasure.length > 0 &&
             React.createElement(
               component,

@@ -103,17 +103,9 @@ export default class extends Component {
             height: itemHeight
           }}
         >
-          <h3>
-            {letter.toUpperCase()}
-          </h3>
-          {content.map((p, i) =>
-            (<p key={i}>
-              {p}
-            </p>)
-          )}
-          <p>
-            {'We do! We do!'}
-          </p>
+          <h3>{letter.toUpperCase()}</h3>
+          {content.map((p, i) => <p key={i}>{p}</p>)}
+          <p>We do! We do!</p>
         </li>
       );
     });
@@ -147,11 +139,11 @@ export default class extends Component {
               value={layout}
               onChange={ev => this.setState({ layout: ev.target.value })}
             >
-              {layouts.map(name =>
-                (<option value={camelCase(name)} key={name}>
+              {layouts.map(name => (
+                <option value={camelCase(name)} key={name}>
                   {name}
-                </option>)
-              )}
+                </option>
+              ))}
             </select>
           </label>
           <label>
@@ -161,11 +153,11 @@ export default class extends Component {
               onChange={ev =>
                 this.setState({ enterExitStyle: ev.target.value })}
             >
-              {enterExitStyles.map(name =>
-                (<option value={camelCase(name)} key={name}>
+              {enterExitStyles.map(name => (
+                <option value={camelCase(name)} key={name}>
                   {name}
-                </option>)
-              )}
+                </option>
+              ))}
             </select>
           </label>
           <label>
@@ -175,11 +167,11 @@ export default class extends Component {
               onChange={ev => this.setState({ easing: ev.target.value })}
               disabled={!useCSS}
             >
-              {Object.keys(easings).map(name =>
-                (<option value={easings[name]} key={name}>
+              {Object.keys(easings).map(name => (
+                <option value={easings[name]} key={name}>
                   {name}
-                </option>)
-              )}
+                </option>
+              ))}
             </select>
           </label>
           <label className="checkbox">

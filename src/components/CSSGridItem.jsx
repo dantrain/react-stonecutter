@@ -99,10 +99,16 @@ export default class extends Component {
 
   render() {
     const item = React.Children.only(this.props.children);
-    const { transition, perspective, lengthUnit, angleUnit } = this.props;
+    const {
+      transition, perspective, lengthUnit, angleUnit
+    } = this.props;
     const Element = item.type;
 
-    const { style: { translateX, translateY, opacity, zIndex } } = this.state;
+    const {
+      style: {
+        translateX, translateY, opacity, zIndex
+      }
+    } = this.state;
 
     if (
       typeof translateX === 'undefined' ||

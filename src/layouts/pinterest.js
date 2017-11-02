@@ -1,6 +1,8 @@
 /* eslint-disable no-mixed-operators */
 export default function(items, props) {
-  const { columns, columnWidth, gutterWidth, gutterHeight } = props;
+  const {
+    columns, columnWidth, gutterWidth, gutterHeight
+  } = props;
 
   const columnHeights = [];
   for (let i = 0; i < columns; i++) {
@@ -14,9 +16,7 @@ export default function(items, props) {
       itemProps.itemHeight || (itemProps.itemRect && itemProps.itemRect.height);
 
     if (!(height && typeof height === 'number')) {
-      throw new Error(
-        'Each child must have an "itemHeight" prop or an "itemRect.height" prop.'
-      );
+      throw new Error('Each child must have an "itemHeight" prop or an "itemRect.height" prop.');
     }
 
     const x = column * columnWidth + column * gutterWidth;

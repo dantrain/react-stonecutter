@@ -33,22 +33,19 @@ export default (Grid, { maxWidth, minPadding = 0, defaultColumns = 4 } = {}) =>
             i < arr.length - 1 && `(max-width: ${width}px)`
           ]
             .filter(Boolean)
-            .join(' and ')
-        )
+            .join(' and '))
         .map((breakpoint, i) => ({
           breakpoint,
           handler: () => this.setState({ columns: i + 1 })
         }));
 
       this.breakpoints.forEach(({ breakpoint, handler }) =>
-        enquire.register(breakpoint, { match: handler })
-      );
+        enquire.register(breakpoint, { match: handler }));
     }
 
     componentWillUnmount() {
       this.breakpoints.forEach(({ breakpoint, handler }) =>
-        enquire.unregister(breakpoint, handler)
-      );
+        enquire.unregister(breakpoint, handler));
     }
 
     state = {
