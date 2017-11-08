@@ -17,7 +17,8 @@ const browserSync = browserSyncCreate();
 browserSync.use({
   plugin() {},
   hooks: {
-    'client:js': '___browserSync___.socket.on("disconnect", window.close.bind(window));'
+    'client:js':
+      '___browserSync___.socket.on("disconnect", window.close.bind(window));'
   }
 });
 
@@ -81,9 +82,15 @@ gulp.task('webpack', (done) => {
       const jsonStats = stats.toJson();
 
       if (jsonStats.errors.length > 0) {
-        notifier.notify({ title: 'Webpack Error', message: jsonStats.errors[0] });
+        notifier.notify({
+          title: 'Webpack Error',
+          message: jsonStats.errors[0]
+        });
       } else if (jsonStats.warnings.length > 0) {
-        notifier.notify({ title: 'Webpack Warning', message: jsonStats.warnings[0] });
+        notifier.notify({
+          title: 'Webpack Warning',
+          message: jsonStats.warnings[0]
+        });
       }
 
       gutil.log(
@@ -116,7 +123,9 @@ gulp.task('browser-sync', ['webpack', 'demo-html-css'], () => {
 });
 
 gulp.task('demo-html-css', () => {
-  const sliderCssFilter = filter('node_modules/rc-slider/assets/index.css', { restore: true });
+  const sliderCssFilter = filter('node_modules/rc-slider/assets/index.css', {
+    restore: true
+  });
 
   return gulp
     .src(['demo/src/*.@(html|css)', 'node_modules/rc-slider/assets/index.css'])
@@ -139,14 +148,15 @@ gulp.task('watch', () => {
 
 gulp.task('gh-pages-start', shell.task(['git stash', 'git checkout gh-pages']));
 
-gulp.task('copy-demo-to-root', () => gulp.src('./demo/public/**/*').pipe(gulp.dest('./')));
+gulp.task('copy-demo-to-root', () =>
+  gulp.src('./demo/public/**/*').pipe(gulp.dest('./')));
 
 gulp.task(
   'gh-pages-end',
   shell.task([
     'git add index.html demo.js *.css',
     'git commit --amend --no-edit',
-    'git push github gh-pages --force',
+    'git push origin gh-pages --force',
     'git checkout master',
     'git stash apply'
   ])
@@ -161,7 +171,6 @@ gulp.task('lint', () =>
     .src(['src/**/*.js*(x)', 'demo/src/**/*.js*(x)', 'test/**/*.js'])
     .pipe(eslint())
     .pipe(eslint.format())
-    .pipe(eslint.failAfterError())
-);
+    .pipe(eslint.failAfterError()));
 
 gulp.task('default', ['browser-sync', 'watch']);

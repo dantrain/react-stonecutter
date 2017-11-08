@@ -12,6 +12,7 @@
     "test": "mocha -R spec --compilers jsx:babel-register test/*.jsx",
     "lint": "gulp lint",
     "start": "gulp",
+    "gh-pages": "gulp gh-pages",
     "pre-commit": "gulp lint",
     "pre-push": "npm test"
   },
