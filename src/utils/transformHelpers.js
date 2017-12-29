@@ -15,6 +15,11 @@ const properties = [
   { name: 'rotateY', unit: 'angle' }
 ];
 
+const isNaN = (val) => {
+  const n = Number(val);
+  return n !== n; // eslint-disable-line no-self-compare
+};
+
 export const positionToProperties = position => ({
   translateX: position[0],
   translateY: position[1]
