@@ -203,6 +203,9 @@ The [angle](https://developer.mozilla.org/en-US/docs/Web/CSS/angle) unit. Affect
 Configuration of the React-Motion spring. See the [React-Motion docs](https://github.com/chenglou/react-motion#helpers) for more info.
 Default: `{ stiffness: 60, damping: 14, precision: 0.1 }`.
 
+**sorted={`Boolean`}**
+Items in the sorted order. Default: `false`.
+
 ### CSSGrid only props
 
 **duration={`Number`}**  

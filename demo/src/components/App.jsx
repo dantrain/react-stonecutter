@@ -44,6 +44,7 @@ export default class extends Component {
       data: this.generateData(),
       useCSS: false,
       responsive: false,
+      sorted: false,
       layout: camelCase(layouts[0]),
       enterExitStyle: camelCase(enterExitStyles[0]),
       duration: 800,
@@ -77,6 +78,7 @@ export default class extends Component {
       layout,
       enterExitStyle,
       responsive,
+      sorted,
       columns,
       gutters,
       stiffness,
@@ -181,6 +183,16 @@ export default class extends Component {
               onChange={ev => this.setState({ responsive: ev.target.checked })}
             />Responsive
           </label>
+          {
+            layout !== 'simple' ?
+              <label className="checkbox">
+                <input
+                  type="checkbox"
+                  checked={sorted}
+                  onChange={ev => this.setState({ sorted: ev.target.checked })}
+                />Sorted
+              </label> : null
+          }
           <div className="slider">
             {'Columns '}
             <div className="slider-container">
