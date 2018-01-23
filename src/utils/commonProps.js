@@ -9,6 +9,7 @@ export const commonPropTypes = {
   gutterHeight: PropTypes.number,
   component: PropTypes.string,
   layout: PropTypes.func,
+  sorted: PropTypes.bool,
   enter: PropTypes.func,
   entered: PropTypes.func,
   exit: PropTypes.func,
@@ -24,6 +25,7 @@ export const commonDefaultProps = {
   gutterWidth: 0,
   gutterHeight: 0,
   layout: simpleLayout,
+  sorted: false,
   enter: simpleEnterExit.enter,
   entered: simpleEnterExit.entered,
   exit: simpleEnterExit.exit

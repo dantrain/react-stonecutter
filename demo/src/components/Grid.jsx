@@ -48,6 +48,7 @@ export default class extends Component {
       useCSS,
       responsive,
       layout,
+      sorted,
       enterExitStyle,
       duration,
       easing,
@@ -73,6 +74,7 @@ export default class extends Component {
         gutterWidth={gutters}
         gutterHeight={gutters}
         layout={gridLayout}
+        sorted={sorted}
         enter={gridEnterExitStyle.enter}
         entered={gridEnterExitStyle.entered}
         exit={gridEnterExitStyle.exit}

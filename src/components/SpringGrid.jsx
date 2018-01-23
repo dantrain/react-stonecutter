@@ -123,6 +123,7 @@ export default class extends Component {
       'gutterWidth',
       'gutterHeight',
       'layout',
+      'sorted',
       'enter',
       'entered',
       'exit',

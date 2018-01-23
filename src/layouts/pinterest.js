@@ -1,7 +1,7 @@
 /* eslint-disable no-mixed-operators */
 export default function(items, props) {
   const {
-    columns, columnWidth, gutterWidth, gutterHeight
+    columns, columnWidth, gutterWidth, gutterHeight, sorted
   } = props;
 
   const columnHeights = [];
@@ -9,8 +9,10 @@ export default function(items, props) {
     columnHeights.push(0);
   }
 
-  const positions = items.map((itemProps) => {
-    const column = columnHeights.indexOf(Math.min.apply(null, columnHeights));
+  const positions = items.map((itemProps, i) => {
+    const column = sorted
+      ? i % columns
+      : columnHeights.indexOf(Math.min.apply(null, columnHeights));
 
     const height =
       itemProps.itemHeight || (itemProps.itemRect && itemProps.itemRect.height);
