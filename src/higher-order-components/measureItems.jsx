@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
-import partition from 'lodash.partition';
-import debounce from 'lodash.debounce';
-import { commonDefaultProps } from '../utils/commonProps';
+import React, { Component } from "react";
+import partition from "lodash.partition";
+import debounce from "lodash.debounce";
+import { commonDefaultProps } from "../utils/commonProps";
 
 const imagesLoaded =
-  typeof window !== 'undefined' ? require('imagesloaded') : null;
+  typeof window !== "undefined" ? require("imagesloaded") : null;
 
 export default (Grid, { measureImages, background } = {}) =>
   class extends Component {
@@ -34,7 +34,7 @@ export default (Grid, { measureImages, background } = {}) =>
     }
 
     componentWillUnmount() {
-      Object.keys(this.retryTimeouts).forEach((key) => {
+      Object.keys(this.retryTimeouts).forEach(key => {
         clearTimeout(this.retryTimeouts[key]);
       });
     }
@@ -47,7 +47,7 @@ export default (Grid, { measureImages, background } = {}) =>
           if (measureImages) {
             Array.from(elements)
               .filter(el => !this.loading[el.dataset.stonecutterkey])
-              .forEach((el) => {
+              .forEach(el => {
                 this.loading[el.dataset.stonecutterkey] = true;
 
                 imagesLoaded(el, { background }, () => {
@@ -85,37 +85,43 @@ export default (Grid, { measureImages, background } = {}) =>
     };
 
     updateRects = () => {
-      this.setState({
-        rects: {
-          ...this.state.rects,
-          ...this.rects
-        }
-      });
+      this.setState(state => {
+        const { rects } = this;
+        this.rects = {};
 
-      this.rects = {};
+        return {
+          rects: {
+            ...state.rects,
+            ...rects
+          }
+        };
+      });
     };
 
     render() {
-      const { component } = this.props;
+      const { component, children, columnWidth } = this.props;
+      const { rects } = this.state;
 
       const [newElements, existingElements] = partition(
-        React.Children.toArray(this.props.children),
-        element => !this.state.rects[element.key]
+        React.Children.toArray(children),
+        element => !rects[element.key]
       );
 
       const elementsToMeasure = newElements.map(element =>
         React.cloneElement(element, {
-          'style': {
+          style: {
             ...element.props.style,
-            width: this.props.columnWidth
+            width: columnWidth
           },
-          'data-stonecutterkey': element.key
-        }));
+          "data-stonecutterkey": element.key
+        })
+      );
 
       const measuredElements = existingElements.map(element =>
         React.cloneElement(element, {
-          itemRect: this.state.rects[element.key]
-        }));
+          itemRect: rects[element.key]
+        })
+      );
 
       return (
         <span>
@@ -131,10 +137,10 @@ export default (Grid, { measureImages, background } = {}) =>
                   height: 0,
                   padding: 0,
                   margin: 0,
-                  overflow: 'hidden',
-                  visibility: 'hidden'
+                  overflow: "hidden",
+                  visibility: "hidden"
                 },
-                ref: (el) => {
+                ref: el => {
                   this.elementsToMeasureContainer = el;
                 }
               },

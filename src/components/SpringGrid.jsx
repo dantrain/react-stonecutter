@@ -1,15 +1,15 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { TransitionMotion, spring } from 'react-motion';
-import stripStyle from 'react-motion/lib/stripStyle';
-import shallowEqual from 'shallowequal';
-import omit from 'lodash.omit';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { TransitionMotion, spring } from "react-motion";
+import stripStyle from "react-motion/lib/stripStyle";
+import shallowEqual from "shallowequal";
+import omit from "lodash.omit";
 import {
   buildTransform,
   positionToProperties
-} from '../utils/transformHelpers';
-import { commonPropTypes, commonDefaultProps } from '../utils/commonProps';
-import assertIsElement from '../utils/assertIsElement';
+} from "../utils/transformHelpers";
+import { commonPropTypes, commonDefaultProps } from "../utils/commonProps";
+import assertIsElement from "../utils/assertIsElement";
 
 export default class extends Component {
   static propTypes = {
@@ -38,7 +38,7 @@ export default class extends Component {
   }
 
   doLayout(props) {
-    const items = React.Children.toArray(props.children).map((element) => {
+    const items = React.Children.toArray(props.children).map(element => {
       assertIsElement(element);
 
       return {
@@ -76,34 +76,33 @@ export default class extends Component {
     return { styles, gridWidth, gridHeight };
   }
 
-  willEnter = (transitionStyle) => {
+  willEnter = transitionStyle => {
     const { gridWidth, gridHeight } = this.state;
+    const { enter } = this.props;
 
     return {
       ...stripStyle(transitionStyle.style),
       zIndex: 1,
-      ...this.props.enter(transitionStyle.data.element.props, this.props, {
+      ...enter(transitionStyle.data.element.props, this.props, {
         gridWidth,
         gridHeight
       })
     };
   };
 
-  willLeave = (transitionStyle) => {
+  willLeave = transitionStyle => {
+    const { exit, springConfig } = this.props;
     const { gridWidth, gridHeight } = this.state;
-    const exitStyle = this.props.exit(
-      transitionStyle.data.element.props,
-      this.props,
-      {
-        gridWidth,
-        gridHeight
-      }
-    );
+
+    const exitStyle = exit(transitionStyle.data.element.props, this.props, {
+      gridWidth,
+      gridHeight
+    });
 
     return {
       ...transitionStyle.style,
       zIndex: 0,
-      ...springify(exitStyle, this.props.springConfig)
+      ...springify(exitStyle, springConfig)
     };
   };
 
@@ -116,39 +115,44 @@ export default class extends Component {
       angleUnit,
       ...rest
     } = omit(this.props, [
-      'itemHeight',
-      'measured',
-      'columns',
-      'columnWidth',
-      'gutterWidth',
-      'gutterHeight',
-      'layout',
-      'enter',
-      'entered',
-      'exit',
-      'springConfig',
-      'duration',
-      'easing'
+      "itemHeight",
+      "measured",
+      "columns",
+      "columnWidth",
+      "gutterWidth",
+      "gutterHeight",
+      "layout",
+      "enter",
+      "entered",
+      "exit",
+      "springConfig",
+      "duration",
+      "easing"
     ]);
+
+    const { styles, gridWidth, gridHeight } = this.state;
 
     return (
       <TransitionMotion
-        styles={this.state.styles}
+        styles={styles}
         willEnter={this.willEnter}
         willLeave={this.willLeave}
       >
         {interpolatedStyles => (
           <Parent
             style={{
-              position: 'relative',
+              position: "relative",
               ...style,
-              width: `${this.state.gridWidth}${lengthUnit}`,
-              height: `${this.state.gridHeight}${lengthUnit}`
+              width: `${gridWidth}${lengthUnit}`,
+              height: `${gridHeight}${lengthUnit}`
             }}
             {...rest}
           >
-            {interpolatedStyles.map((config) => {
-              const { style: { opacity, zIndex }, data } = config;
+            {interpolatedStyles.map(config => {
+              const {
+                style: { opacity, zIndex },
+                data
+              } = config;
               const Child = data.element.type;
 
               const transform = buildTransform(config.style, perspective, {
@@ -157,8 +161,8 @@ export default class extends Component {
               });
 
               const itemProps = omit(data.element.props, [
-                'itemRect',
-                'itemHeight'
+                "itemRect",
+                "itemHeight"
               ]);
 
               return (
@@ -167,7 +171,7 @@ export default class extends Component {
                   {...itemProps}
                   style={{
                     ...itemProps.style,
-                    position: 'absolute',
+                    position: "absolute",
                     top: 0,
                     left: 0,
                     zIndex,

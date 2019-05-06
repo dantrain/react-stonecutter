@@ -25,7 +25,6 @@
         "ignoreRegExpLiterals": true
       }
     ],
-    "quote-props": [1, "consistent-as-needed"],
     "radix": 0,
     "no-unused-vars": [1, { "vars": "local", "args": "after-used" }],
     "no-param-reassign": 0,
@@ -73,7 +72,7 @@
     "node": true,
     "browser": true
   },
-  "extends": "airbnb",
+  "extends": ["airbnb", "prettier", "prettier/react"],
   "parser": "babel-eslint",
   "parserOptions": {
     "sourceType": "module"

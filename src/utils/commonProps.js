@@ -1,6 +1,6 @@
-import PropTypes from 'prop-types';
-import simpleLayout from '../layouts/simple';
-import * as simpleEnterExit from '../enter-exit-styles/simple';
+import PropTypes from "prop-types";
+import simpleLayout from "../layouts/simple";
+import * as simpleEnterExit from "../enter-exit-styles/simple";
 
 export const commonPropTypes = {
   columns: PropTypes.number.isRequired,
@@ -18,9 +18,9 @@ export const commonPropTypes = {
 };
 
 export const commonDefaultProps = {
-  lengthUnit: 'px',
-  angleUnit: 'deg',
-  component: 'div',
+  lengthUnit: "px",
+  angleUnit: "deg",
+  component: "div",
   gutterWidth: 0,
   gutterHeight: 0,
   layout: simpleLayout,

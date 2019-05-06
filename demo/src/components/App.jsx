@@ -1,13 +1,14 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/no-array-index-key */
-import React, { Component } from 'react';
-import { RadioGroup, Radio } from 'react-radio-group';
-import Slider, { createSliderWithTooltip } from 'rc-slider';
-import shuffle from 'lodash.shuffle';
-import camelCase from 'lodash.camelcase';
-import Grid from './Grid';
-import { easings } from '../../../src/index';
+import React, { Component } from "react";
+import { RadioGroup, Radio } from "react-radio-group";
+import Slider, { createSliderWithTooltip } from "rc-slider";
+import shuffle from "lodash.shuffle";
+import camelCase from "lodash.camelcase";
+import Grid from "./Grid";
+import { easings } from "../../../src/index";
 
-const alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('');
+const alphabet = "abcdefghijklmnopqrstuvwxyz".split("");
 
 const ipsum = `Who controls the British crown?
 Who keeps the metric system down?
@@ -16,18 +17,18 @@ Who keeps the Martians under wraps?
 Who holds back the electric car?
 Who makes Steve Guttenberg a star?
 Who robs cavefish of their sight?
-Who rigs every Oscar night?`.split('\n');
+Who rigs every Oscar night?`.split("\n");
 
-const layouts = ['Pinterest', 'Simple'];
+const layouts = ["Pinterest", "Simple"];
 const enterExitStyles = [
-  'Simple',
-  'Skew',
-  'Newspaper',
-  'Fold Up',
-  'From Center',
-  'From Left to Right',
-  'From Top',
-  'From Bottom'
+  "Simple",
+  "Skew",
+  "Newspaper",
+  "Fold Up",
+  "From Center",
+  "From Left to Right",
+  "From Top",
+  "From Bottom"
 ];
 
 const SliderWithTooltip = createSliderWithTooltip(Slider);
@@ -61,14 +62,13 @@ export default class extends Component {
     });
   };
 
-  generateData = () =>
-    shuffle(alphabet)
-      .slice(
-        0,
-        this.props.minItems +
-          Math.floor(Math.random() * (26 - this.props.minItems))
-      )
+  generateData = () => {
+    const { minItems } = this.props;
+
+    return shuffle(alphabet)
+      .slice(0, minItems + Math.floor(Math.random() * (26 - minItems)))
       .sort();
+  };
 
   render() {
     const { data, ...gridProps } = this.state;
@@ -85,9 +85,9 @@ export default class extends Component {
       easing
     } = this.state;
 
-    const itemHeight = layout === 'simple' ? 190 : null;
+    const itemHeight = layout === "simple" ? 190 : null;
 
-    const items = data.map((letter) => {
+    const items = data.map(letter => {
       const contentIndex = letter.charCodeAt(0) % 6;
       const content = ipsum.slice(
         contentIndex,
@@ -104,7 +104,9 @@ export default class extends Component {
           }}
         >
           <h3>{letter.toUpperCase()}</h3>
-          {content.map((p, i) => <p key={i}>{p}</p>)}
+          {content.map((p, i) => (
+            <p key={i}>{p}</p>
+          ))}
           <p>We do! We do!</p>
         </li>
       );
@@ -116,14 +118,16 @@ export default class extends Component {
           <RadioGroup
             className="radio-group"
             name="useCSS"
-            selectedValue={useCSS ? 'css' : 'spring'}
-            onChange={value => this.setState({ useCSS: value === 'css' })}
+            selectedValue={useCSS ? "css" : "spring"}
+            onChange={value => this.setState({ useCSS: value === "css" })}
           >
             <label>
-              <Radio value="spring" />React Motion
+              <Radio value="spring" />
+              React Motion
             </label>
             <label>
-              <Radio value="css" />CSS Transitions
+              <Radio value="css" />
+              CSS Transitions
             </label>
             <a href="https://github.com/dantrain/react-stonecutter">
               <img
@@ -134,7 +138,7 @@ export default class extends Component {
             </a>
           </RadioGroup>
           <label>
-            {'Layout '}
+            {"Layout "}
             <select
               value={layout}
               onChange={ev => this.setState({ layout: ev.target.value })}
@@ -147,11 +151,12 @@ export default class extends Component {
             </select>
           </label>
           <label>
-            {'Enter/Exit Style '}
+            {"Enter/Exit Style "}
             <select
               value={enterExitStyle}
               onChange={ev =>
-                this.setState({ enterExitStyle: ev.target.value })}
+                this.setState({ enterExitStyle: ev.target.value })
+              }
             >
               {enterExitStyles.map(name => (
                 <option value={camelCase(name)} key={name}>
@@ -161,7 +166,7 @@ export default class extends Component {
             </select>
           </label>
           <label>
-            {'Easing '}
+            {"Easing "}
             <select
               value={easing}
               onChange={ev => this.setState({ easing: ev.target.value })}
@@ -179,10 +184,11 @@ export default class extends Component {
               type="checkbox"
               checked={responsive}
               onChange={ev => this.setState({ responsive: ev.target.checked })}
-            />Responsive
+            />
+            Responsive
           </label>
           <div className="slider">
-            {'Columns '}
+            {"Columns "}
             <div className="slider-container">
               <SliderWithTooltip
                 value={columns}
@@ -194,7 +200,7 @@ export default class extends Component {
             </div>
           </div>
           <div className="slider">
-            {'Gutters '}
+            {"Gutters "}
             <div className="slider-container">
               <SliderWithTooltip
                 value={gutters}
@@ -206,7 +212,7 @@ export default class extends Component {
             </div>
           </div>
           <div className="slider">
-            {'Stiffness '}
+            {"Stiffness "}
             <div className="slider-container">
               <SliderWithTooltip
                 value={stiffness}
@@ -218,7 +224,7 @@ export default class extends Component {
             </div>
           </div>
           <div className="slider">
-            {'Damping '}
+            {"Damping "}
             <div className="slider-container">
               <SliderWithTooltip
                 value={damping}
@@ -230,7 +236,7 @@ export default class extends Component {
             </div>
           </div>
           <div className="slider">
-            {'Duration '}
+            {"Duration "}
             <div className="slider-container">
               <SliderWithTooltip
                 value={duration}
@@ -243,11 +249,13 @@ export default class extends Component {
               />
             </div>
           </div>
-          <button onClick={this.handleShuffle}>Randomize children</button>
+          <button type="button" onClick={this.handleShuffle}>
+            Randomize children
+          </button>
         </div>
         <Grid
           itemHeight={itemHeight}
-          measured={layout !== 'simple'}
+          measured={layout !== "simple"}
           {...gridProps}
         >
           {items}

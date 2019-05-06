@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
-import shallowEqual from 'shallowequal';
-import omit from 'lodash.omit';
+import React, { Component } from "react";
+import shallowEqual from "shallowequal";
+import omit from "lodash.omit";
 import {
   buildTransform,
   positionToProperties
-} from '../utils/transformHelpers';
+} from "../utils/transformHelpers";
 
 export default class extends Component {
   componentDidMount() {
@@ -35,14 +35,14 @@ export default class extends Component {
     const { position, gridProps, gridState } = this.props;
 
     requestAnimationFrame(() => {
-      this.setState({
+      this.setState(state => ({
         style: {
-          ...this.state.style,
+          ...state.style,
           ...positionToProperties(position),
           zIndex: 1,
           ...gridProps.enter(this.props, gridProps, gridState)
         }
-      });
+      }));
 
       done();
     });
@@ -57,19 +57,19 @@ export default class extends Component {
   }
 
   componentWillLeave(done) {
-    const { gridProps, gridState } = this.props;
+    const { gridProps, gridState, duration } = this.props;
 
     requestAnimationFrame(() => {
       if (this.itemIsMounted) {
-        this.setState({
+        this.setState(state => ({
           style: {
-            ...this.state.style,
+            ...state.style,
             zIndex: 0,
             ...gridProps.exit(this.props, gridProps, gridState)
           }
-        });
+        }));
 
-        this.leaveTimeout = setTimeout(done, this.props.duration);
+        this.leaveTimeout = setTimeout(done, duration);
       }
     });
   }
@@ -87,49 +87,51 @@ export default class extends Component {
 
     const { position, gridProps, gridState } = props;
 
-    this.setState({
+    this.setState(state => ({
       style: {
-        ...this.state.style,
+        ...state.style,
         zIndex,
         ...gridProps.entered(props, gridProps, gridState),
         ...positionToProperties(position)
       }
-    });
+    }));
   };
 
   render() {
-    const item = React.Children.only(this.props.children);
     const {
-      transition, perspective, lengthUnit, angleUnit
+      transition,
+      perspective,
+      lengthUnit,
+      angleUnit,
+      children
     } = this.props;
+
+    const item = React.Children.only(children);
     const Element = item.type;
 
-    const {
-      style: {
-        translateX, translateY, opacity, zIndex
-      }
-    } = this.state;
+    const { style } = this.state;
+    const { translateX, translateY, opacity, zIndex } = style;
 
     if (
-      typeof translateX === 'undefined' ||
-      typeof translateY === 'undefined'
+      typeof translateX === "undefined" ||
+      typeof translateY === "undefined"
     ) {
       return null;
     }
 
-    const transform = buildTransform(this.state.style, perspective, {
+    const transform = buildTransform(style, perspective, {
       length: lengthUnit,
       angle: angleUnit
     });
 
-    const itemProps = omit(item.props, ['itemRect', 'itemHeight']);
+    const itemProps = omit(item.props, ["itemRect", "itemHeight"]);
 
     return (
       <Element
         {...itemProps}
         style={{
           ...itemProps.style,
-          position: 'absolute',
+          position: "absolute",
           top: 0,
           left: 0,
           zIndex,
