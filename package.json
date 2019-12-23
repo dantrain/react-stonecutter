@@ -8,6 +8,7 @@
     "grid"
   ],
   "main": "lib/react-stonecutter.js",
+  "types": "types/react-stonecutter.d.ts",
   "scripts": {
     "start": "gulp",
     "gh-pages": "gulp gh-pages",
